@@ -1,0 +1,15 @@
+#+title: ncs-installation-instructions.org
+#+author: Heiko Panjas <heiko@hey.com>
+
+* Windows
+
+* Linux
+
+* Darwin
+** Docker
+
+** Microsoft SQL Server
+
+** Microsoft ODBC driver for SQL Server
+
+** Microsoft SQL Server command-line tools
