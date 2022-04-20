@@ -32,3 +32,5 @@ add_library(nmcsmodelv2
   ${NMCS_MODEL_INCLUDES}
   ${NMCS_MODEL_SOURCES}
 )
+
+add_dependencies(nmcsmodelv2 nmcsruntime)

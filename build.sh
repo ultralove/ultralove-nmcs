@@ -31,7 +31,7 @@ source scripts/BuildTools.sh
 TOOLS_DIRECTORY=`pwd`/tools
 BUILD_DIRECTORY=`pwd`/build
 BUILD_CONFIGURATION="Debug"
-CMAKE_GENERATOR="Ninja"
+CMAKE_GENERATOR="Unix Makefiles"
 CMAKE_EXTRA_ARGS=""
 
 if [ "$1" = "--help" ]; then

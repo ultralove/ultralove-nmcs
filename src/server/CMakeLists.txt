@@ -36,3 +36,6 @@ add_library(nmcsserver
   ${NMCS_SERVER_INCLUDES}
   ${NMCS_SERVER_SOURCES}
 )
+
+add_dependencies(nmcsserver nmcsmodelv1)
+add_dependencies(nmcsserver nmcsmodelv2)
