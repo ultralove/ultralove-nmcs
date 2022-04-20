@@ -24,19 +24,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#include <nmcs/serverservicemanager.h>
 
-#include <nmcs/runtime.h>
+namespace ultralove { namespace nmcs { namespace server {
 
-#pragma pack(push)
-#pragma pack(8)
+ServiceManager::ServiceManager() {}
 
-namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
-}}} // namespace ultralove::nmcs::model
+ServiceManager::~ServiceManager() {}
 
-#pragma pack(pop)
+NmcsStatus ServiceManager::RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION pServiceFactory)
+{
+   return NMCS_NOT_IMPLEMENTED;
+}
 
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+void ServiceManager::UnregisterService(const runtime::String& serviceId) {}
+
+NmcsStatus ServiceManager::AcquireService(const runtime::String& serviceId, IServiceCallback* pCallback, IService*& pService)
+{
+   return NMCS_NOT_IMPLEMENTED;
+}
+
+void ServiceManager::ReleaseService(IService*& pService) {}
+
+}}} // namespace ultralove::nmcs::server

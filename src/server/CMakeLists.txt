@@ -16,28 +16,23 @@ else()
     message(FATAL_ERROR "macOS builds require clang.")
 endif()
 
-set(NMCS_RUNTIME_INCLUDES
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimecommon.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimedatetime.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeglobals.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeguid.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimesharedobject.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestring.h
+set(NMCS_SERVER_INCLUDES
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercommon.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverglobals.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicemanager.h
 )
 
-set(NMCS_RUNTIME_SOURCES
-  runtime.cpp
-  runtimeguid.cpp
-  runtimesharedobject.cpp
-  runtimestream.cpp
-  runtimestring.cpp
+set(NMCS_SERVER_SOURCES
+  server.cpp
+  serverservicemanager.cpp
 )
 
-source_group("Header Files" FILES ${NMCS_RUNTIME_INCLUDES})
-source_group("Source Files" FILES ${NMCS_RUNTIME_SOURCES})
+source_group("Header Files" FILES ${NMCS_SERVER_INCLUDES})
+source_group("Source Files" FILES ${NMCS_SERVER_SOURCES})
 
-add_library(nmcsruntime
-  ${NMCS_RUNTIME_INCLUDES}
-  ${NMCS_RUNTIME_SOURCES}
+add_library(nmcsserver
+  ${NMCS_SERVER_INCLUDES}
+  ${NMCS_SERVER_SOURCES}
 )

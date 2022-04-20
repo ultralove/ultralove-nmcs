@@ -24,26 +24,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_FRAMEWORK_SERVICE_H_INCL__
-#define __NMCS_FRAMEWORK_SERVICE_H_INCL__
+#ifndef __NMCS_SERVER_H_INCL__
+#define __NMCS_SERVER_H_INCL__
 
-#include <nmcs/frameworkservicecallback.h>
+#include <nmcs/servercommon.h>
+#include <nmcs/serverglobals.h>
+#include <nmcs/serverservice.h>
+#include <nmcs/serverservicemanager.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace framework {
-
-class NMCS_SHARED_API IService : public runtime::SharedObject
-{
-protected:
-   virtual ~IService() {}
-};
-
-typedef NmcsStatus (*CREATE_SERVICE_FUNCTION)(IServiceCallback* serviceCallback, IService*& service);
-
-}}} // namespace ultralove::nmcs::framework
+namespace ultralove { namespace nmcs { namespace server {
+namespace nmcs    = ultralove::nmcs;
+namespace runtime = ultralove::nmcs::runtime;
+}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_FRAMEWORK_SERVICE_H_INCL__
+#endif // #ifndef __NMCS_SERVER_H_INCL__

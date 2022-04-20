@@ -88,7 +88,7 @@ fi
 
 if [ $CMAKE_INSTALL_FOUND -ne 0 ]; then
   echo "Configuring projects using $CMAKE_GENERATOR..."
-  cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
+  cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
   if [ $? -ne 0 ]; then
     echo "Failed to configure projects."
     exit -1

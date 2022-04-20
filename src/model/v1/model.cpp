@@ -24,17 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_FRAMEWORK_COMMON_H_INCL__
-#define __NMCS_FRAMEWORK_COMMON_H_INCL__
+#include <nmcs/model.h>
 
-#include <nmcs/common.h>
+namespace ultralove { namespace nmcs { namespace model {
 
-#pragma pack(push)
-#pragma pack(8)
-
-namespace ultralove { namespace nmcs { namespace framework {
-}}} // namespace ultralove::nmcs::framework
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_FRAMEWORK_COMMON_H_INCL__
+}}} // namespace ultralove::nmcs::model

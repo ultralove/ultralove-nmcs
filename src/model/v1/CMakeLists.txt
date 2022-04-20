@@ -16,28 +16,19 @@ else()
     message(FATAL_ERROR "macOS builds require clang.")
 endif()
 
-set(NMCS_RUNTIME_INCLUDES
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimecommon.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimedatetime.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeglobals.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeguid.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimesharedobject.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestring.h
+set(NMCS_MODEL_INCLUDES
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/modelcommon.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/modelglobals.h
 )
 
-set(NMCS_RUNTIME_SOURCES
-  runtime.cpp
-  runtimeguid.cpp
-  runtimesharedobject.cpp
-  runtimestream.cpp
-  runtimestring.cpp
+set(NMCS_MODEL_SOURCES
+  model.cpp
 )
 
-source_group("Header Files" FILES ${NMCS_RUNTIME_INCLUDES})
-source_group("Source Files" FILES ${NMCS_RUNTIME_SOURCES})
+source_group("Header Files" FILES ${NMCS_MODEL_INCLUDES})
+source_group("Source Files" FILES ${NMCS_MODEL_SOURCES})
 
-add_library(nmcsruntime
-  ${NMCS_RUNTIME_INCLUDES}
-  ${NMCS_RUNTIME_SOURCES}
+add_library(nmcsmodelv1
+  ${NMCS_MODEL_INCLUDES}
+  ${NMCS_MODEL_SOURCES}
 )

@@ -24,26 +24,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_FRAMEWORK_H_INCL__
-#define __NMCS_FRAMEWORK_H_INCL__
+#ifndef __NMCS_SERVER_COMMON_H_INCL__
+#define __NMCS_SERVER_COMMON_H_INCL__
 
-#include <nmcs/model.h>
-
-#include <nmcs/frameworkcommon.h>
-#include <nmcs/frameworkglobals.h>
-#include <nmcs/frameworkservice.h>
-#include <nmcs/frameworkservicemanager.h>
+#include <nmcs/common.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace framework {
-namespace nmcs     = ultralove::nmcs;
-namespace runtime  = ultralove::nmcs::runtime;
-namespace model    = ultralove::nmcs::model;
-namespace platform = ultralove::nmcs::platform;
-}}} // namespace ultralove::nmcs::framework
+namespace ultralove { namespace nmcs { namespace server {
+}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_FRAMEWORK_H_INCL__
+#endif // #ifndef __NMCS_SERVER_COMMON_H_INCL__

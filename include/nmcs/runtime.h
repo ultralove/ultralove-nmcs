@@ -27,11 +27,11 @@
 #ifndef __NMCS_RUNTIME_H_INCL__
 #define __NMCS_RUNTIME_H_INCL__
 
-#include <runtimecommon.h>
-#include <runtimeglobals.h>
-#include <runtimeguid.h>
-#include <runtimestream.h>
-#include <runtimestring.h>
+#include <nmcs/runtimecommon.h>
+#include <nmcs/runtimeglobals.h>
+#include <nmcs/runtimeguid.h>
+#include <nmcs/runtimestream.h>
+#include <nmcs/runtimestring.h>
 
 #pragma pack(push)
 #pragma pack(8)

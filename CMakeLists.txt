@@ -87,5 +87,6 @@ set(NMCS_INCLUDE_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/include")
 include_directories(${NMCS_INCLUDE_DIRECTORY})
 
 add_subdirectory("src/runtime")
-# add_subdirectory("src/model")
-# add_subdirectory("src/framework")
+add_subdirectory("src/model/v1")
+add_subdirectory("src/model/v2")
+add_subdirectory("src/server")

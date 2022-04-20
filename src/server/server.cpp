@@ -24,32 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_FRAMEWORK_SERVICE_MANAGER_H_INCL__
-#define __NMCS_FRAMEWORK_SERVICE_MANAGER_H_INCL__
+#include <nmcs/server.h>
 
-#include <nmcs/frameworkservice.h>
-#include <nmcs/runtimestring.h>
+namespace ultralove { namespace nmcs { namespace server {
 
-#pragma pack(push)
-#pragma pack(8)
-
-namespace ultralove { namespace nmcs { namespace framework {
-
-class NMCS_SHARED_API ServiceManager
-{
-public:
-   ServiceManager();
-   virtual ~ServiceManager();
-
-   NmcsStatus RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION serviceFactory);
-   void UnregisterService(const runtime::String& serviceId);
-
-   NmcsStatus AcquireService(const runtime::String& serviceId, IServiceCallback* callback, IService*& service);
-   void ReleaseService(IService*& pService);
-};
-
-}}} // namespace ultralove::nmcs::framework
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_FRAMEWORK_SERVICE_MANAGER_H_INCL__
+}}} // namespace ultralove::nmcs::server

@@ -24,24 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_FRAMEWORK_SERVICE_CALLBACK_H_INCL__
-#define __NMCS_FRAMEWORK_SERVICE_CALLBACK_H_INCL__
+#include <nmcs/runtime.h>
 
-#include <nmcs/runtimesharedobject.h>
+namespace ultralove { namespace nmcs { namespace runtime {
 
-#pragma pack(push)
-#pragma pack(8)
-
-namespace ultralove { namespace nmcs { namespace framework {
-
-class NMCS_SHARED_API IServiceCallback : public runtime::SharedObject
-{
-protected:
-   virtual ~IServiceCallback() {}
-};
-
-}}} // namespace ultralove::nmcs::framework
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_FRAMEWORK_SERVICE_CALLBACK_H_INCL__
+}}} // namespace ultralove::nmcs::runtime

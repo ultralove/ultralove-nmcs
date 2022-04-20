@@ -24,26 +24,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/frameworkservicemanager.h>
+#ifndef __NMCS_SERVER_SERVICE_CALLBACK_H_INCL__
+#define __NMCS_SERVER_SERVICE_CALLBACK_H_INCL__
 
-namespace ultralove { namespace nmcs { namespace framework {
+#include <nmcs/runtimesharedobject.h>
 
-ServiceManager::ServiceManager() {}
+#pragma pack(push)
+#pragma pack(8)
 
-ServiceManager::~ServiceManager() {}
+namespace ultralove { namespace nmcs { namespace server {
 
-NmcsStatus ServiceManager::RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION pServiceFactory)
+class NMCS_SHARED_API IServiceCallback : public runtime::SharedObject
 {
-   return NMCS_NOT_IMPLEMENTED;
-}
+protected:
+   virtual ~IServiceCallback() {}
+};
 
-void ServiceManager::UnregisterService(const runtime::String& serviceId) {}
+}}} // namespace ultralove::nmcs::server
 
-NmcsStatus ServiceManager::AcquireService(const runtime::String& serviceId, IServiceCallback* pCallback, IService*& pService)
-{
-   return NMCS_NOT_IMPLEMENTED;
-}
+#pragma pack(pop)
 
-void ServiceManager::ReleaseService(IService*& pService) {}
-
-}}} // namespace ultralove::nmcs::framework
+#endif // #ifndef __NMCS_SERVER_SERVICE_CALLBACK_H_INCL__
