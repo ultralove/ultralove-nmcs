@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -37,7 +37,8 @@ namespace ultralove { namespace nmcs { namespace runtime {
 class NMCS_SHARED_API Guid
 {
 public:
-   ~Guid();
+   explicit Guid(const char* str);
+   virtual ~Guid();
 
    Guid(const Guid& rhs);
    Guid& operator=(const Guid& rhs);
@@ -45,10 +46,14 @@ public:
    bool operator==(const Guid& rhs) const;
    bool operator<(const Guid& rhs) const;
 
-   static Guid New();
+   static Guid Create();
+   static Guid Create(const char* str);
    static const Guid& Null();
 
 private:
+   uint8_t data_[16];
+   static const Guid null_;
+
    Guid();
 };
 

@@ -24,19 +24,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#ifndef __NMCS_PLATFORM_GLOBALS_H_INCL__
+#define __NMCS_PLATFORM_GLOBALS_H_INCL__
 
-#include <nmcs/runtime.h>
+#include <nmcs/globals.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
-}}} // namespace ultralove::nmcs::model
+namespace ultralove { namespace nmcs { namespace platform {
+}}} // namespace ultralove::nmcs::platform
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+#endif // #ifndef __NMCS_PLATFORM_GLOBALS_H_INCL__

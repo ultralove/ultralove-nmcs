@@ -24,19 +24,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
-
-#include <nmcs/runtime.h>
-
-#pragma pack(push)
-#pragma pack(8)
+#include <nmcs/modelfabric.h>
 
 namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
+
+const runtime::Guid Fabric::typeId_ = runtime::Guid::Create("68753A44-4D6F-1226-9C60-0050E4C00067");
+
+Fabric::~Fabric() {}
+
+const runtime::Guid& Fabric::TypeId()
+{
+   return typeId_;
+}
+
 }}} // namespace ultralove::nmcs::model
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_MODEL_H_INCL__

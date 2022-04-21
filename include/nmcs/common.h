@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -34,11 +34,11 @@
    #ifdef NMCS_SHARED
       #define NMCS_SHARED_API __declspec(dllexport)
    #else
-      #define NMCS_SHARED_API
+      #define NMCS_SHARED_API __declspec(dllimport)
    #endif
 #else
    #ifdef __GNUC__
-      #ifdef NMCS_SHARED_API
+      #ifdef NMCS_SHARED
          #define NMCS_SHARED_API __attribute__((visibility("default")))
       #else
          #define NMCS_SHARED_API
@@ -54,12 +54,13 @@ typedef uint32_t NmcsStatus;
 
 // General status codes
 #define NMCS_FACILITY                   0x00000000
-#define NMCS_SUCCESS                    NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000000)
-#define NMCS_FAILURE                    NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000001)
-#define NMCS_NOT_FOUND                  NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000002)
-#define NMCS_INVALID_PARAMETER          NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000003)
-#define NMCS_NOT_IMPLEMENTED            NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000004)
-#define NMCS_ALREADY_REGISTERED         NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000002)
+#define NMCS_STATUS_SUCCESS             NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000000)
+#define NMCS_STATUS_FAILURE             NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000001)
+#define NMCS_STATUS_NOT_FOUND           NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000002)
+#define NMCS_STATUS_INVALID_PARAMETER   NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000003)
+#define NMCS_STATUS_NOT_IMPLEMENTED     NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000004)
+#define NMCS_STATUS_ALREADY_REGISTERED  NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000005)
+#define NMCS_STATUS_OUT_OF_MEMORY       NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000006)
 
 #define NMCS_SUCCEEDED(__nmcs_status__) (NMCS_SUCCESS == (__nmcs_status__))
 #define NMCS_FAILED(__nmcs_status__)    (NMCS_SUCCESS != (__nmcs_status__))

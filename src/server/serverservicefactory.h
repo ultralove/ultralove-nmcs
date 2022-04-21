@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -24,8 +24,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/model.h>
+#ifndef __NMCS_SERVER_SERVICE_FACTORY_H_INCL__
+#define __NMCS_SERVER_SERVICE_FACTORY_H_INCL__
 
-namespace ultralove { namespace nmcs { namespace model {
+#include <nmcs/runtimestring.h>
+#include <nmcs/serverservice.h>
 
-}}} // namespace ultralove::nmcs::model
+#pragma pack(push)
+#pragma pack(8)
+
+namespace ultralove { namespace nmcs { namespace server {
+
+class ServiceFactory
+{
+public:
+   ServiceFactory();
+   virtual ~ServiceFactory();
+
+   NmcsStatus RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION factoryFunction);
+   void UnregisterService(const runtime::String& serviceId);
+};
+
+}}} // namespace ultralove::nmcs::server
+
+#pragma pack(pop)
+
+#endif // #ifndef __NMCS_SERVER_SERVICE_FACTORY_H_INCL__

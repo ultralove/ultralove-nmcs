@@ -24,19 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
-
-#include <nmcs/runtime.h>
-
-#pragma pack(push)
-#pragma pack(8)
+#include <nmcs/model.h>
 
 namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
+
 }}} // namespace ultralove::nmcs::model
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_MODEL_H_INCL__

@@ -24,28 +24,27 @@
 #
 ################################################################################
 
-set(NMCS_RUNTIME_INCLUDES
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimecommon.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimedatetime.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeglobals.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeguid.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimesharedobject.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestring.h
+set(NMCS_PLATFORM_INCLUDES
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformcommon.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformglobals.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformguid.h
 )
 
-set(NMCS_RUNTIME_SOURCES
-  runtime.cpp
-  runtimeguid.cpp
-  runtimesharedobject.cpp
-  runtimestream.cpp
-  runtimestring.cpp
+set(NMCS_PLATFORM_SOURCES
+  ${NMCS_TARGET_SYSTEM}/platformguid.cpp
+  platform.cpp
 )
 
-set(NMCS_RUNTIME_DEPENDENCIES
-  nmcsplatform
-)
+if(NMCS_TARGET_SYSTEM STREQUAL "darwin")
+  set(NMCS_PLATFORM_DEPENDENCIES
+    "-framework Carbon"
+    "-framework IOKit"
+    "-framework Security"
+  )
+endif()
 
-add_library(nmcsruntime ${NMCS_RUNTIME_INCLUDES} ${NMCS_RUNTIME_SOURCES})
-add_dependencies(nmcsruntime ${NMCS_RUNTIME_DEPENDENCIES})
-target_link_libraries(nmcsruntime ${NMCS_RUNTIME_DEPENDENCIES})
+source_group("Header Files" FILES ${NMCS_PLATFORM_INCLUDES})
+source_group("Source Files" FILES ${NMCS_PLATFORM_SOURCES})
+
+add_library(nmcsplatform ${NMCS_PLATFORM_INCLUDES} ${NMCS_PLATFORM_SOURCES})
+target_link_libraries(nmcsplatform ${NMCS_PLATFORM_DEPENDENCIES})

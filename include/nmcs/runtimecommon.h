@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -27,6 +27,8 @@
 #ifndef __NMCS_RUNTIME_COMMON_H_INCL__
 #define __NMCS_RUNTIME_COMMON_H_INCL__
 
+#include <nmcs/platformcommon.h>
+
 #include <nmcs/runtimesharedobject.h>
 
 #pragma pack(push)
@@ -34,7 +36,8 @@
 
 namespace ultralove { namespace nmcs { namespace runtime {
 
-namespace nmcs = ultralove::nmcs;
+namespace nmcs     = ultralove::nmcs;
+namespace platform = ultralove::nmcs::platform;
 
 inline static void SafeRelease(SharedObject*& ptr)
 {

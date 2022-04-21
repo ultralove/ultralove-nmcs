@@ -24,19 +24,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#include "serverconfiguration.h"
 
-#include <nmcs/runtime.h>
+#include <nmcs/serverfileservice.h>
 
-#pragma pack(push)
-#pragma pack(8)
+namespace ultralove { namespace nmcs { namespace server {
 
-namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
-}}} // namespace ultralove::nmcs::model
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+}}} // namespace ultralove::nmcs::server

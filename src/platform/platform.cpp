@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -24,8 +24,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/model.h>
+namespace ultralove { namespace nmcs { namespace platform {
 
-namespace ultralove { namespace nmcs { namespace model {
-
-}}} // namespace ultralove::nmcs::model
+}}} // namespace ultralove::nmcs::platform

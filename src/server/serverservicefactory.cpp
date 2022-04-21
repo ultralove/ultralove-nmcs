@@ -24,19 +24,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#include "serverservicefactory.h"
 
-#include <nmcs/runtime.h>
+namespace ultralove { namespace nmcs { namespace server {
 
-#pragma pack(push)
-#pragma pack(8)
+ServiceFactory::ServiceFactory() {}
 
-namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
-}}} // namespace ultralove::nmcs::model
+ServiceFactory::~ServiceFactory() {}
 
-#pragma pack(pop)
+NmcsStatus ServiceFactory::RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION factoryFunction)
+{
+   return NMCS_STATUS_NOT_IMPLEMENTED;
+}
 
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+void ServiceFactory::UnregisterService(const runtime::String& serviceId) {}
+
+}}} // namespace ultralove::nmcs::server

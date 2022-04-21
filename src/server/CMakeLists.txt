@@ -1,41 +1,56 @@
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  set(EXTRA_LIBRARIES "-framework AppKit" "-framework Carbon" "-framework IOKit" "-framework Security")
-  if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 12)
-    message(STATUS "Building for x86_64 using clang ${CMAKE_CXX_COMPILER_VERSION}.")
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.11 CACHE INTERNAL "")
-    set(CMAKE_OSX_ARCHITECTURES x86_64 CACHE INTERNAL "")
-    add_compile_options(-mmacosx-version-min=10.11)
-  else()
-    message(STATUS "Building for x86_64 and arm64 using clang ${CMAKE_CXX_COMPILER_VERSION}.")
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE INTERNAL "")
-    set(CMAKE_OSX_ARCHITECTURES arm64 x86_64 CACHE INTERNAL "")
-    add_compile_options(-mmacosx-version-min=10.15)
-  endif()
-else()
-    message(FATAL_ERROR "macOS builds require clang.")
-endif()
+################################################################################
+#
+# Copyright (c) ultralove contributors (https://github.com/ultralove)
+#
+# The MIT License (MIT)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+################################################################################
 
 set(NMCS_SERVER_INCLUDES
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercredentialservice.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercommon.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverfileservice.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverglobals.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverhttpservice.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicemanager.h
+  serverconfiguration.h
+  serverservicefactory.h
 )
 
 set(NMCS_SERVER_SOURCES
   server.cpp
+  serverconfiguration.cpp
+  servercredentialservice.cpp
+  serverfileservice.cpp
+  serverhttpservice.cpp
+  serverservicefactory.cpp
   serverservicemanager.cpp
 )
 
-source_group("Header Files" FILES ${NMCS_SERVER_INCLUDES})
-source_group("Source Files" FILES ${NMCS_SERVER_SOURCES})
-
-add_library(nmcsserver
-  ${NMCS_SERVER_INCLUDES}
-  ${NMCS_SERVER_SOURCES}
+set(NMCS_SERVER_DEPENDENCIES
+  nmcsmodel
 )
 
-add_dependencies(nmcsserver nmcsmodelv1)
-add_dependencies(nmcsserver nmcsmodelv2)
+add_library(nmcsserver ${NMCS_SERVER_INCLUDES} ${NMCS_SERVER_SOURCES})
+add_dependencies(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
+target_link_libraries(nmcsserver ${NMCS_SERVER_DEPENDENCIES})

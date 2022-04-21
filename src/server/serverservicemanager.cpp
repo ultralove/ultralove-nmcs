@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -24,6 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "serverservicefactory.h"
+
 #include <nmcs/serverservicemanager.h>
 
 namespace ultralove { namespace nmcs { namespace server {
@@ -34,14 +36,14 @@ ServiceManager::~ServiceManager() {}
 
 NmcsStatus ServiceManager::RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION pServiceFactory)
 {
-   return NMCS_NOT_IMPLEMENTED;
+   return NMCS_STATUS_NOT_IMPLEMENTED;
 }
 
 void ServiceManager::UnregisterService(const runtime::String& serviceId) {}
 
 NmcsStatus ServiceManager::AcquireService(const runtime::String& serviceId, IServiceCallback* pCallback, IService*& pService)
 {
-   return NMCS_NOT_IMPLEMENTED;
+   return NMCS_STATUS_NOT_IMPLEMENTED;
 }
 
 void ServiceManager::ReleaseService(IService*& pService) {}

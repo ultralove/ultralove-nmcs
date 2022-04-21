@@ -24,19 +24,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#ifndef __NMCS_MODEL_FABRIC_H_INCL__
+#define __NMCS_MODEL_FABRIC_H_INCL__
 
-#include <nmcs/runtime.h>
+#include <nmcs/runtimeguid.h>
+#include <nmcs/runtimestring.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
+
+class NMCS_SHARED_API Fabric
+{
+public:
+   virtual ~Fabric();
+
+   static const runtime::Guid& TypeId();
+
+protected:
+   static const runtime::Guid typeId_;
+};
+
 }}} // namespace ultralove::nmcs::model
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+#endif // #ifndef __NMCS_MODEL_FABRIC_H_INCL__

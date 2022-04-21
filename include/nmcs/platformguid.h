@@ -24,19 +24,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#ifndef __NMCS_PLATFORM_GUID_H_INCL__
+#define __NMCS_PLATFORM_GUID_H_INCL__
 
-#include <nmcs/runtime.h>
+#include <nmcs/platformcommon.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
-}}} // namespace ultralove::nmcs::model
+namespace ultralove { namespace nmcs { namespace platform {
+
+NMCS_SHARED_API NmcsStatus CreateGuid(uint8_t* data);
+NMCS_SHARED_API NmcsStatus CreateGuidFromString(const char* str, uint8_t* data);
+NMCS_SHARED_API NmcsStatus CreateGuidString(const uint8_t* data, char* str, const size_t strSize);
+
+}}} // namespace ultralove::nmcs::platform
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+#endif // #ifndef __NMCS_PLATFORM_GUID_H_INCL__

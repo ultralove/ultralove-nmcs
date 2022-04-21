@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -24,39 +24,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <nmcs/platformguid.h>
 #include <nmcs/runtimeguid.h>
 
 namespace ultralove { namespace nmcs { namespace runtime {
 
-Guid::Guid() {}
+const Guid Guid::null_;
+
+Guid::Guid()
+{
+   memset(data_, 0, sizeof(uint8_t) * 16);
+}
 
 Guid::~Guid() {}
 
-Guid::Guid(const Guid& rhs) {}
+Guid::Guid(const Guid& rhs)
+{
+   *this = rhs;
+}
 
 Guid& Guid::operator=(const Guid& rhs)
 {
+   memcpy(data_, rhs.data_, sizeof(uint8_t) * 16);
    return *this;
 }
 
 bool Guid::operator==(const Guid& rhs) const
 {
-   return false;
+   return memcmp(data_, rhs.data_, sizeof(uint8_t) * 16) == 0;
 }
 
 bool Guid::operator<(const Guid& rhs) const
 {
-   return false;
+   return memcmp(data_, rhs.data_, sizeof(uint8_t) * 16) < 0;
 }
 
-Guid Guid::New()
+Guid Guid::Create()
 {
-   return Guid();
+   Guid guid;
+   platform::CreateGuid(guid.data_);
+   return guid;
+}
+
+Guid Guid::Create(const char* str)
+{
+   Guid guid;
+   platform::CreateGuidFromString(str, guid.data_);
+   return guid;
 }
 
 const Guid& Guid::Null()
 {
-   return Guid();
+   return null_;
 }
 
 }}} // namespace ultralove::nmcs::runtime

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -36,9 +36,8 @@
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace platform {
-namespace nmcs = ultralove::nmcs;
-}}} // namespace ultralove::nmcs::platform
+namespace ultralove { namespace nmcs { namespace runtime {
+}}} // namespace ultralove::nmcs::runtime
 
 #pragma pack(pop)
 
