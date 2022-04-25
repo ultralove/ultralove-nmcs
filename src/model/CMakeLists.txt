@@ -24,6 +24,9 @@
 #
 ################################################################################
 
+set (NMCS_MODEL_INCLUDES
+)
+
 set(NMCS_MODEL_SOURCES
   model.cpp
   modelfabric.cpp

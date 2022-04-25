@@ -29,6 +29,7 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <cstring>
 
 #ifdef _MSC_VER
    #ifdef NMCS_SHARED

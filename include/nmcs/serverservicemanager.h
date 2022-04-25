@@ -28,6 +28,7 @@
 #define __NMCS_SERVER_SERVICE_MANAGER_H_INCL__
 
 #include <nmcs/runtimestring.h>
+
 #include <nmcs/serverservice.h>
 
 #pragma pack(push)

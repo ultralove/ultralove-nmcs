@@ -25,8 +25,6 @@
 ################################################################################
 
 set(NMCS_PLATFORM_INCLUDES
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformcommon.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformglobals.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformguid.h
 )
 

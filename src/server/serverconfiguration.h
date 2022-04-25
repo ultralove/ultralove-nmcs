@@ -27,17 +27,8 @@
 #ifndef __NMCS_SERVER_CONFIGURATION_H_INCL__
 #define __NMCS_SERVER_CONFIGURATION_H_INCL__
 
-#include <nmcs/servercommon.h>
-#include <nmcs/serverglobals.h>
-#include <nmcs/serverservicemanager.h>
-
 #pragma pack(push)
 #pragma pack(8)
-
-namespace ultralove { namespace nmcs { namespace server {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
-}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 

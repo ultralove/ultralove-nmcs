@@ -33,8 +33,9 @@
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
+namespace nmcs     = ultralove::nmcs;
+namespace platform = ultralove::nmcs::platform;
+namespace runtime  = ultralove::nmcs::runtime;
 }}} // namespace ultralove::nmcs::model
 
 #pragma pack(pop)

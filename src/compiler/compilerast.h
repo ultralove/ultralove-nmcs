@@ -24,17 +24,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_GLOBALS_H_INCL__
-#define __NMCS_RUNTIME_GLOBALS_H_INCL__
+#ifndef __NMCS_COMPILER_AST_H_INCL__
+#define __NMCS_COMPILER_AST_H_INCL__
 
-#include <nmcs/globals.h>
+namespace ultralove { namespace nmcs { namespace compiler {
 
-#pragma pack(push)
-#pragma pack(8)
+class AST
+{};
 
-namespace ultralove { namespace nmcs { namespace runtime {
-}}} // namespace ultralove::nmcs::runtime
+}}} // namespace ultralove::nmcs::compiler
 
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_RUNTIME_GLOBALS_H_INCL__
+#endif // #ifndef __NMCS_COMPILER_AST_H_INCL__

@@ -25,9 +25,7 @@
 ################################################################################
 
 set(NMCS_RUNTIME_INCLUDES
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimecommon.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimedatetime.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeglobals.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeguid.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimesharedobject.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h

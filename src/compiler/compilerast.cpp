@@ -24,31 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_COMMON_H_INCL__
-#define __NMCS_RUNTIME_COMMON_H_INCL__
+#include "compilerast.h"
 
-#include <nmcs/platformcommon.h>
+namespace ultralove { namespace nmcs { namespace compiler {
 
-#include <nmcs/runtimesharedobject.h>
-
-#pragma pack(push)
-#pragma pack(8)
-
-namespace ultralove { namespace nmcs { namespace runtime {
-
-namespace nmcs     = ultralove::nmcs;
-namespace platform = ultralove::nmcs::platform;
-
-inline static void SafeRelease(SharedObject*& ptr)
-{
-   if (ptr != 0) {
-      ptr->Release();
-      ptr = 0;
-   }
-}
-
-}}} // namespace ultralove::nmcs::runtime
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_RUNTIME_COMMON_H_INCL__
+}}} // namespace ultralove::nmcs::compiler

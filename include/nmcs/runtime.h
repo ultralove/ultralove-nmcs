@@ -27,17 +27,25 @@
 #ifndef __NMCS_RUNTIME_H_INCL__
 #define __NMCS_RUNTIME_H_INCL__
 
-#include <nmcs/runtimecommon.h>
-#include <nmcs/runtimeglobals.h>
-#include <nmcs/runtimeguid.h>
-#include <nmcs/runtimestream.h>
-#include <nmcs/runtimestring.h>
+#include <nmcs/platform.h>
+
+#include <nmcs/runtimesharedobject.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace runtime {
+namespace nmcs     = ultralove::nmcs;
+namespace platform = ultralove::nmcs::platform;
 }}} // namespace ultralove::nmcs::runtime
+
+inline static void SafeRelease(ultralove::nmcs::runtime::SharedObject*& ptr)
+{
+   if (ptr != 0) {
+      ptr->Release();
+      ptr = 0;
+   }
+}
 
 #pragma pack(pop)
 

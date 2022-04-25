@@ -42,6 +42,6 @@ set(NMCS_AGENT_DEPENDENCIES
   nmcsserver
 )
 
-add_executable(nmcsagent ${NMCS_AGENT_INCLUDES} ${NMCS_AGENT_SOURCES})
-add_dependencies(nmcsagent ${NMCS_AGENT_DEPENDENCIES})
-target_link_libraries(nmcsagent ${NMCS_AGENT_DEPENDENCIES})
+add_executable(nmcsd ${NMCS_AGENT_INCLUDES} ${NMCS_AGENT_SOURCES})
+add_dependencies(nmcsd ${NMCS_AGENT_DEPENDENCIES})
+target_link_libraries(nmcsd ${NMCS_AGENT_DEPENDENCIES})

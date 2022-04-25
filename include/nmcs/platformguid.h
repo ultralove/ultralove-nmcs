@@ -27,7 +27,7 @@
 #ifndef __NMCS_PLATFORM_GUID_H_INCL__
 #define __NMCS_PLATFORM_GUID_H_INCL__
 
-#include <nmcs/platformcommon.h>
+#include <nmcs/common.h>
 
 #pragma pack(push)
 #pragma pack(8)

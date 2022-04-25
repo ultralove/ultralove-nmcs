@@ -28,6 +28,7 @@
 #define __NMCS_RUNTIME_SHARED_OBJECT_H_INCL__
 
 #include <atomic>
+
 #include <nmcs/common.h>
 
 #pragma pack(push)

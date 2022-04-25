@@ -27,17 +27,16 @@
 #ifndef __NMCS_SERVER_H_INCL__
 #define __NMCS_SERVER_H_INCL__
 
-#include <nmcs/servercommon.h>
-#include <nmcs/serverglobals.h>
-#include <nmcs/serverservice.h>
-#include <nmcs/serverservicemanager.h>
+#include <nmcs/model.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace server {
-namespace nmcs    = ultralove::nmcs;
-namespace runtime = ultralove::nmcs::runtime;
+namespace nmcs     = ultralove::nmcs;
+namespace platform = ultralove::nmcs::platform;
+namespace runtime  = ultralove::nmcs::runtime;
+namespace model    = ultralove::nmcs::model;
 }}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)

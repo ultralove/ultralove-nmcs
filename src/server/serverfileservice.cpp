@@ -29,5 +29,4 @@
 #include <nmcs/serverfileservice.h>
 
 namespace ultralove { namespace nmcs { namespace server {
-
 }}} // namespace ultralove::nmcs::server

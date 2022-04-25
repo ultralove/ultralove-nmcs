@@ -24,17 +24,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_GLOBALS_H_INCL__
-#define __NMCS_MODEL_GLOBALS_H_INCL__
+#ifndef __NMCS_COMPILER_DRIVER_H_INCL__
+#define __NMCS_COMPILER_DRIVER_H_INCL__
 
-#include <nmcs/globals.h>
+#include "compileremittertype.h"
 
-#pragma pack(push)
-#pragma pack(8)
+namespace ultralove { namespace nmcs { namespace compiler {
 
-namespace ultralove { namespace nmcs { namespace model {
-}}} // namespace ultralove::nmcs::model
+class Driver
+{
+public:
+   void Phase1(const EmitterType emitterType) const;
+   void Phase2();
 
-#pragma pack(pop)
+private:
+   Driver(const Driver&)            = delete;
+   Driver& operator=(const Driver&) = delete;
+};
 
-#endif // #ifndef __NMCS_MODEL_GLOBALS_H_INCL__
+}}} // namespace ultralove::nmcs::compiler
+
+#endif // #ifndef __NMCS_COMPILER_DRIVER_H_INCL__

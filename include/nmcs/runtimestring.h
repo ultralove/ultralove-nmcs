@@ -27,7 +27,7 @@
 #ifndef __NMCS_RUNTIME_STRING_H_INCL__
 #define __NMCS_RUNTIME_STRING_H_INCL__
 
-#include <nmcs/runtimecommon.h>
+#include <nmcs/common.h>
 
 #pragma pack(push)
 #pragma pack(8)

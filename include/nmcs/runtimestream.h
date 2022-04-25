@@ -27,8 +27,6 @@
 #ifndef __NMCS_RUNTIME_STREAM_H_INCL__
 #define __NMCS_RUNTIME_STREAM_H_INCL__
 
-#include <nmcs/runtimecommon.h>
-#include <nmcs/runtimeglobals.h>
 #include <nmcs/runtimesharedobject.h>
 
 #pragma pack(push)

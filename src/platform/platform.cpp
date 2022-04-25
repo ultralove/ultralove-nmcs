@@ -24,6 +24,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <nmcs/platform.h>
+
 namespace ultralove { namespace nmcs { namespace platform {
+
+void* NmcsAlloc(const size_t size)
+{
+   NMCS_PRECONDITION_RETURN(size > 0, nullptr);
+   return calloc(0, size);
+}
+
+void NmcsRelease(void*& ptr)
+{
+   NMCS_PRECONDITION(ptr != nullptr);
+   free(ptr);
+   ptr = nullptr;
+}
 
 }}} // namespace ultralove::nmcs::platform

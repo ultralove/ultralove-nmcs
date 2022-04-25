@@ -24,17 +24,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_PLATFORM_GLOBALS_H_INCL__
-#define __NMCS_PLATFORM_GLOBALS_H_INCL__
+#ifndef __NMCS_COMPILER_EMITTER_TYPE_H_INCL__
+#define __NMCS_COMPILER_EMITTER_TYPE_H_INCL__
 
-#include <nmcs/globals.h>
+namespace ultralove { namespace nmcs { namespace compiler {
 
-#pragma pack(push)
-#pragma pack(8)
+enum class EmitterType : int
+{
+   CPP_EMITTER,
+   CSHARP_EMITTER,
+   SWIFT_EMITTER,
+   TYPESCRIPT_EMITTER,
+   JAVA_EMITTER,
+   MAX_EMITTER_TYPE     = JAVA_EMITTER,
+   INVALID_EMITTER_TYPE = MAX_EMITTER_TYPE + 1
+};
 
-namespace ultralove { namespace nmcs { namespace platform {
-}}} // namespace ultralove::nmcs::platform
+}}} // namespace ultralove::nmcs::compiler
 
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_PLATFORM_GLOBALS_H_INCL__
+#endif // ifndef __NMCS_COMPILER_EMITTER_TYPE_H_INCL__

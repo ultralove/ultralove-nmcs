@@ -26,9 +26,7 @@
 
 set(NMCS_SERVER_INCLUDES
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercredentialservice.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercommon.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverfileservice.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverglobals.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverhttpservice.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h

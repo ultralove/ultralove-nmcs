@@ -24,18 +24,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_PLATFORM_COMMON_H_INCL__
-#define __NMCS_PLATFORM_COMMON_H_INCL__
+#include "compilerdriver.h"
+#include "compilercommon.h"
 
-#include <nmcs/common.h>
+namespace ultralove { namespace nmcs { namespace compiler {
 
-#pragma pack(push)
-#pragma pack(8)
+void Driver::Phase1(const EmitterType emitterType) const {}
 
-namespace ultralove { namespace nmcs { namespace platform {
-namespace nmcs = ultralove::nmcs;
-}}} // namespace ultralove::nmcs::platform
+void Driver::Phase2() {}
 
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_PLATFORM_COMMON_H_INCL__
+}}} // namespace ultralove::nmcs::compiler

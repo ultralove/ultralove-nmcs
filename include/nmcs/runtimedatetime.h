@@ -27,8 +27,6 @@
 #ifndef __NMCS_RUNTIME_DATETIME_H_INCL__
 #define __NMCS_RUNTIME_DATETIME_H_INCL__
 
-#include <nmcs/runtimecommon.h>
-
 #pragma pack(push)
 #pragma pack(8)
 

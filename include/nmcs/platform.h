@@ -27,8 +27,9 @@
 #ifndef __NMCS_PLATFORM_H_INCL__
 #define __NMCS_PLATFORM_H_INCL__
 
-#include <nmcs/platformcommon.h>
-#include <nmcs/platformglobals.h>
+#include <nmcs/common.h>
+#include <nmcs/globals.h>
+
 #include <nmcs/platformguid.h>
 
 #pragma pack(push)
@@ -36,7 +37,13 @@
 
 namespace ultralove { namespace nmcs { namespace platform {
 namespace nmcs = ultralove::nmcs;
+
 }}} // namespace ultralove::nmcs::platform
+
+extern "C" {
+void* NmcsAlloc(const size_t size);
+void NmcsRelease(void*& ptr);
+}
 
 #pragma pack(pop)
 

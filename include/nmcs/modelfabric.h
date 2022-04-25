@@ -28,7 +28,6 @@
 #define __NMCS_MODEL_FABRIC_H_INCL__
 
 #include <nmcs/runtimeguid.h>
-#include <nmcs/runtimestring.h>
 
 #pragma pack(push)
 #pragma pack(8)

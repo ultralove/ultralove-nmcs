@@ -24,17 +24,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_COMMON_H_INCL__
-#define __NMCS_MODEL_COMMON_H_INCL__
+#ifndef __NMCS_COMPILER_COMMON_H_INCL__
+#define __NMCS_COMPILER_COMMON_H_INCL__
 
-#include <nmcs/common.h>
+#include <cstdint>
+#include <cstdlib>
 
-#pragma pack(push)
-#pragma pack(8)
+#define PRECONDITION(a) \
+   {                    \
+      if (!(a))         \
+         return;        \
+   }
+#define PRECONDITION_RETURN(a, b) \
+   {                              \
+      if (!(a))                   \
+         return (b);              \
+   }
 
-namespace ultralove { namespace nmcs { namespace model {
-}}} // namespace ultralove::nmcs::model
+namespace ultralove { namespace nmcs { namespace compiler {
+}}} // namespace ultralove::nmcs::compiler
 
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_MODEL_COMMON_H_INCL__
+#endif // #ifndef __NMCS_COMPILER_COMMON_H_INCL__
