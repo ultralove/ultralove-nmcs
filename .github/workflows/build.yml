@@ -70,4 +70,4 @@ jobs:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
           automatic_release_tag: "${{needs.configure.outputs.build_id}}"
           prerelease: true
-          files: ${{runner.workspace}}/artifacts/*
+          files: ${{runner.workspace}}/artifacts/**
