@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) ultralove contributors (https://github.com/ultralove)
+// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -29,7 +29,8 @@
 
 #include <CLI/CLI.hpp>
 
-#include "compilercommon.h"
+#include <nmcs/common.h>
+
 #include "compilerdriver.h"
 #include "compilerparser.h"
 #include "compilerscanner.h"
@@ -39,6 +40,7 @@ bool printVersion             = false;
 
 namespace compiler            = ultralove::nmcs::compiler;
 compiler::EmitterType emitter = compiler::EmitterType::CPP_EMITTER;
+std::string input;
 
 void PrintLogo();
 void PrintVersion();
@@ -50,27 +52,29 @@ int main(int argc, char** argv)
 {
    CLI::App app{"Ultralove NMCS Domain Model Compiler version 1.0.0"};
 
-   using namespace CLI::enums;
-   std::vector<std::pair<std::string, compiler::EmitterType>> emitterTypes{
-      {       "c++",        compiler::EmitterType::CPP_EMITTER},
-      {        "c#",     compiler::EmitterType::CSHARP_EMITTER},
-      {     "swift",      compiler::EmitterType::SWIFT_EMITTER},
-      {"typescript", compiler::EmitterType::TYPESCRIPT_EMITTER},
-      {      "java",       compiler::EmitterType::JAVA_EMITTER}
+   std::map<std::string, compiler::EmitterType> emitters{
+      {       "C++",        compiler::EmitterType::CPP_EMITTER},
+      {        "C#",     compiler::EmitterType::CSHARP_EMITTER},
+      {     "Swift",      compiler::EmitterType::SWIFT_EMITTER},
+      {"Typescript", compiler::EmitterType::TYPESCRIPT_EMITTER},
+      {      "Java",       compiler::EmitterType::JAVA_EMITTER}
    };
-   app.add_option("-e,--emitter", emitter, "Specify target language")->transform(CLI::CheckedTransformer(emitterTypes, CLI::ignore_case));
+   app.add_option("-e,--emitter", emitter, "Specify target language")->transform(CLI::CheckedTransformer(emitters, CLI::ignore_case));
+
    app.add_flag("--nologo", suppressLogo, "Do not display the startup banner and copyright message");
    app.add_flag("--version", printVersion, "Display compiler version information");
-
+   app.add_option("file", input, "Specify the input file");
    try {
       app.parse(argc, argv);
       PrintLogo();
       PrintVersion();
+      if (input.empty() == false) {
+         Parse(input.c_str());
+      }
    }
    catch (const CLI::ParseError& e) {
       app.exit(e);
    }
-
    return 0;
 }
 
@@ -78,7 +82,7 @@ void PrintLogo()
 {
    if ((false == suppressLogo) && (false == printVersion)) {
       std::cout << "Ultralove NMCS Domain Model Compiler version " << Version() << std::endl
-                << "Copyright (c) ultralove contributors (https://github.com/ultralove)" << std::endl
+                << "Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)" << std::endl
                 << std::endl;
    }
 }
@@ -97,33 +101,31 @@ const char* Version()
 
 void yyerror(const char* s)
 {
-   PRECONDITION(s != nullptr);
+   NMCS_PRECONDITION(s != nullptr);
 
-   // fprintf(stderr, "Syntax error in %s(%d): %s\n", currentInputFile, yylineno, s);
-   fprintf(stderr, "\nSyntax error: %s\n", s);
+   fprintf(stderr, "Syntax error in %s(%d): %s\n", input.c_str(), yylineno, s);
+   //  fprintf(stderr, "\nSyntax error: %s\n", s);
    exit(1);
 }
 
 int Parse(const char* filename)
 {
-   PRECONDITION_RETURN(filename != nullptr, -1);
+   NMCS_PRECONDITION_RETURN(filename != nullptr, -1);
 
    extern FILE* yyin;
    yyin = fopen(filename, "r");
    if (yyin != nullptr) {
-      printf("Compiling %s...\n", filename);
-
+      printf("Compiling %s...\n\n", filename);
       do {
          yyparse();
       }
       while (!feof(yyin));
-
       fclose(yyin);
+      std::cout << "\nCompiler finished successfully\n" << std::endl;
    }
    else {
-      fprintf(stderr, "Failed to open source file '%s': %s\n", filename, strerror(errno));
+      fprintf(stderr, "\nFailed to open source file '%s': %s\n", filename, strerror(errno));
       return -1;
    }
-
    return 0;
 }

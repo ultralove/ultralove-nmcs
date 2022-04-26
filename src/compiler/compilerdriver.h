@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) ultralove contributors (https://github.com/ultralove)
+// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -27,6 +27,7 @@
 #ifndef __NMCS_COMPILER_DRIVER_H_INCL__
 #define __NMCS_COMPILER_DRIVER_H_INCL__
 
+#include "compilerast.h"
 #include "compileremittertype.h"
 
 namespace ultralove { namespace nmcs { namespace compiler {
@@ -34,8 +35,8 @@ namespace ultralove { namespace nmcs { namespace compiler {
 class Driver
 {
 public:
-   void Phase1(const EmitterType emitterType) const;
-   void Phase2();
+   const AST* Phase1() const;
+   void Phase2(const EmitterType emitterType) const;
 
 private:
    Driver(const Driver&)            = delete;

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) ultralove contributors (https://github.com/ultralove)
+// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -25,12 +25,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "compilerdriver.h"
-#include "compilercommon.h"
 
 namespace ultralove { namespace nmcs { namespace compiler {
 
-void Driver::Phase1(const EmitterType emitterType) const {}
+const AST* Driver::Phase1() const
+{
+   return nullptr;
+}
 
-void Driver::Phase2() {}
+void Driver::Phase2(const EmitterType emitterType) const {}
 
 }}} // namespace ultralove::nmcs::compiler

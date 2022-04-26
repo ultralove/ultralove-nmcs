@@ -2,7 +2,7 @@
 
 ################################################################################
 #
-# Copyright (c) ultralove contributors (https://github.com/ultralove)
+# Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
 #
 # The MIT License (MIT)
 #
