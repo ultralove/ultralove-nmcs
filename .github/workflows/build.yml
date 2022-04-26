@@ -1,0 +1,73 @@
+name: CMake
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    outputs:
+      build_timestamp: ${{steps.timestamp.outputs.timestamp}}
+      build_id: nmcs-1.0.0-build${{github.run_number}}-${{steps.timestamp.outputs.timestamp}}
+    steps:
+      - name: configure build id
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date -u +'%Y%m%d%H%M')"
+
+  build:
+    needs: configure
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install (linux)
+        run: sudo apt-get install ninja-build
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: install (windows)
+        run: choco install ninja
+        if: matrix.os == 'windows-latest'
+
+      - name: install (macos)
+        run: brew install ninja
+        if: matrix.os == 'macos-latest'
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: configure
+        run: cmake -GNinja -B${{runner.workspace}}/build -DCMAKE_INSTALL_PREFIX=${{runner.workspace}}/build/artifacts -DCMAKE_BUILD_TYPE=Release
+
+      - name: build
+        run: cmake --build ${{runner.workspace}}/build --target install --config Release
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{needs.configure.outputs.build_id}}
+          path: |
+            ${{runner.workspace}}/build/artifacts/*
+            # !${{runner.workspace}}/build/artifacts/reaper_ultraschall.dll.manifest
+
+  release:
+    needs: [configure, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{needs.configure.outputs.build_id}}
+          path: ${{runner.workspace}}/artifacts
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{secrets.GITHUB_TOKEN}}"
+          automatic_release_tag: "${{needs.configure.outputs.build_id}}"
+          prerelease: true
+          files: ${{runner.workspace}}/artifacts/*
