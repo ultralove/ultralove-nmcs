@@ -39,7 +39,7 @@ include_directories(${CLI11_INCLUDES})
 
 find_package(BISON REQUIRED)
 if(BISON_FOUND)
-    set(NMCS_BISON_COMPILE_FLAGS "--feature=caret")
+    # set(NMCS_BISON_COMPILE_FLAGS "--feature=caret")
     message(STATUS "NMCS_BISON_COMPILE_FLAGS = ${NMCS_BISON_COMPILE_FLAGS}")
     BISON_TARGET(compilerparser
         compilerparser.ypp
