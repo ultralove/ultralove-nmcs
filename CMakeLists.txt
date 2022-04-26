@@ -97,3 +97,6 @@ add_subdirectory("src/server")
 add_subdirectory("src/agent")
 add_subdirectory("src/client")
 add_subdirectory("src/compiler")
+
+install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver DESTINATION lib)
+install(TARGETS nmcsc nmcsd nmcscli DESTINATION bin)
