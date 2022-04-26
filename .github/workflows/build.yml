@@ -36,7 +36,7 @@ jobs:
         if: matrix.os == 'windows-latest'
 
       - name: install (macos)
-        run: brew install ninja
+        run: brew install ninja bison flex
         if: matrix.os == 'macos-latest'
 
       - uses: ilammy/msvc-dev-cmd@v1
