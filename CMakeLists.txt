@@ -27,7 +27,7 @@
 cmake_minimum_required(VERSION 3.19)
 
 project(nmcs
-  VERSION 0.0.1
+  VERSION 1.0.0
   DESCRIPTION "Network Media Control System"
   LANGUAGES ASM C CXX
 )
@@ -92,16 +92,20 @@ include_directories(${NMCS_INCLUDE_DIRECTORY})
 
 add_subdirectory("src/platform")
 add_subdirectory("src/runtime")
+add_subdirectory("src/compiler")
 add_subdirectory("src/model")
 add_subdirectory("src/server")
 add_subdirectory("src/agent")
 add_subdirectory("src/client")
 
-install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver DESTINATION lib)
-install(TARGETS nmcsd nmcscli DESTINATION bin)
+install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsc nmcscli nmcsd
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
 install(DIRECTORY include/nmcs DESTINATION include)
 
-set(CPACK_PACKAGE_NAME "ultralove-nmcs")
+set(CPACK_PACKAGE_NAME "nmcs")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-${NMCS_TARGET_SYSTEM}")
 set(CPACK_PACKAGE_VENDOR "ultralove")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "nmcs")
