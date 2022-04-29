@@ -45,3 +45,4 @@ set(NMCS_AGENT_DEPENDENCIES
 add_executable(nmcsd ${NMCS_AGENT_INCLUDES} ${NMCS_AGENT_SOURCES})
 add_dependencies(nmcsd ${NMCS_AGENT_DEPENDENCIES})
 target_link_libraries(nmcsd ${NMCS_AGENT_DEPENDENCIES})
+set_target_properties(nmcsd PROPERTIES VERSION ${PROJECT_VERSION})

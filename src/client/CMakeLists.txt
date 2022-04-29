@@ -45,3 +45,4 @@ set(NMCS_CLIENT_DEPENDENCIES
 add_executable(nmcscli ${NMCS_CLIENT_INCLUDES} ${NMCS_CLIENT_SOURCES})
 add_dependencies(nmcscli ${NMCS_CLIENT_DEPENDENCIES})
 target_link_libraries(nmcscli ${NMCS_CLIENT_DEPENDENCIES})
+set_target_properties(nmcscli PROPERTIES VERSION ${PROJECT_VERSION})

@@ -39,3 +39,4 @@ set(NMCS_MODEL_DEPENDENCIES
 add_library(nmcsmodel ${NMCS_MODEL_INCLUDES} ${NMCS_MODEL_SOURCES})
 add_dependencies(nmcsmodel ${NMCS_MODEL_DEPENDENCIES})
 target_link_libraries(nmcsmodel ${NMCS_MODEL_DEPENDENCIES})
+set_target_properties(nmcsmodel PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION})

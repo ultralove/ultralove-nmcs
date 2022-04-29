@@ -27,10 +27,13 @@
 cmake_minimum_required(VERSION 3.19)
 
 project(nmcs
-  VERSION 1.0.0
+  VERSION 1.0.1
   DESCRIPTION "Network Media Control System"
   LANGUAGES ASM C CXX
 )
+
+configure_file(version.h.in version.h)
+include_directories(${CMAKE_BINARY_DIR})
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(CMAKE_CXX_EXTENSIONS OFF)
@@ -98,5 +101,20 @@ add_subdirectory("src/server")
 add_subdirectory("src/agent")
 add_subdirectory("src/client")
 
-install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver DESTINATION lib)
-install(TARGETS nmcsd nmcscli DESTINATION bin)
+install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsc nmcscli nmcsd
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
+install(DIRECTORY include/nmcs DESTINATION include)
+
+set(CPACK_PACKAGE_NAME "nmcs")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-${NMCS_TARGET_SYSTEM}")
+set(CPACK_PACKAGE_VENDOR "ultralove")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "nmcs")
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+include(CPack)
