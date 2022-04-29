@@ -35,7 +35,7 @@ BUILD_SHARED="ON"
 BUILD_THREADS=4
 
 
-CMAKE_EXTRA_ARGS=""
+CMAKE_BUILD_ARGS=""
 # CMAKE_GENERATOR="Unix Makefiles"
 CMAKE_GENERATOR="Ninja"
 # CMAKE_GENERATOR="Ninja Multi-Config"
@@ -60,12 +60,16 @@ case $arg in
     BUILD_CONFIGURATION="${arg#*=}"
     shift # past argument
     ;;
+    -i|--install)
+    CMAKE_BUILD_ARGS="$CMAKE_BUILD_ARGS --target install "
+    shift # past argument
+    ;;
     -n|--no-shared)
     BUILD_SHARED="OFF"
     shift # past argument
     ;;
     --rebuild)
-    CMAKE_EXTRA_ARGS="--clean-first"
+    CMAKE_BUILD_ARGS="$CMAKE_BUILD_ARGS --clean-first "
     shift # past argument
     ;;
     -r|--release)
@@ -121,7 +125,7 @@ fi
 
 if [ ! -d "$BUILD_DIRECTORY" ]; then
     echo "Configuring projects using $CMAKE_GENERATOR..."
-    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DCMAKE_INSTALL_PREFIX="$BUILD_ARTIFACTS" -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
     if [ $? -ne 0 ]; then
       echo "Failed to configure projects."
       exit -1
@@ -134,7 +138,7 @@ if [ -x "$(command -v nproc)" ]; then
 fi
 
 echo "Building projects using $CMAKE_GENERATOR..."
-cmake --build "$BUILD_DIRECTORY" $CMAKE_EXTRA_ARGS --config "$BUILD_CONFIGURATION" -j "$BUILD_THREADS"
+cmake --build "$BUILD_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j "$BUILD_THREADS"
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1
