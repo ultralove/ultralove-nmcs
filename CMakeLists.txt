@@ -92,6 +92,7 @@ include_directories(${NMCS_INCLUDE_DIRECTORY})
 
 add_subdirectory("src/platform")
 add_subdirectory("src/runtime")
+add_subdirectory("src/compiler")
 add_subdirectory("src/model")
 add_subdirectory("src/server")
 add_subdirectory("src/agent")
