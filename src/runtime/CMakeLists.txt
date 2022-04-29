@@ -47,3 +47,4 @@ set(NMCS_RUNTIME_DEPENDENCIES
 add_library(nmcsruntime ${NMCS_RUNTIME_INCLUDES} ${NMCS_RUNTIME_SOURCES})
 add_dependencies(nmcsruntime ${NMCS_RUNTIME_DEPENDENCIES})
 target_link_libraries(nmcsruntime ${NMCS_RUNTIME_DEPENDENCIES})
+set_target_properties(nmcsruntime PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION})

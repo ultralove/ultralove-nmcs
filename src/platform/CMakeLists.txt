@@ -46,3 +46,4 @@ source_group("Source Files" FILES ${NMCS_PLATFORM_SOURCES})
 
 add_library(nmcsplatform ${NMCS_PLATFORM_INCLUDES} ${NMCS_PLATFORM_SOURCES})
 target_link_libraries(nmcsplatform ${NMCS_PLATFORM_DEPENDENCIES})
+set_target_properties(nmcsplatform PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION})

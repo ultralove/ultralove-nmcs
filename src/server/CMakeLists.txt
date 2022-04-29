@@ -52,3 +52,4 @@ set(NMCS_SERVER_DEPENDENCIES
 add_library(nmcsserver ${NMCS_SERVER_INCLUDES} ${NMCS_SERVER_SOURCES})
 add_dependencies(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
 target_link_libraries(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
+set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION})
