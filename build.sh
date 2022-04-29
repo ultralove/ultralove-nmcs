@@ -40,7 +40,6 @@ CMAKE_BUILD_ARGS=""
 CMAKE_GENERATOR="Ninja"
 CMAKE_INSTALL_FOUND=0
 CMAKE_INSTALL_PATH=cmake
-CMAKE_INSTALL_PREFIX="$HOME/.local"
 CMAKE_REQUIRED_VERSION="3.19.0"
 
 source "scripts/buildtools.sh"
@@ -130,7 +129,7 @@ fi
 
 if [ ! -d "$BUILD_DIRECTORY" ]; then
     echo "Configuring projects using $CMAKE_GENERATOR..."
-    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
     if [ $? -ne 0 ]; then
       echo "Failed to configure projects."
       exit -1
@@ -162,7 +161,7 @@ fi
 
 if [ $BUILD_INSTALL -ne 0 ]; then
   echo "Installing projects..."
-  cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target install
+  sudo cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target install
   if [ $? -ne 0 ]; then
     echo "Failed to install projects."
     exit -1
