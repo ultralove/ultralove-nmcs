@@ -34,6 +34,7 @@
 #include "compilerdriver.h"
 #include "compilerparser.h"
 #include "compilerscanner.h"
+#include "version.h"
 
 bool suppressLogo             = false;
 bool printVersion             = false;
@@ -96,7 +97,7 @@ void PrintVersion()
 
 const char* Version()
 {
-   return "1.0.0";
+   return NMCS_VERSION;
 }
 
 void yyerror(const char* s)

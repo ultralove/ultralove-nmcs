@@ -27,10 +27,13 @@
 cmake_minimum_required(VERSION 3.19)
 
 project(nmcs
-  VERSION 1.0.0
+  VERSION 1.0.1
   DESCRIPTION "Network Media Control System"
   LANGUAGES ASM C CXX
 )
+
+configure_file(version.h.in version.h)
+include_directories(${CMAKE_BINARY_DIR})
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(CMAKE_CXX_EXTENSIONS OFF)
