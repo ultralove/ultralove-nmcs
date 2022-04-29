@@ -32,15 +32,15 @@ BUILD_DIRECTORY="$(pwd)/build"
 BUILD_ARTIFACTS="$BUILD_DIRECTORY/artifacts"
 BUILD_REBUILD=0
 BUILD_SHARED="ON"
+BUILD_INSTALL=0
+BUILD_PACKAGE=0
 BUILD_THREADS=4
 
-
 CMAKE_BUILD_ARGS=""
-# CMAKE_GENERATOR="Unix Makefiles"
 CMAKE_GENERATOR="Ninja"
-# CMAKE_GENERATOR="Ninja Multi-Config"
 CMAKE_INSTALL_FOUND=0
 CMAKE_INSTALL_PATH=cmake
+CMAKE_INSTALL_PREFIX="$HOME/.local"
 CMAKE_REQUIRED_VERSION="3.19.0"
 
 source "scripts/buildtools.sh"
@@ -61,11 +61,15 @@ case $arg in
     shift # past argument
     ;;
     -i|--install)
-    CMAKE_BUILD_ARGS="$CMAKE_BUILD_ARGS --target install "
+    BUILD_INSTALL=1
     shift # past argument
     ;;
     -n|--no-shared)
     BUILD_SHARED="OFF"
+    shift # past argument
+    ;;
+    -p|--package)
+    BUILD_PACKAGE=1
     shift # past argument
     ;;
     --rebuild)
@@ -83,6 +87,7 @@ case $arg in
     echo "  --clean                                     Completely remove build output"
     echo "  -c=<BUILD_CONFIG>|--config=<BUILD_CONFIG>   Specify build configuration (default = 'Debug')"
     echo "  -n|--no-shared                              Don't build shared libraries"
+    echo "  -p|--package                                Build distributable package"
     echo "  --rebuild                                   Remove intermediate files before build"
     echo "  --release                                   Don't include debug symbols, overrides '-c|--config'"
     echo ""
@@ -125,7 +130,7 @@ fi
 
 if [ ! -d "$BUILD_DIRECTORY" ]; then
     echo "Configuring projects using $CMAKE_GENERATOR..."
-    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DCMAKE_INSTALL_PREFIX="$BUILD_ARTIFACTS" -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
     if [ $? -ne 0 ]; then
       echo "Failed to configure projects."
       exit -1
@@ -137,12 +142,32 @@ if [ -x "$(command -v nproc)" ]; then
   BUILD_THREADS=$(nproc)
 fi
 
-echo "Building projects using $CMAKE_GENERATOR..."
+echo "Building projects..."
 cmake --build "$BUILD_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j "$BUILD_THREADS"
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1
 fi
 echo "Done."
+
+if [ $BUILD_PACKAGE -ne 0 ]; then
+  echo "Packaging projects..."
+  cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target package
+  if [ $? -ne 0 ]; then
+    echo "Failed to package projects."
+    exit -1
+  fi
+  echo "Done."
+fi
+
+if [ $BUILD_INSTALL -ne 0 ]; then
+  echo "Installing projects..."
+  cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target install
+  if [ $? -ne 0 ]; then
+    echo "Failed to install projects."
+    exit -1
+  fi
+  echo "Done."
+fi
 
 exit 0
