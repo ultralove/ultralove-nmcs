@@ -33,6 +33,7 @@ BUILD_ARTIFACTS="$BUILD_DIRECTORY/artifacts"
 BUILD_REBUILD=0
 BUILD_SHARED="ON"
 BUILD_INSTALL=0
+BUILD_UNINSTALL=0
 BUILD_PACKAGE=0
 BUILD_THREADS=4
 
@@ -85,12 +86,18 @@ case $arg in
     echo "Options:"
     echo "  --clean                                     Completely remove build output"
     echo "  -c=<BUILD_CONFIG>|--config=<BUILD_CONFIG>   Specify build configuration (default = 'Debug')"
+    echo "  -i|--install                                Install build targets to /usr/local"
     echo "  -n|--no-shared                              Don't build shared libraries"
     echo "  -p|--package                                Build distributable package"
     echo "  --rebuild                                   Remove intermediate files before build"
     echo "  --release                                   Don't include debug symbols, overrides '-c|--config'"
+    echo "  -u|--uninstall                              Remove build targets from /usr/local"
     echo ""
     exit 0
+    shift # past argument
+    ;;
+    -u|--uninstall)
+    BUILD_UNINSTALL=1
     shift # past argument
     ;;
     *)    # unknown option
@@ -100,6 +107,16 @@ case $arg in
 esac
 done
 
+if [ $BUILD_UNINSTALL -ne 0 ]; then
+  echo "Uninstalling..."
+  if [ -f "$BUILD_DIRECTORY/install_manifest.txt" ]; then
+    xargs sudo rm -f < "$BUILD_DIRECTORY/install_manifest.txt"
+    sudo rm -rf "$CMAKE_INSTALL_PREFIX/include/nmcs"
+    echo "Done."
+    exit 0
+  fi
+fi
+
 if [ $BUILD_CLEAN -eq 1 ]; then
   if [ -d "$BUILD_DIRECTORY" ]; then
     rm -rf "$BUILD_DIRECTORY"
@@ -107,7 +124,7 @@ if [ $BUILD_CLEAN -eq 1 ]; then
   if [ -d "$BUILD_TARGET_DIRECTORY" ]; then
     rm -rf "$BUILD_TARGET_DIRECTORY"
   fi
-  exit 1
+  exit 0
 fi
 
 echo "Looking for CMake $CMAKE_REQUIRED_VERSION..."
@@ -150,20 +167,20 @@ fi
 echo "Done."
 
 if [ $BUILD_PACKAGE -ne 0 ]; then
-  echo "Packaging projects..."
+  echo "Packaging targets..."
   cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target package
   if [ $? -ne 0 ]; then
-    echo "Failed to package projects."
+    echo "Failed to package targets."
     exit -1
   fi
   echo "Done."
 fi
 
 if [ $BUILD_INSTALL -ne 0 ]; then
-  echo "Installing projects..."
+  echo "Installing targets to $CMAKE_INSTALL_PREFIX..."
   sudo cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target install
   if [ $? -ne 0 ]; then
-    echo "Failed to install projects."
+    echo "Failed to install targets."
     exit -1
   fi
   echo "Done."
