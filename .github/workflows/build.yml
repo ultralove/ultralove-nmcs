@@ -49,10 +49,12 @@ jobs:
       - name: build
         run: cmake --build ${{runner.workspace}}/build --config Release
 
-      - name: package (darwin)
+      - name: package
         run: cmake --build ${{runner.workspace}}/build --target package --config Release
 
-      - uses: actions/upload-artifact@v2
+      - name: upload (darwin)
+        uses: actions/upload-artifact@v2
+        if: matrix.os == 'macos-latest'
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: |
