@@ -33,6 +33,9 @@ project(nmcs
 )
 
 set(NMCS_VERSION "${PROJECT_VERSION}")
+if((NOT DEFINED NMCS_BUILD_ID) OR (NOT DEFINED ${NMCS_BUILD_ID}))
+  set(NMCS_BUILD_ID 0)
+endif()
 string(TIMESTAMP NMCS_BUILD_TIMESTAMP "%Y-%m-%d %H:%M:%S")
 configure_file(version.h.in version.h)
 include_directories(${CMAKE_BINARY_DIR})
@@ -110,7 +113,7 @@ install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsc nmcscli nmcs
 install(DIRECTORY include/nmcs DESTINATION include)
 
 set(CPACK_PACKAGE_NAME "nmcs")
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-${NMCS_TARGET_SYSTEM}")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-build${NMCS_BUILD_ID}-${NMCS_TARGET_SYSTEM}")
 set(CPACK_PACKAGE_VENDOR "ultralove")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "network media control system")
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
