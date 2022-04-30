@@ -50,6 +50,10 @@ public:
    static Guid Create(const char* str);
    static const Guid& Null();
 
+   std::string PlainString() const;
+   std::string RegistryString() const;
+   std::string UniversalString() const;
+
 private:
    uint8_t data_[16];
    static const Guid null_;

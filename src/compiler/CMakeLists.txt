@@ -24,10 +24,6 @@
 #
 ################################################################################
 
-if(WIN32)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-endif()
-
 include_directories(${CLI11_INCLUDES})
 
 set(NMCS_COMPILER_INCLUDES
@@ -52,12 +48,4 @@ add_dependencies(nmcsc ${NMCS_COMPILER_DEPENDENCIES})
 target_link_libraries(nmcsc ${NMCS_COMPILER_DEPENDENCIES})
 
 set_target_properties(nmcsc PROPERTIES VERSION ${PROJECT_VERSION})
-# target_precompile_headers(nmcsc PRIVATE
-#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
-#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
-#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
-#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/model.h
-#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/server.h
-# )
-
 target_precompile_headers(nmcsc REUSE_FROM nmcsprecomp)

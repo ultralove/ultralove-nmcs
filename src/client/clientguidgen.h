@@ -24,15 +24,39 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "clientapplication.h"
-#include "clientguidgen.h"
+#ifndef __NMCS_CLIENT_GUIDGEN_H_INCL__
+#define __NMCS_CLIENT_GUIDGEN_H_INCL__
 
-namespace client = ultralove::nmcs::client;
+#include <CLI/CLI.hpp>
 
-int main(int argc, char** argv, char** envp)
+#include <nmcs/common.h>
+
+#pragma pack(push)
+#pragma pack(8)
+
+namespace ultralove { namespace nmcs { namespace client {
+
+enum class GuidFormat : int
 {
-   client::ClientApplication application;
-   client::Guidgen::Configure(application);
-   CLI11_PARSE(application, argc, argv);
-   return 0;
-}
+   Universal,
+   Plain,
+   Registry
+};
+
+struct GuidgenArgs
+{
+   GuidFormat format = GuidFormat::Universal;
+};
+
+class Guidgen
+{
+public:
+   static void Configure(CLI::App& app);
+   static void Run(const std::shared_ptr<GuidgenArgs>& args);
+};
+
+}}} // namespace ultralove::nmcs::client
+
+#pragma pack(pop)
+
+#endif // #ifndef __NMCS_CLIENT_GUIDGEN_H_INCL__

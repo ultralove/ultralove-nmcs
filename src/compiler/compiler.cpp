@@ -32,12 +32,12 @@
 #include <nmcs/common.h>
 
 #include "compilerdriver.h"
-#include "version.h"
 
 bool suppressLogo             = false;
 bool printVersion             = false;
 
 namespace compiler            = ultralove::nmcs::compiler;
+
 compiler::EmitterType emitter = compiler::EmitterType::CPP_EMITTER;
 std::string input;
 

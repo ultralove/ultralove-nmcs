@@ -78,4 +78,62 @@ const Guid& Guid::Null()
    return null_;
 }
 
+std::string Guid::PlainString() const
+{
+   std::stringstream os;
+
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[0];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[1];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[2];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[3];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[4];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[5];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[6];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[7];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[8];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[9];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[10];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[11];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[12];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[13];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[14];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[15];
+
+   return os.str();
+}
+
+std::string Guid::RegistryString() const
+{
+   std::stringstream os;
+   os << "{" << UniversalString() << "}";
+   return os.str();
+}
+
+std::string Guid::UniversalString() const
+{
+   std::stringstream os;
+
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[0];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[1];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[2];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[3];
+   os << "-";
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[4];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[5];
+   os << "-";
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[6];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[7];
+   os << "-";
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[8];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[9];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[10];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[11];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[12];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[13];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[14];
+   os << std::hex << std::setw(2) << std::setfill('0') << (int)data_[15];
+
+   return os.str();
+}
+
 }}} // namespace ultralove::nmcs::runtime

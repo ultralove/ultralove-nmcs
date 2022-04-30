@@ -31,6 +31,10 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <iomanip>
+#include <sstream>
+#include <string>
+
 #include "version.h"
 
 #ifdef _MSC_VER

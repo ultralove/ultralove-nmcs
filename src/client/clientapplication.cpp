@@ -25,14 +25,28 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "clientapplication.h"
-#include "clientguidgen.h"
 
-namespace client = ultralove::nmcs::client;
+namespace ultralove { namespace nmcs { namespace client {
 
-int main(int argc, char** argv, char** envp)
+ClientApplication::ClientApplication() : CLI::App("Ultralove NMCS CLI " + std::string(NmcsBuildString())), args_(std::make_shared<ClientApplicationArgs>())
 {
-   client::ClientApplication application;
-   client::Guidgen::Configure(application);
-   CLI11_PARSE(application, argc, argv);
-   return 0;
+   add_flag("--nologo", args_->suppressLogo, "Do not display the startup banner and copyright message");
+   add_flag("--version", args_->printVersion, "Display version information");
+   callback([&]() { Run(args_); });
 }
+
+void ClientApplication::pre_callback()
+{
+   if ((false == args_->suppressLogo) && (false == args_->printVersion)) {
+      std::cout << "Ultralove NMCS CLI " << NmcsBuildString() << std::endl
+                << "Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)" << std::endl
+                << std::endl;
+   }
+   if (true == args_->printVersion) {
+      std::cout << NmcsVersion() << std::endl;
+   }
+}
+
+void ClientApplication::Run(const std::shared_ptr<ClientApplicationArgs>& args) {}
+
+}}} // namespace ultralove::nmcs::client

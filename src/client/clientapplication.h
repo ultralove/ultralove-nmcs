@@ -24,15 +24,37 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "clientapplication.h"
-#include "clientguidgen.h"
+#ifndef __NMCS_CLIENT_APPLICATION_H_INCL__
+#define __NMCS_CLIENT_APPLICATION_H_INCL__
 
-namespace client = ultralove::nmcs::client;
+#include <CLI/CLI.hpp>
 
-int main(int argc, char** argv, char** envp)
+#pragma pack(push)
+#pragma pack(8)
+
+namespace ultralove { namespace nmcs { namespace client {
+
+struct ClientApplicationArgs
 {
-   client::ClientApplication application;
-   client::Guidgen::Configure(application);
-   CLI11_PARSE(application, argc, argv);
-   return 0;
-}
+   bool suppressLogo = true;
+   bool printVersion = false;
+};
+
+class ClientApplication : public CLI::App
+{
+public:
+   ClientApplication();
+
+   virtual void pre_callback();
+
+private:
+   std::shared_ptr<ClientApplicationArgs> args_;
+
+   static void Run(const std::shared_ptr<ClientApplicationArgs>& args);
+};
+
+}}} // namespace ultralove::nmcs::client
+
+#pragma pack(pop)
+
+#endif // #ifndef __NMCS_CLIENT_APPLICATION_H_INCL__

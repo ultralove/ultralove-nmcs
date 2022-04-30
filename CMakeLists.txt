@@ -27,7 +27,7 @@
 cmake_minimum_required(VERSION 3.19)
 
 project(nmcs
-  VERSION 1.0.1
+  VERSION 1.0.2
   DESCRIPTION "Network Media Control System"
   LANGUAGES ASM C CXX
 )
