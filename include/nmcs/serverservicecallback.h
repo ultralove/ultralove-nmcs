@@ -27,14 +27,14 @@
 #ifndef __NMCS_SERVER_SERVICE_CALLBACK_H_INCL__
 #define __NMCS_SERVER_SERVICE_CALLBACK_H_INCL__
 
-#include <nmcs/runtimesharedobject.h>
+#include <nmcs/runtimeshared.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API IServiceCallback : public runtime::SharedObject
+class NMCS_SHARED_API IServiceCallback : public runtime::Shared
 {
 protected:
    virtual ~IServiceCallback() {}

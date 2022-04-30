@@ -27,14 +27,14 @@
 #ifndef __NMCS_RUNTIME_STREAM_H_INCL__
 #define __NMCS_RUNTIME_STREAM_H_INCL__
 
-#include <nmcs/runtimesharedobject.h>
+#include <nmcs/runtimeshared.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace runtime {
 
-class NMCS_SHARED_API Stream : public SharedObject
+class NMCS_SHARED_API Stream : public Shared
 {
 public:
    explicit Stream(const size_t size);

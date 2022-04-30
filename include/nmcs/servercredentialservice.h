@@ -34,7 +34,7 @@
 
 namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API ICredentialService : public runtime::SharedObject
+class NMCS_SHARED_API ICredentialService : public runtime::Shared
 {
 protected:
    virtual ~ICredentialService() {}

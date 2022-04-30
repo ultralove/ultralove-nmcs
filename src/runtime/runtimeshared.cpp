@@ -24,20 +24,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/runtimesharedobject.h>
+#include <nmcs/runtimeshared.h>
 
 namespace ultralove { namespace nmcs { namespace runtime {
 
-SharedObject::SharedObject() : refCount_(1) {}
+Shared::Shared() : refCount_(1) {}
 
-SharedObject::~SharedObject() {}
+Shared::~Shared() {}
 
-uint32_t SharedObject::AddRef() const
+uint32_t Shared::AddRef() const
 {
    return ++refCount_;
 }
 
-uint32_t SharedObject::Release() const
+uint32_t Shared::Release() const
 {
    const uint32_t refCount = --refCount_;
    if (refCount == 0) {

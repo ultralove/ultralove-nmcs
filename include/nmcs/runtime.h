@@ -29,7 +29,7 @@
 
 #include <nmcs/platform.h>
 
-#include <nmcs/runtimesharedobject.h>
+#include <nmcs/runtimeshared.h>
 
 #pragma pack(push)
 #pragma pack(8)
@@ -39,7 +39,7 @@ namespace nmcs     = ultralove::nmcs;
 namespace platform = ultralove::nmcs::platform;
 }}} // namespace ultralove::nmcs::runtime
 
-inline static void SafeRelease(ultralove::nmcs::runtime::SharedObject*& ptr)
+inline static void SafeRelease(ultralove::nmcs::runtime::Shared*& ptr)
 {
    if (ptr != 0) {
       ptr->Release();

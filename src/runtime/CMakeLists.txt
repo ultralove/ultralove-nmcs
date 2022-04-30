@@ -27,7 +27,7 @@
 set(NMCS_RUNTIME_INCLUDES
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimedatetime.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeguid.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimesharedobject.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeshared.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestring.h
 )
@@ -35,7 +35,7 @@ set(NMCS_RUNTIME_INCLUDES
 set(NMCS_RUNTIME_SOURCES
   runtime.cpp
   runtimeguid.cpp
-  runtimesharedobject.cpp
+  runtimeshared.cpp
   runtimestream.cpp
   runtimestring.cpp
 )

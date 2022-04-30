@@ -24,8 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_SHARED_OBJECT_H_INCL__
-#define __NMCS_RUNTIME_SHARED_OBJECT_H_INCL__
+#ifndef __NMCS_RUNTIME_SHARED_H_INCL__
+#define __NMCS_RUNTIME_SHARED_H_INCL__
 
 #include <atomic>
 
@@ -36,15 +36,15 @@
 
 namespace ultralove { namespace nmcs { namespace runtime {
 
-class NMCS_SHARED_API SharedObject
+class NMCS_SHARED_API Shared
 {
 public:
    uint32_t AddRef() const;
    uint32_t Release() const;
 
 protected:
-   SharedObject();
-   virtual ~SharedObject();
+   Shared();
+   virtual ~Shared();
 
 private:
    mutable std::atomic<uint32_t> refCount_;
@@ -54,4 +54,4 @@ private:
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_RUNTIME_SHARED_OBJECT_H_INCL__
+#endif // #ifndef __NMCS_RUNTIME_SHARED_H_INCL__
