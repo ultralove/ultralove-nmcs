@@ -113,7 +113,7 @@ install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsc nmcscli nmcs
 install(DIRECTORY include/nmcs DESTINATION include)
 
 set(CPACK_PACKAGE_NAME "nmcs")
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-build${NMCS_BUILD_ID}-${NMCS_TARGET_SYSTEM}")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-build${NMCS_BUILD_ID}-${NMCS_TARGET_SYSTEM}")
 set(CPACK_PACKAGE_VENDOR "ultralove")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "network media control system")
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
