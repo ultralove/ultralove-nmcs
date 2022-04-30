@@ -32,8 +32,6 @@
 #include <nmcs/common.h>
 
 #include "compilerdriver.h"
-#include "compilerparser.h"
-#include "compilerscanner.h"
 #include "version.h"
 
 bool suppressLogo             = false;
@@ -51,7 +49,8 @@ int Parse(const char* filename);
 
 int main(int argc, char** argv)
 {
-   CLI::App app{"Ultralove NMCS Domain Model Compiler version 1.0.0"};
+   const std::string banner = "Ultralove NMCS Domain Model Compiler v" + std::string(Version());
+   CLI::App app{banner};
 
    std::map<std::string, compiler::EmitterType> emitters{
       {       "C++",        compiler::EmitterType::CPP_EMITTER},
@@ -100,33 +99,8 @@ const char* Version()
    return NMCS_VERSION;
 }
 
-void yyerror(const char* s)
-{
-   NMCS_PRECONDITION(s != nullptr);
-
-   fprintf(stderr, "Syntax error in %s(%d): %s\n", input.c_str(), yylineno, s);
-   //  fprintf(stderr, "\nSyntax error: %s\n", s);
-   exit(1);
-}
-
 int Parse(const char* filename)
 {
    NMCS_PRECONDITION_RETURN(filename != nullptr, -1);
-
-   extern FILE* yyin;
-   yyin = fopen(filename, "r");
-   if (yyin != nullptr) {
-      printf("Compiling %s...\n\n", filename);
-      do {
-         yyparse();
-      }
-      while (!feof(yyin));
-      fclose(yyin);
-      std::cout << "\nCompiler finished successfully\n" << std::endl;
-   }
-   else {
-      fprintf(stderr, "\nFailed to open source file '%s': %s\n", filename, strerror(errno));
-      return -1;
-   }
    return 0;
 }
