@@ -11,12 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       build_timestamp: ${{steps.timestamp.outputs.timestamp}}
-      # build_id: nmcs-build${{github.run_number}}-${{steps.timestamp.outputs.timestamp}}
-      build_id: nmcs-build${{github.run_number}}
+      build_id: nmcs-1.0.0-build${{github.run_number}}-${{steps.timestamp.outputs.timestamp}}
     steps:
       - name: configure build id
         id: timestamp
-        run: echo "::set-output name=timestamp::$(date -u +'%Y%m%d%H%M')"
+        run: echo "::set-output name=timestamp::$(date -u +'%Y-%m-%d')"
 
   build:
     needs: configure
@@ -57,7 +56,7 @@ jobs:
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: |
-            ${{runner.workspace}}/build/nmcs-build${{github.run_number}}-darwin.tar.gz
+            ${{runner.workspace}}/build/nmcs-1.0.0-build${{github.run_number}}-darwin.tar.gz
 
   release:
     needs: [configure, build]
