@@ -28,17 +28,6 @@ if(WIN32)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
-FetchContent_Declare(CLI11
-  GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
-  GIT_TAG v2.2.0
-)
-FetchContent_GetProperties(cli11)
-if(NOT cli11_POPULATED)
-  FetchContent_Populate(cli11)
-  add_subdirectory(${cli11_SOURCE_DIR} ${cli11_BINARY_DIR})
-  set(CLI11_INCLUDES ${cli11_SOURCE_DIR}/include)
-endif()
-
 include_directories(${CLI11_INCLUDES})
 
 set(NMCS_COMPILER_INCLUDES
@@ -58,6 +47,17 @@ set(NMCS_COMPILER_DEPENDENCIES
 )
 
 add_executable(nmcsc ${NMCS_COMPILER_INCLUDES} ${NMCS_COMPILER_SOURCES})
+
 add_dependencies(nmcsc ${NMCS_COMPILER_DEPENDENCIES})
 target_link_libraries(nmcsc ${NMCS_COMPILER_DEPENDENCIES})
+
 set_target_properties(nmcsc PROPERTIES VERSION ${PROJECT_VERSION})
+# target_precompile_headers(nmcsc PRIVATE
+#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
+#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
+#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
+#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/model.h
+#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/server.h
+# )
+
+target_precompile_headers(nmcsc REUSE_FROM nmcsprecomp)

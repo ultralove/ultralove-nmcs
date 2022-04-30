@@ -91,6 +91,7 @@ include(cmake/${NMCS_TARGET_SYSTEM}.cmake)
 set(NMCS_INCLUDE_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/include")
 include_directories(${NMCS_INCLUDE_DIRECTORY})
 
+add_subdirectory("src/precomp")
 add_subdirectory("src/platform")
 add_subdirectory("src/runtime")
 add_subdirectory("src/compiler")

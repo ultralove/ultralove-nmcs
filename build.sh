@@ -113,8 +113,8 @@ if [ $BUILD_UNINSTALL -ne 0 ]; then
     xargs sudo rm -f < "$BUILD_DIRECTORY/install_manifest.txt"
     sudo rm -rf "$CMAKE_INSTALL_PREFIX/include/nmcs"
     echo "Done."
-    exit 0
   fi
+  exit 0
 fi
 
 if [ $BUILD_CLEAN -eq 1 ]; then
@@ -154,12 +154,8 @@ if [ ! -d "$BUILD_DIRECTORY" ]; then
     echo "Done."
 fi
 
-if [ -x "$(command -v nproc)" ]; then
-  BUILD_THREADS=$(nproc)
-fi
-
 echo "Building projects..."
-cmake --build "$BUILD_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j "$BUILD_THREADS"
+cmake --build "$BUILD_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1

@@ -24,37 +24,24 @@
 #
 # ##############################################################################
 
-set(NMCS_SERVER_INCLUDES
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercredentialservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverfileservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverhttpservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicemanager.h
-    serverconfiguration.h
-    serverservicefactory.h)
+include_directories(${CLI11_INCLUDES})
 
-set(NMCS_SERVER_SOURCES
-    server.cpp
-    serverconfiguration.cpp
-    servercredentialservice.cpp
-    serverfileservice.cpp
-    serverhttpservice.cpp
-    serverservicefactory.cpp
-    serverservicemanager.cpp)
-
-set(NMCS_SERVER_DEPENDENCIES nmcsmodel)
-
-add_library(nmcsserver ${NMCS_SERVER_INCLUDES} ${NMCS_SERVER_SOURCES})
-
-add_dependencies(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
-target_link_libraries(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
-
-set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION}
-                                            SOVERSION ${PROJECT_VERSION})
-target_precompile_headers(nmcsserver PRIVATE
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/model.h
+set(NMCS_PRECOMP_INCLUDES
+    ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
+    ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
+    ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
+    ${NMCS_INCLUDE_DIRECTORY}/nmcs/model.h
+    ${NMCS_INCLUDE_DIRECTORY}/nmcs/server.h
 )
+
+set(NMCS_PRECOMP_SOURCES
+    precomp.cpp
+)
+
+add_library(nmcsprecomp STATIC ${NMCS_PRECOMP_INCLUDES} ${NMCS_PRECOMP_SOURCES})
+
+target_link_libraries(nmcsprecomp ${NMCS_PRECOMP_DEPENDENCIES})
+
+set_target_properties(nmcsprecomp PROPERTIES VERSION ${PROJECT_VERSION}
+                                            SOVERSION ${PROJECT_VERSION})
+target_precompile_headers(nmcsprecomp PRIVATE ${NMCS_PRECOMP_INCLUDES})

@@ -41,9 +41,13 @@ if(NMCS_TARGET_SYSTEM STREQUAL "darwin")
   )
 endif()
 
-source_group("Header Files" FILES ${NMCS_PLATFORM_INCLUDES})
-source_group("Source Files" FILES ${NMCS_PLATFORM_SOURCES})
-
 add_library(nmcsplatform ${NMCS_PLATFORM_INCLUDES} ${NMCS_PLATFORM_SOURCES})
+
+add_dependencies(nmcsplatform nmcsprecomp)
 target_link_libraries(nmcsplatform ${NMCS_PLATFORM_DEPENDENCIES})
+
 set_target_properties(nmcsplatform PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION})
+
+target_precompile_headers(nmcsplatform PRIVATE
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
+)

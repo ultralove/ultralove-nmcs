@@ -32,3 +32,14 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+
+FetchContent_Declare(CLI11
+  GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+  GIT_TAG v2.2.0
+)
+FetchContent_GetProperties(cli11)
+if(NOT cli11_POPULATED)
+  FetchContent_Populate(cli11)
+  add_subdirectory(${cli11_SOURCE_DIR} ${cli11_BINARY_DIR})
+  set(CLI11_INCLUDES ${cli11_SOURCE_DIR}/include)
+endif()

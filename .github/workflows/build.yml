@@ -35,8 +35,8 @@ jobs:
         run: choco install ninja
         if: matrix.os == 'windows-latest'
 
-      - name: install (macos)
-        run: brew install ninja bison flex
+      - name: install (darwin)
+        run: brew install ninja
         if: matrix.os == 'macos-latest'
 
       - uses: ilammy/msvc-dev-cmd@v1
@@ -44,17 +44,19 @@ jobs:
           arch: x64
 
       - name: configure
-        run: cmake -GNinja -B${{runner.workspace}}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=${{runner.workspace}}/build/artifacts -DCMAKE_BUILD_TYPE=Release
+        run: cmake -GNinja -B${{runner.workspace}}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release
 
       - name: build
-        run: cmake --build ${{runner.workspace}}/build --target install --config Release
+        run: cmake --build ${{runner.workspace}}/build --config Release
+
+      - name: package (darwin)
+        cmake --build ${{runner.workspace}}/build --target package --config Release
 
       - uses: actions/upload-artifact@v2
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: |
-            ${{runner.workspace}}/build/artifacts/*
-            # !${{runner.workspace}}/build/artifacts/reaper_ultraschall.dll.manifest
+            ${{runner.workspace}}/build/nmcs-1.0.1-darwin.tar.gz
 
   release:
     needs: [configure, build]
@@ -63,11 +65,11 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ${{needs.configure.outputs.build_id}}
-          path: ${{runner.workspace}}/artifacts
+          path: ${{runner.workspace}}/package
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
           automatic_release_tag: "${{needs.configure.outputs.build_id}}"
           prerelease: true
-          files: ${{runner.workspace}}/artifacts/**
+          files: ${{runner.workspace}}/package/**
