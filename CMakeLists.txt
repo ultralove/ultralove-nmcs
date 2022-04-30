@@ -32,6 +32,8 @@ project(nmcs
   LANGUAGES ASM C CXX
 )
 
+set(NMCS_VERSION "${PROJECT_VERSION}")
+string(TIMESTAMP NMCS_BUILD_TIMESTAMP "%Y-%m-%d %H:%M:%S")
 configure_file(version.h.in version.h)
 include_directories(${CMAKE_BINARY_DIR})
 

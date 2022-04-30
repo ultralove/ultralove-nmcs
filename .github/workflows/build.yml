@@ -44,7 +44,7 @@ jobs:
           arch: x64
 
       - name: configure
-        run: cmake -GNinja -B${{runner.workspace}}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release
+        run: cmake -GNinja -B${{runner.workspace}}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DNMCS_BUILD_ID=${{github.run_number}} -DNMCS_BUILD_DATE="${{needs.configure.outputs.build_timestamp}}"
 
       - name: build
         run: cmake --build ${{runner.workspace}}/build --config Release

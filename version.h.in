@@ -27,6 +27,9 @@
 #ifndef __NMCS_VERSION_H_INCL__
 #define __NMCS_VERSION_H_INCL__
 
-#define NMCS_VERSION "${PROJECT_VERSION}"
+#define NMCS_VERSION         "${NMCS_VERSION}"
+#define NMCS_BUILD_ID        "build ${NMCS_BUILD_ID}"
+#define NMCS_BUILD_TIMESTAMP "${NMCS_BUILD_TIMESTAMP}"
+#define NMCS_BUILD_STRING    "v${NMCS_VERSION} (build ${NMCS_BUILD_ID}, ${NMCS_BUILD_TIMESTAMP})"
 
 #endif // #ifndef __NMCS_VERSION_H_INCL__

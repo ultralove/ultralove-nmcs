@@ -31,6 +31,8 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "version.h"
+
 #ifdef _MSC_VER
    #ifdef NMCS_SHARED
       #define NMCS_SHARED_API __declspec(dllexport)
@@ -117,6 +119,21 @@ template<class T> inline static void SafeDeleteArray(T*& ptr)
 }
 
 }} // namespace ultralove::nmcs
+
+inline static const char* NmcsVersion()
+{
+   return NMCS_VERSION;
+}
+
+inline static const char* NmcsBuildId()
+{
+   return NMCS_BUILD_ID;
+}
+
+inline static const char* NmcsBuildString()
+{
+   return NMCS_BUILD_STRING;
+}
 
 #pragma pack(pop)
 

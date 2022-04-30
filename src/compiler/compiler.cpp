@@ -43,13 +43,12 @@ std::string input;
 
 void PrintLogo();
 void PrintVersion();
-const char* Version();
 
 int Parse(const char* filename);
 
 int main(int argc, char** argv)
 {
-   const std::string banner = "Ultralove NMCS Domain Model Compiler v" + std::string(Version());
+   const std::string banner = "Ultralove NMCS Domain Model Compiler " + std::string(NmcsBuildString());
    CLI::App app{banner};
 
    std::map<std::string, compiler::EmitterType> emitters{
@@ -81,7 +80,7 @@ int main(int argc, char** argv)
 void PrintLogo()
 {
    if ((false == suppressLogo) && (false == printVersion)) {
-      std::cout << "Ultralove NMCS Domain Model Compiler version " << Version() << std::endl
+      std::cout << "Ultralove NMCS Domain Model Compiler " << NmcsBuildString() << std::endl
                 << "Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)" << std::endl
                 << std::endl;
    }
@@ -90,13 +89,8 @@ void PrintLogo()
 void PrintVersion()
 {
    if (true == printVersion) {
-      std::cout << Version() << std::endl;
+      std::cout << NmcsVersion() << std::endl;
    }
-}
-
-const char* Version()
-{
-   return NMCS_VERSION;
 }
 
 int Parse(const char* filename)
