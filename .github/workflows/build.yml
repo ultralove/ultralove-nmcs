@@ -52,8 +52,24 @@ jobs:
       - name: package
         run: cmake --build ${{runner.workspace}}/build --target package --config Release
 
+      - name: upload (linux)
+        uses: actions/upload-artifact@v3
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: ${{needs.configure.outputs.build_id}}
+          path: |
+            ${{runner.workspace}}/build/nmcs-1.0.0-build${{github.run_number}}-linux.tar.gz
+
+      - name: upload (windows)
+        uses: actions/upload-artifact@v3
+        if: matrix.os == 'windows-latest'
+        with:
+          name: ${{needs.configure.outputs.build_id}}
+          path: |
+            ${{runner.workspace}}/build/nmcs-1.0.0-build${{github.run_number}}-windows.zip
+
       - name: upload (darwin)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: matrix.os == 'macos-latest'
         with:
           name: ${{needs.configure.outputs.build_id}}
@@ -64,7 +80,7 @@ jobs:
     needs: [configure, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: ${{runner.workspace}}/package
