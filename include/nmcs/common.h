@@ -37,6 +37,9 @@
 
 #include "version.h"
 
+#include <nmcs/macros.h>
+#include <nmcs/status.h>
+
 #ifdef _MSC_VER
    #ifdef NMCS_SHARED
       #define NMCS_SHARED_API __declspec(dllexport)
@@ -54,23 +57,6 @@
 #endif
 
 typedef uint32_t NmcsStatus;
-
-#define NMCS_STATUS_CODE(__nmcs_facility__, __nmcs_code__) ((__nmcs_facility__) | (__nmcs_code__))
-#define NMCS_DEFINE_STATUS(__nmcs_status__, __nmcs_facility__, __nmcs_code__) \
-   static const NmcsStatus(__nmcs_status__) = NMCS_STATUS_CODE((__nmcs_facility__), (__nmcs_code__))
-
-// General status codes
-#define NMCS_FACILITY                   0x00000000
-#define NMCS_STATUS_SUCCESS             NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000000)
-#define NMCS_STATUS_FAILURE             NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000001)
-#define NMCS_STATUS_NOT_FOUND           NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000002)
-#define NMCS_STATUS_INVALID_PARAMETER   NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000003)
-#define NMCS_STATUS_NOT_IMPLEMENTED     NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000004)
-#define NMCS_STATUS_ALREADY_REGISTERED  NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000005)
-#define NMCS_STATUS_OUT_OF_MEMORY       NMCS_STATUS_CODE(NMCS_FACILITY, 0x00000006)
-
-#define NMCS_SUCCEEDED(__nmcs_status__) (NMCS_SUCCESS == (__nmcs_status__))
-#define NMCS_FAILED(__nmcs_status__)    (NMCS_SUCCESS != (__nmcs_status__))
 
 #define NMCS_PRECONDITION(__nmcs_condition__) \
    if (false == (__nmcs_condition__)) {       \
