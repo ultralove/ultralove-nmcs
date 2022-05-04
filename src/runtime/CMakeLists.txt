@@ -25,7 +25,7 @@
 ################################################################################
 
 set(NMCS_RUNTIME_INCLUDES
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimedatetime.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimetimestamp.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeguid.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeshared.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h

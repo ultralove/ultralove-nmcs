@@ -27,13 +27,15 @@
 include_directories(${CLI11_INCLUDES})
 
 set(NMCS_CLIENT_INCLUDES
-  clientguidgen.h
+  clientchapterscommand.h
+  clientguidgencommand.h
 )
 
 set(NMCS_CLIENT_SOURCES
   client.cpp
   clientapplication.cpp
-  clientguidgen.cpp
+  clientchapterscommand.cpp
+  clientguidgencommand.cpp
 )
 
 set(NMCS_CLIENT_DEPENDENCIES

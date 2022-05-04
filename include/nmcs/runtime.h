@@ -29,7 +29,11 @@
 
 #include <nmcs/platform.h>
 
+#include <nmcs/runtimeguid.h>
 #include <nmcs/runtimeshared.h>
+#include <nmcs/runtimestream.h>
+#include <nmcs/runtimestring.h>
+#include <nmcs/runtimetimestamp.h>
 
 #pragma pack(push)
 #pragma pack(8)

@@ -24,39 +24,28 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/runtimeguid.h>
+#ifndef __NMCS_SERVER_COMMENTS_FRAME_H_INCL__
+#define __NMCS_SERVER_COMMENTS_FRAME_H_INCL__
 
-#include "clientguidgen.h"
+#include "serverframe.h"
 
-namespace ultralove { namespace nmcs { namespace client {
+#pragma pack(push)
+#pragma pack(8)
 
-void Guidgen::Configure(CLI::App& app)
+namespace ultralove { namespace nmcs { namespace server {
+
+class CommentsFrame : public Frame
 {
-   std::shared_ptr<GuidgenArgs> args         = std::make_shared<GuidgenArgs>();
-   CLI::App* command                         = app.add_subcommand("guidgen", "Generate a new GUID");
-   std::map<std::string, GuidFormat> formats = {
-      {"universal", GuidFormat::Universal},
-      {    "plain",     GuidFormat::Plain},
-      { "registry",  GuidFormat::Registry}
-   };
-   command->add_option("-f,--format", args->format, "Specify output format")->transform(CLI::CheckedTransformer(formats, CLI::ignore_case));
-   command->callback([args]() { Run(args); });
-}
+public:
+   static IFrame* Create();
+   virtual ~CommentsFrame();
 
-void Guidgen::Run(const std::shared_ptr<GuidgenArgs>& args)
-{
-   runtime::Guid guid = runtime::Guid::Create();
-   switch (args->format) {
-      case GuidFormat::Universal:
-         std::cout << guid.UniversalString() << std::endl;
-         break;
-      case GuidFormat::Plain:
-         std::cout << guid.PlainString() << std::endl;
-         break;
-      case GuidFormat::Registry:
-         std::cout << guid.RegistryString() << std::endl;
-         break;
-   }
-}
+private:
+   CommentsFrame();
+};
 
-}}} // namespace ultralove::nmcs::client
+}}} // namespace ultralove::nmcs::server
+
+#pragma pack(pop)
+
+#endif // #ifndef __NMCS_SERVER_COMMENTS_FRAME_H_INCL__

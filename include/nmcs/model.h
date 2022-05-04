@@ -29,6 +29,8 @@
 
 #include <nmcs/runtime.h>
 
+#include <nmcs/modelfabric.h>
+
 #pragma pack(push)
 #pragma pack(8)
 

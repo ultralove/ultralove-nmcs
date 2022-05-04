@@ -24,58 +24,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_STRING_H_INCL__
-#define __NMCS_RUNTIME_STRING_H_INCL__
+#ifndef __NMCS_SERVER_FRAME_CONTROLLER_H_INCL__
+#define __NMCS_SERVER_FRAME_CONTROLLER_H_INCL__
 
-#include <nmcs/common.h>
+#include "serverframearray.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace runtime {
+namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API String
+class FrameController
 {
 public:
-   enum class Encoding
-   {
-      LATIN1,
-      UTF8,
-      UTF16,
-      UTF16_LE,
-      UTF16_BE,
-      UTF32,
-   };
+   static size_t DumpRawFrames(const runtime::Stream& stream);
 
-   String();
-   explicit String(const char* str);
-   virtual ~String();
-
-   String(const String& rhs);
-   void operator=(const String& rhs);
-
-   void operator=(const char* str);
-   void operator=(const char16_t* str);
-   void operator=(const char32_t* str);
-
-   String(const uint8_t* data, const size_t dataSize);
-   String(const uint16_t* data, const size_t dataSize);
-   String(const uint32_t* data, const size_t dataSize);
-
-   bool operator==(const String& rhs) const;
-   bool operator<(const String& rhs) const;
-
-   const uint8_t* Data() const;
-   size_t Size() const;
+   FrameArray ParseFrames(const runtime::Stream& stream);
 
 private:
-   uint8_t* data_;
-   size_t dataSize_;
-   Encoding encoding_;
+   static bool CompareRawFrameId(const uint32_t rawFrameId, const char* frameId, const size_t frameIdSize);
+   static size_t ComputeSubframeOffset(const uint8_t* data, const size_t dataSize);
+
+   static void DumpRawHeader(const uint8_t* data, const size_t dataSize);
+   static size_t DumpRawFrame(const size_t indentLevel, const uint8_t* data, const size_t dataSize);
 };
 
-}}} // namespace ultralove::nmcs::runtime
+}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_RUNTIME_STRING_H_INCL__
+#endif // #ifndef __NMCS_SERVER_FRAME_CONTROLLER_H_INCL__

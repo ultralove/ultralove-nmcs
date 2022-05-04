@@ -50,6 +50,16 @@ bool String::operator<(const String& str) const
    return false;
 }
 
+const uint8_t* String::Data() const
+{
+   return data_;
+}
+
+size_t String::Size() const
+{
+   return dataSize_;
+}
+
 #if 0
 bool String::empty() const
 {

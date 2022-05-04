@@ -24,58 +24,69 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_STRING_H_INCL__
-#define __NMCS_RUNTIME_STRING_H_INCL__
+#ifndef __NMCS_SERVER_FRAME_H_INCL__
+#define __NMCS_SERVER_FRAME_H_INCL__
 
-#include <nmcs/common.h>
+#include "serverid3v2.h"
+#include "serveriframe.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace runtime {
+namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API String
+class Frame : public IFrame
 {
 public:
-   enum class Encoding
-   {
-      LATIN1,
-      UTF8,
-      UTF16,
-      UTF16_LE,
-      UTF16_BE,
-      UTF32,
-   };
+   virtual ~Frame();
 
-   String();
-   explicit String(const char* str);
-   virtual ~String();
+   static bool IsValid(const uint8_t* data, const size_t dataSize);
+   bool IsValid() const;
 
-   String(const String& rhs);
-   void operator=(const String& rhs);
+   inline uint32_t Id() const;
+   inline uint32_t Size() const;
+   inline uint16_t Flags() const;
 
-   void operator=(const char* str);
-   void operator=(const char16_t* str);
-   void operator=(const char32_t* str);
+   bool ConfigureData(const uint8_t* data, const size_t dataSize);
 
-   String(const uint8_t* data, const size_t dataSize);
-   String(const uint16_t* data, const size_t dataSize);
-   String(const uint32_t* data, const size_t dataSize);
+protected:
+   Frame();
 
-   bool operator==(const String& rhs) const;
-   bool operator<(const String& rhs) const;
-
-   const uint8_t* Data() const;
-   size_t Size() const;
+   void Id(const uint32_t id);
+   void Size(const uint32_t size);
+   void Flags(const uint16_t flags);
 
 private:
-   uint8_t* data_;
-   size_t dataSize_;
-   Encoding encoding_;
+   uint8_t* data_   = nullptr;
+   size_t dataSize_ = ID3V2_INVALID_SIZE_VALUE;
+
+   uint32_t id_     = ID3V2_INVALID_FRAME_ID;
+   uint32_t size_   = ID3V2_INVALID_FRAME_SIZE;
+   uint16_t flags_  = ID3V2_INVALID_FRAME_FLAGS;
+
+   bool AllocData(const uint8_t* data, const size_t dataSize);
 };
 
-}}} // namespace ultralove::nmcs::runtime
+inline uint32_t Frame::Id() const
+{
+   NMCS_PRECONDITION_RETURN(IsValid() == true, ID3V2_INVALID_FRAME_ID);
+   return id_;
+}
+
+inline uint32_t Frame::Size() const
+{
+   NMCS_PRECONDITION_RETURN(IsValid() == true, ID3V2_INVALID_FRAME_SIZE);
+   return size_;
+}
+
+inline uint16_t Frame::Flags() const
+{
+   NMCS_PRECONDITION_RETURN(IsValid() == true, ID3V2_INVALID_FRAME_FLAGS);
+   return flags_;
+}
+
+}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_RUNTIME_STRING_H_INCL__
+#endif // #ifndef __NMCS_SERVER_FRAME_H_INCL__

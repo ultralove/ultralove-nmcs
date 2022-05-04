@@ -25,14 +25,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "clientapplication.h"
-#include "clientguidgen.h"
+#include "clientchapterscommand.h"
+#include "clientguidgencommand.h"
 
 namespace client = ultralove::nmcs::client;
 
 int main(int argc, char** argv, char** envp)
 {
    client::ClientApplication application;
-   client::Guidgen::Configure(application);
+   client::GuidgenCommand::Configure(application);
+   client::ChaptersCommand::Configure(application);
    CLI11_PARSE(application, argc, argv);
    return 0;
 }

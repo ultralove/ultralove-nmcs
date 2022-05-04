@@ -24,58 +24,48 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_STRING_H_INCL__
-#define __NMCS_RUNTIME_STRING_H_INCL__
+#ifndef __NMCS_SERVER_FRAME_RESOURCE_H_INCL__
+#define __NMCS_SERVER_FRAME_RESOURCE_H_INCL__
 
-#include <nmcs/common.h>
+#include "serverframefactory.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace runtime {
+namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API String
+template<class T> class FrameResource
 {
 public:
-   enum class Encoding
+   FrameResource(const char* id)
    {
-      LATIN1,
-      UTF8,
-      UTF16,
-      UTF16_LE,
-      UTF16_BE,
-      UTF32,
-   };
+      FrameResource(runtime::String(id));
+   }
 
-   String();
-   explicit String(const char* str);
-   virtual ~String();
+   FrameResource(const runtime::String& id)
+   {
+      NMCS_PRECONDITION(id.Size() >= ID3V2_FRAME_ID_SIZE);
 
-   String(const String& rhs);
-   void operator=(const String& rhs);
+      id_                        = ID3V2_DECODE_FRAME_ID(reinterpret_cast<const uint8_t*>(id.Data()), ID3V2_FRAME_ID_SIZE);
+      FrameFactory& frameFactory = FrameFactory::Instance();
+      registered_                = frameFactory.RegisterFrame(id_, T::Create);
+   }
 
-   void operator=(const char* str);
-   void operator=(const char16_t* str);
-   void operator=(const char32_t* str);
-
-   String(const uint8_t* data, const size_t dataSize);
-   String(const uint16_t* data, const size_t dataSize);
-   String(const uint32_t* data, const size_t dataSize);
-
-   bool operator==(const String& rhs) const;
-   bool operator<(const String& rhs) const;
-
-   const uint8_t* Data() const;
-   size_t Size() const;
+   ~FrameResource()
+   {
+      if ((id_ != ID3V2_INVALID_FRAME_ID) && (true == registered_)) {
+         FrameFactory& frameFactory = FrameFactory::Instance();
+         frameFactory.UnregisterFrame(id_);
+      }
+   }
 
 private:
-   uint8_t* data_;
-   size_t dataSize_;
-   Encoding encoding_;
+   uint32_t id_     = ID3V2_INVALID_FRAME_ID;
+   bool registered_ = false;
 };
 
-}}} // namespace ultralove::nmcs::runtime
+}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_RUNTIME_STRING_H_INCL__
+#endif // #ifndef __NMCS_SERVER_FRAME_RESOURCE_H_INCL__

@@ -24,39 +24,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_CLIENT_GUIDGEN_H_INCL__
-#define __NMCS_CLIENT_GUIDGEN_H_INCL__
+#include "serverurllinkframe.h"
+#include "serverframeresource.h"
 
-#include <CLI/CLI.hpp>
+namespace ultralove { namespace nmcs { namespace server {
 
-#include <nmcs/common.h>
+static FrameResource<URLLinkFrame> resource1("WCOM");
+static FrameResource<URLLinkFrame> resource2("WCOP");
+static FrameResource<URLLinkFrame> resource3("WOAF");
+static FrameResource<URLLinkFrame> resource4("WOAR");
+static FrameResource<URLLinkFrame> resource5("WOAS");
+static FrameResource<URLLinkFrame> resource6("WORS");
+static FrameResource<URLLinkFrame> resource7("WPAY");
+static FrameResource<URLLinkFrame> resource8("WPUB");
 
-#pragma pack(push)
-#pragma pack(8)
+URLLinkFrame::URLLinkFrame() {}
 
-namespace ultralove { namespace nmcs { namespace client {
+URLLinkFrame::~URLLinkFrame() {}
 
-enum class GuidFormat : int
+IFrame* URLLinkFrame::Create()
 {
-   Universal,
-   Plain,
-   Registry
-};
+   return new URLLinkFrame();
+}
 
-struct GuidgenArgs
-{
-   GuidFormat format = GuidFormat::Universal;
-};
-
-class Guidgen
-{
-public:
-   static void Configure(CLI::App& app);
-   static void Run(const std::shared_ptr<GuidgenArgs>& args);
-};
-
-}}} // namespace ultralove::nmcs::client
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_CLIENT_GUIDGEN_H_INCL__
+}}} // namespace ultralove::nmcs::server

@@ -24,58 +24,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_STRING_H_INCL__
-#define __NMCS_RUNTIME_STRING_H_INCL__
+#ifndef __NMCS_SERVER_FRAME_FACTORY_H_INCL__
+#define __NMCS_SERVER_FRAME_FACTORY_H_INCL__
 
-#include <nmcs/common.h>
+#include "serverframe.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace runtime {
+namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API String
+class FrameFactory
 {
 public:
-   enum class Encoding
-   {
-      LATIN1,
-      UTF8,
-      UTF16,
-      UTF16_LE,
-      UTF16_BE,
-      UTF32,
-   };
+   typedef IFrame* (*CREATE_FRAME_FUNCTION)();
 
-   String();
-   explicit String(const char* str);
-   virtual ~String();
+   static FrameFactory& Instance();
+   virtual ~FrameFactory();
 
-   String(const String& rhs);
-   void operator=(const String& rhs);
+   bool RegisterFrame(const uint32_t id, CREATE_FRAME_FUNCTION factoryFunction);
+   void UnregisterFrame(const uint32_t id);
 
-   void operator=(const char* str);
-   void operator=(const char16_t* str);
-   void operator=(const char32_t* str);
-
-   String(const uint8_t* data, const size_t dataSize);
-   String(const uint16_t* data, const size_t dataSize);
-   String(const uint32_t* data, const size_t dataSize);
-
-   bool operator==(const String& rhs) const;
-   bool operator<(const String& rhs) const;
-
-   const uint8_t* Data() const;
-   size_t Size() const;
+   bool CanCreate(const uint8_t* data, const size_t dataSize) const;
+   IFrame* Create(const uint8_t* data, const size_t dataSize) const;
 
 private:
-   uint8_t* data_;
-   size_t dataSize_;
-   Encoding encoding_;
+   FrameFactory();
+
+   typedef std::map<uint32_t, CREATE_FRAME_FUNCTION> FunctionDictionary;
+   FunctionDictionary functions_;
+   mutable std::recursive_mutex functionsLock_;
 };
 
-}}} // namespace ultralove::nmcs::runtime
+}}} // namespace ultralove::nmcs::server
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_RUNTIME_STRING_H_INCL__
+#endif // #ifndef __NMCS_SERVER_FRAME_FACTORY_H_INCL____

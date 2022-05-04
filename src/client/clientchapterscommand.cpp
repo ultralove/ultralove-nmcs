@@ -24,58 +24,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_STRING_H_INCL__
-#define __NMCS_RUNTIME_STRING_H_INCL__
+#include <nmcs/runtimeguid.h>
 
-#include <nmcs/common.h>
+#include "clientchapterscommand.h"
 
-#pragma pack(push)
-#pragma pack(8)
+namespace ultralove { namespace nmcs { namespace client {
 
-namespace ultralove { namespace nmcs { namespace runtime {
-
-class NMCS_SHARED_API String
+void ChaptersCommand::Configure(CLI::App& app)
 {
-public:
-   enum class Encoding
-   {
-      LATIN1,
-      UTF8,
-      UTF16,
-      UTF16_LE,
-      UTF16_BE,
-      UTF32,
-   };
+   std::shared_ptr<ChaptersCommandArgs> args = std::make_shared<ChaptersCommandArgs>();
+   CLI::App* command                         = app.add_subcommand("chapters", "TODO");
+   command->add_flag("-d,--dump", args->dump, "Print chapters");
+   command->add_flag("-r,--raw", args->raw, "Don't invoke chapter parser");
+   command->callback([args]() { Run(args); });
+}
 
-   String();
-   explicit String(const char* str);
-   virtual ~String();
+void ChaptersCommand::Run(const std::shared_ptr<ChaptersCommandArgs>& args) {}
 
-   String(const String& rhs);
-   void operator=(const String& rhs);
-
-   void operator=(const char* str);
-   void operator=(const char16_t* str);
-   void operator=(const char32_t* str);
-
-   String(const uint8_t* data, const size_t dataSize);
-   String(const uint16_t* data, const size_t dataSize);
-   String(const uint32_t* data, const size_t dataSize);
-
-   bool operator==(const String& rhs) const;
-   bool operator<(const String& rhs) const;
-
-   const uint8_t* Data() const;
-   size_t Size() const;
-
-private:
-   uint8_t* data_;
-   size_t dataSize_;
-   Encoding encoding_;
-};
-
-}}} // namespace ultralove::nmcs::runtime
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_RUNTIME_STRING_H_INCL__
+}}} // namespace ultralove::nmcs::client

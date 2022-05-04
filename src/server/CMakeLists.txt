@@ -31,17 +31,39 @@ set(NMCS_SERVER_INCLUDES
     ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
     ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h
     ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicemanager.h
+    serverattachedpictureframe.h
+    serverchapterframe.h
+    servercommentsframe.h
     serverconfiguration.h
-    serverservicefactory.h)
+    serverframe.h
+    serverframecontroller.h
+    serverframefactory.h
+    serverframeresource.h
+    serverid3v2.h
+    serveriframe.h
+    serverservicefactory.h
+    servertableofcontentsframe.h
+    servertextinformationframe.h
+    serverurllinkframe.h)
 
 set(NMCS_SERVER_SOURCES
     server.cpp
+    serverattachedpictureframe.cpp
+    serverchapterframe.cpp
+    servercommentsframe.cpp
     serverconfiguration.cpp
     servercredentialservice.cpp
     serverfileservice.cpp
+    serverframe.cpp
+    serverframecontroller.cpp
+    serverframefactory.cpp
     serverhttpservice.cpp
+    serverid3v2.cpp
     serverservicefactory.cpp
-    serverservicemanager.cpp)
+    serverservicemanager.cpp
+    servertableofcontentsframe.cpp
+    servertextinformationframe.cpp
+    serverurllinkframe.cpp)
 
 set(NMCS_SERVER_DEPENDENCIES nmcsmodel)
 
@@ -57,4 +79,5 @@ target_precompile_headers(nmcsserver PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/model.h
+  servercommon.h
 )
