@@ -91,8 +91,6 @@ if(NMCS_TARGET_SYSTEM STREQUAL "darwin")
   else()
     message(FATAL_ERROR "Darwin builds require clang.")
   endif()
-elseif(NMCS_TARGET_SYSTEM STREQUAL "linux")
-  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
 include(cmake/${NMCS_TARGET_SYSTEM}.cmake)
