@@ -24,32 +24,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_RUNTIME_SHARED_H_INCL__
-#define __NMCS_RUNTIME_SHARED_H_INCL__
+#ifndef __NMCS_CLIENT_HEX_DUMP_H_INCL__
+#define __NMCS_CLIENT_HEX_DUMP_H_INCL__
 
 #include <nmcs/common.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace runtime {
+namespace ultralove { namespace nmcs { namespace client {
 
-class NMCS_SHARED_API Shared
-{
-public:
-   uint32_t AddRef() const;
-   uint32_t Release() const;
+void HexDump(const uint8_t* data, const size_t dataSize, const size_t rowSize = 16);
+void HexDump(const size_t indentLevel, const uint8_t* data, const size_t dataSize, const size_t rowSize = 16);
+void HexDump(const size_t indentLevel, const uint8_t* data, const size_t dataSize, const size_t displayDataSize, const size_t rowSize);
 
-protected:
-   Shared();
-   virtual ~Shared();
-
-private:
-   mutable std::atomic<uint32_t> refCount_;
-};
-
-}}} // namespace ultralove::nmcs::runtime
+}}} // namespace ultralove::nmcs::client
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_RUNTIME_SHARED_H_INCL__
+#endif // #ifndef __NMCS_CLIENT_HEX_DUMP_H_INCL__

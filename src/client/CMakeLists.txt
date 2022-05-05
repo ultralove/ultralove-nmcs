@@ -29,6 +29,7 @@ include_directories(${CLI11_INCLUDES})
 set(NMCS_CLIENT_INCLUDES
   clientchapterscommand.h
   clientguidgencommand.h
+  clienthexdump.h
 )
 
 set(NMCS_CLIENT_SOURCES
@@ -36,6 +37,7 @@ set(NMCS_CLIENT_SOURCES
   clientapplication.cpp
   clientchapterscommand.cpp
   clientguidgencommand.cpp
+  clienthexdump.cpp
 )
 
 set(NMCS_CLIENT_DEPENDENCIES

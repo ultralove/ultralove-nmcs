@@ -35,6 +35,8 @@
 #include <sstream>
 #include <string>
 
+#include <atomic>
+
 #include "version.h"
 
 #include <nmcs/macros.h>

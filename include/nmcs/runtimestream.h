@@ -37,17 +37,60 @@ namespace ultralove { namespace nmcs { namespace runtime {
 class NMCS_SHARED_API Stream : public Shared
 {
 public:
-   explicit Stream(const size_t size);
+   Stream();
+   Stream(const uint8_t* items, const size_t itemCount);
+
+   Stream(const Stream& rhs);
+   Stream& operator=(const Stream& rhs);
+
+   Stream(Stream&& rhs) noexcept;
+   Stream& operator=(Stream&& rhs) noexcept;
+
+   bool operator==(const Stream& rhs) const;
+   bool operator<(const Stream& rhs) const;
 
    size_t Size() const;
-   const uint8_t* Data() const;
+   const uint8_t* Data(const size_t itemOffset = 0) const;
+   bool Valid() const;
 
-   bool Write(const size_t offset, const uint8_t* data, const size_t size);
-   bool Read(const size_t offset, uint8_t* data, const size_t size);
+   size_t Write(const size_t offset, const uint8_t* items, const size_t itemCount);
+   inline size_t Write(const uint8_t* items, const size_t itemCount);
+
+   size_t Read(const size_t offset, uint8_t* items, const size_t itemCount) const;
+   inline size_t Read(uint8_t* items, const size_t itemCount) const;
+
+   void Reset();
 
 protected:
    virtual ~Stream();
+
+private:
+   uint8_t* items_   = 0;
+   size_t itemCount_ = 0;
+
+   void AllocItems(const size_t itemCount = 0);
+   void ReplaceItems(const uint8_t* items, const size_t itemCount);
 };
+
+inline size_t Stream::Size() const
+{
+   return itemCount_;
+}
+
+inline bool Stream::Valid() const
+{
+   return (items_ != 0) && (itemCount_ > 0);
+}
+
+inline size_t Stream::Write(const uint8_t* items, const size_t itemCount)
+{
+   return Write(0, items, itemCount);
+}
+
+inline size_t Stream::Read(uint8_t* items, const size_t itemCount) const
+{
+   return Read(0, items, itemCount);
+}
 
 }}} // namespace ultralove::nmcs::runtime
 

@@ -37,13 +37,23 @@
 
 namespace ultralove { namespace nmcs { namespace platform {
 namespace nmcs = ultralove::nmcs;
-
 }}} // namespace ultralove::nmcs::platform
 
-extern "C" {
+#ifdef __MSCVER
+   #define NmcsByteSwap16(x) _byteswap_ushort(x)
+   #define NmcsByteSwap32(x) _byteswap_ulong(x)
+   #define NmcsByteSwap64(x) _byteswap_uint64(x)
+#else
+   #define NmcsByteSwap16(x) __builtin_bswap16(x)
+   #define NmcsByteSwap32(x) __builtin_bswap32(x)
+   #define NmcsByteSwap64(x) __builtin_bswap64(x)
+#endif
+
 void* NmcsAlloc(const size_t size);
 void NmcsRelease(void*& ptr);
-}
+
+uint32_t NmcsUnsynchronize32(const uint32_t value);
+uint32_t NmcsSynchronize32(const uint32_t value);
 
 #pragma pack(pop)
 

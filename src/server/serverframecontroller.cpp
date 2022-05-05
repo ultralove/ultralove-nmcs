@@ -64,46 +64,46 @@ FrameArray FrameController::ParseFrames(const runtime::Stream& stream)
    return frames;
 }
 
-size_t FrameController::DumpRawFrames(const runtime::Stream& stream)
-{
-   NMCS_PRECONDITION_RETURN(stream.Data() != nullptr, ID3V2_INVALID_FRAME);
-   NMCS_PRECONDITION_RETURN(stream.Size() > 0, ID3V2_INVALID_FRAME);
+// size_t FrameController::DumpRawFrames(const runtime::Stream& stream)
+// {
+//    NMCS_PRECONDITION_RETURN(stream.Data() != nullptr, ID3V2_INVALID_FRAME);
+//    NMCS_PRECONDITION_RETURN(stream.Size() > 0, ID3V2_INVALID_FRAME);
 
-   DumpRawHeader(stream.Data(0), ID3V2_FILE_HEADER_SIZE);
+//    DumpRawHeader(stream.Data(0), ID3V2_FILE_HEADER_SIZE);
 
-   size_t offset = ID3V2_FILE_HEADER_SIZE;
-   bool isValid  = Frame::IsValid(stream.Data(offset), stream.Size() - offset);
-   while ((true == isValid) && (offset < stream.Size())) {
-      offset += DumpRawFrame(0, stream.Data(offset), stream.Size());
-      isValid = Frame::IsValid(stream.Data(offset), stream.Size() - offset);
-   }
+//    size_t offset = ID3V2_FILE_HEADER_SIZE;
+//    bool isValid  = Frame::IsValid(stream.Data(offset), stream.Size() - offset);
+//    while ((true == isValid) && (offset < stream.Size())) {
+//       offset += DumpRawFrame(0, stream.Data(offset), stream.Size());
+//       isValid = Frame::IsValid(stream.Data(offset), stream.Size() - offset);
+//    }
 
-   return offset;
-}
+//    return offset;
+// }
 
-void FrameController::DumpRawHeader(const uint8_t* data, const size_t dataSize)
-{
-   NMCS_PRECONDITION(data != 0);
-   NMCS_PRECONDITION(dataSize >= ID3V2_FILE_HEADER_SIZE);
+// void FrameController::DumpRawHeader(const uint8_t* data, const size_t dataSize)
+// {
+//    NMCS_PRECONDITION(data != 0);
+//    NMCS_PRECONDITION(dataSize >= ID3V2_FILE_HEADER_SIZE);
 
-   const uint32_t id                           = ID3V2_DECODE_FILE_ID(data, ID3V2_FILE_HEADER_SIZE);
-   //  std::cout << "Id:      " << ((uint8_t*)&id)[0] << ((uint8_t*)&id)[1] << ((uint8_t*)&id)[2] << std::endl;
+//    const uint32_t id                           = ID3V2_DECODE_FILE_ID(data, ID3V2_FILE_HEADER_SIZE);
+//    //  std::cout << "Id:      " << ((uint8_t*)&id)[0] << ((uint8_t*)&id)[1] << ((uint8_t*)&id)[2] << std::endl;
 
-   const uint8_t version                       = ID3V2_DECODE_FILE_VERSION(data, ID3V2_FILE_HEADER_SIZE);
-   const uint8_t revision                      = ID3V2_DECODE_FILE_REVISION(data, ID3V2_FILE_HEADER_SIZE);
-   //  std::cout << "Version: 2." << static_cast<int>(version) << "." << static_cast<int>(revision) << std::endl;
+//    const uint8_t version                       = ID3V2_DECODE_FILE_VERSION(data, ID3V2_FILE_HEADER_SIZE);
+//    const uint8_t revision                      = ID3V2_DECODE_FILE_REVISION(data, ID3V2_FILE_HEADER_SIZE);
+//    //  std::cout << "Version: 2." << static_cast<int>(version) << "." << static_cast<int>(revision) << std::endl;
 
-   const uint8_t flags                         = ID3V2_DECODE_FILE_FLAGS(data, ID3V2_FILE_HEADER_SIZE);
-   //  std::cout << "Flags:   0x" << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(flags) << std::endl;
+//    const uint8_t flags                         = ID3V2_DECODE_FILE_FLAGS(data, ID3V2_FILE_HEADER_SIZE);
+//    //  std::cout << "Flags:   0x" << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(flags) << std::endl;
 
-   const uint32_t size                         = ID3V2_DECODE_FILE_SIZE(data, ID3V2_FILE_HEADER_SIZE);
-   //  std::cout << "Size:    0x" << std::hex << std::setw(8) << std::setfill('0') << size << " (" << std::dec << size << ")" << std::endl;
+//    const uint32_t size                         = ID3V2_DECODE_FILE_SIZE(data, ID3V2_FILE_HEADER_SIZE);
+//    //  std::cout << "Size:    0x" << std::hex << std::setw(8) << std::setfill('0') << size << " (" << std::dec << size << ")" << std::endl;
 
-   static const size_t ID3V2_MAX_DATA_ROW_SIZE = 32;
-   //  std::cout << "Data:" << std::endl;
-   HexDump(data, ID3V2_FILE_HEADER_SIZE, ID3V2_MAX_DATA_ROW_SIZE);
-   //  std::cout << std::endl;
-}
+//    static const size_t ID3V2_MAX_DATA_ROW_SIZE = 32;
+//    //  std::cout << "Data:" << std::endl;
+//    HexDump(data, ID3V2_FILE_HEADER_SIZE, ID3V2_MAX_DATA_ROW_SIZE);
+//    //  std::cout << std::endl;
+// }
 
 size_t FrameController::ComputeSubframeOffset(const uint8_t* data, const size_t dataSize)
 {
@@ -125,43 +125,43 @@ size_t FrameController::ComputeSubframeOffset(const uint8_t* data, const size_t 
    return offset + (sizeof(uint32_t) * 4);
 }
 
-size_t FrameController::DumpRawFrame(const size_t indentLevel, const uint8_t* data, const size_t dataSize)
-{
-   NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_SIZE_VALUE);
-   NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FRAME_HEADER_SIZE, ID3V2_INVALID_SIZE_VALUE);
+// size_t FrameController::DumpRawFrame(const size_t indentLevel, const uint8_t* data, const size_t dataSize)
+// {
+//    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_SIZE_VALUE);
+//    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FRAME_HEADER_SIZE, ID3V2_INVALID_SIZE_VALUE);
 
-   const uint32_t id                                 = ID3V2_DECODE_FRAME_ID(ID3V2_DATA_OFFSET(data, ID3V2_FRAME_ID_OFFSET), ID3V2_FRAME_ID_SIZE);
-   //  std::cout << IndentString(indentLevel) << "Id:      " << ((uint8_t*)&id)[0] << ((uint8_t*)&id)[1] << ((uint8_t*)&id)[2] << ((uint8_t*)&id)[3] <<
-   //  std::endl;
+//    const uint32_t id                                 = ID3V2_DECODE_FRAME_ID(ID3V2_DATA_OFFSET(data, ID3V2_FRAME_ID_OFFSET), ID3V2_FRAME_ID_SIZE);
+//    //  std::cout << IndentString(indentLevel) << "Id:      " << ((uint8_t*)&id)[0] << ((uint8_t*)&id)[1] << ((uint8_t*)&id)[2] << ((uint8_t*)&id)[3] <<
+//    //  std::endl;
 
-   const uint16_t flags                              = ID3V2_DECODE_FRAME_FLAGS(ID3V2_DATA_OFFSET(data, ID3V2_FRAME_FLAGS_OFFSET), ID3V2_FRAME_FLAGS_SIZE);
-   //  std::cout << IndentString(indentLevel) << "Flags:   0x" << std::hex << std::setw(4) << std::setfill('0') << flags << std::endl;
+//    const uint16_t flags                              = ID3V2_DECODE_FRAME_FLAGS(ID3V2_DATA_OFFSET(data, ID3V2_FRAME_FLAGS_OFFSET), ID3V2_FRAME_FLAGS_SIZE);
+//    //  std::cout << IndentString(indentLevel) << "Flags:   0x" << std::hex << std::setw(4) << std::setfill('0') << flags << std::endl;
 
-   const uint32_t size                               = ID3V2_DECODE_FRAME_SIZE(ID3V2_DATA_OFFSET(data, ID3V2_FRAME_SIZE_OFFSET), ID3V2_FRAME_SIZE_SIZE);
-   //  std::cout << IndentString(indentLevel) << "Size:    0x" << std::hex << std::setw(8) << std::setfill('0') << size << " (" << std::dec << size << ")"
-   //  << std::endl;
+//    const uint32_t size                               = ID3V2_DECODE_FRAME_SIZE(ID3V2_DATA_OFFSET(data, ID3V2_FRAME_SIZE_OFFSET), ID3V2_FRAME_SIZE_SIZE);
+//    //  std::cout << IndentString(indentLevel) << "Size:    0x" << std::hex << std::setw(8) << std::setfill('0') << size << " (" << std::dec << size << ")"
+//    //  << std::endl;
 
-   static const uint32_t ID3V2_MAX_DATA_DISPLAY_SIZE = 512;
-   static const size_t ID3V2_MAX_DATA_ROW_SIZE       = 32;
+//    static const uint32_t ID3V2_MAX_DATA_DISPLAY_SIZE = 512;
+//    static const size_t ID3V2_MAX_DATA_ROW_SIZE       = 32;
 
-   //  std::cout << IndentString(indentLevel) << "Data:" << std::endl;
-   // HexDump(indentLevel, ID3V2_DATA_OFFSET(data, ID3V2_FRAME_DATA_OFFSET), std::min(size, ID3V2_MAX_DATA_DISPLAY_SIZE), ID3V2_MAX_DATA_ROW_SIZE);
-   HexDump(indentLevel, ID3V2_DATA_OFFSET(data, ID3V2_FRAME_DATA_OFFSET), size, ID3V2_MAX_DATA_DISPLAY_SIZE, ID3V2_MAX_DATA_ROW_SIZE);
+//    //  std::cout << IndentString(indentLevel) << "Data:" << std::endl;
+//    // HexDump(indentLevel, ID3V2_DATA_OFFSET(data, ID3V2_FRAME_DATA_OFFSET), std::min(size, ID3V2_MAX_DATA_DISPLAY_SIZE), ID3V2_MAX_DATA_ROW_SIZE);
+//    HexDump(indentLevel, ID3V2_DATA_OFFSET(data, ID3V2_FRAME_DATA_OFFSET), size, ID3V2_MAX_DATA_DISPLAY_SIZE, ID3V2_MAX_DATA_ROW_SIZE);
 
-   //  std::cout << std::endl;
+//    //  std::cout << std::endl;
 
-   // Print sub-frames
-   if (CompareRawFrameId(id, "CHAP", ID3V2_FRAME_ID_SIZE) == true) {
-      size_t subframeOffset = ComputeSubframeOffset(data, ID3V2_FRAME_HEADER_SIZE + size);
-      while (subframeOffset < size) {
-         const uint8_t* subframeData = &data[subframeOffset];
-         const size_t subFrameSize   = DumpRawFrame(indentLevel + 1, subframeData, size);
-         subframeOffset += subFrameSize;
-      }
-   }
+//    // Print sub-frames
+//    if (CompareRawFrameId(id, "CHAP", ID3V2_FRAME_ID_SIZE) == true) {
+//       size_t subframeOffset = ComputeSubframeOffset(data, ID3V2_FRAME_HEADER_SIZE + size);
+//       while (subframeOffset < size) {
+//          const uint8_t* subframeData = &data[subframeOffset];
+//          const size_t subFrameSize   = DumpRawFrame(indentLevel + 1, subframeData, size);
+//          subframeOffset += subFrameSize;
+//       }
+//    }
 
-   return ID3V2_FRAME_HEADER_SIZE + size;
-}
+//    return ID3V2_FRAME_HEADER_SIZE + size;
+// }
 
 bool FrameController::CompareRawFrameId(const uint32_t rawFrameId, const char* frameId, const size_t frameIdSize)
 {

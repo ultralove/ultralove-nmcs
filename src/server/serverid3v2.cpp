@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "serverid3v2.h"
+#include "servercommon.h"
 
 namespace ultralove { namespace nmcs { namespace server {
 
@@ -119,9 +120,9 @@ uint32_t ID3V2_DECODE_FILE_SIZE(const uint8_t* data, const size_t dataSize)
    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_FILE_SIZE);
    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FILE_HEADER_SIZE, ID3V2_INVALID_FILE_SIZE);
 
-   const uint32_t rawValue = _Fast_Byte_Swap_32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
+   const uint32_t rawValue = NmcsByteSwap32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
 
-   return _Fast_Unsynchronize_32(rawValue);
+   return NmcsUnsynchronize32(rawValue);
 }
 
 uint32_t ID3V2_ENCODE_FILE_SIZE(const uint32_t size, uint8_t* data, const size_t dataSize)
@@ -130,8 +131,8 @@ uint32_t ID3V2_ENCODE_FILE_SIZE(const uint32_t size, uint8_t* data, const size_t
    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_FILE_SIZE);
    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FILE_HEADER_SIZE, ID3V2_INVALID_FILE_SIZE);
 
-   const uint32_t cookedValue                  = _Fast_Synchronize_32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
-   *((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]) = _Fast_Byte_Swap_32(cookedValue);
+   const uint32_t cookedValue                  = NmcsSynchronize32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
+   *((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]) = NmcsByteSwap32(cookedValue);
 
    return *((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]);
 }
@@ -218,7 +219,7 @@ uint32_t ID3V2_DECODE_FRAME_SIZE(const uint8_t* data, const size_t dataSize)
    ((uint8_t*)&size)[2] = data[2];
    ((uint8_t*)&size)[3] = data[3];
 
-   return _Fast_Byte_Swap_32(size);
+   return NmcsByteSwap32(size);
 }
 
 uint32_t ID3V2_ENCODE_FRAME_SIZE(const uint32_t size, uint8_t* data, const size_t dataSize)
@@ -227,7 +228,7 @@ uint32_t ID3V2_ENCODE_FRAME_SIZE(const uint32_t size, uint8_t* data, const size_
    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_FRAME_SIZE);
    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FRAME_ID_SIZE, ID3V2_INVALID_FRAME_SIZE);
 
-   uint32_t encodedSize = _Fast_Byte_Swap_32(size);
+   uint32_t encodedSize = NmcsByteSwap32(size);
 
    data[0]              = ((uint8_t*)&encodedSize)[0];
    data[1]              = ((uint8_t*)&encodedSize)[1];
@@ -247,7 +248,7 @@ uint16_t ID3V2_DECODE_FRAME_FLAGS(const uint8_t* data, const size_t dataSize)
    ((uint8_t*)&flags)[0] = data[0];
    ((uint8_t*)&flags)[1] = data[1];
 
-   return _Fast_Byte_Swap_16(flags);
+   return NmcsByteSwap16(flags);
 }
 
 uint16_t ID3V2_ENCODE_FRAME_FLAGS(const uint16_t flags, uint8_t* data, const size_t dataSize)
@@ -256,7 +257,7 @@ uint16_t ID3V2_ENCODE_FRAME_FLAGS(const uint16_t flags, uint8_t* data, const siz
    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_FRAME_FLAGS);
    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FRAME_ID_SIZE, ID3V2_INVALID_FRAME_FLAGS);
 
-   uint16_t encodedFlags = _Fast_Byte_Swap_16(flags);
+   uint16_t encodedFlags = NmcsByteSwap16(flags);
 
    data[0]               = ((uint8_t*)&encodedFlags)[0];
    data[1]               = ((uint8_t*)&encodedFlags)[1];
