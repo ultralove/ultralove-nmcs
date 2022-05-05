@@ -24,8 +24,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/runtimeguid.h>
-
 #include "clientguidgencommand.h"
 
 namespace ultralove { namespace nmcs { namespace client {

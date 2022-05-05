@@ -24,37 +24,34 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_CLIENT_APPLICATION_H_INCL__
-#define __NMCS_CLIENT_APPLICATION_H_INCL__
+#ifndef __NMCS_CLIENT_COMMON_H_INCL__
+#define __NMCS_CLIENT_COMMON_H_INCL__
 
-#include "clientcommon.h"
+#include <nmcs/common.h>
+#include <nmcs/model.h>
+#include <nmcs/platform.h>
+#include <nmcs/runtime.h>
+#include <nmcs/server.h>
+
+namespace nmcs     = ultralove::nmcs;
+namespace platform = ultralove::nmcs::platform;
+namespace runtime  = ultralove::nmcs::runtime;
+namespace model    = ultralove::nmcs::model;
+namespace server   = ultralove::nmcs::server;
+
+#include <CLI/CLI.hpp>
+
+#include <cstddef>
+#include <cstdint>
+#include <map>
+#include <vector>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace client {
-
-struct ClientApplicationArgs
-{
-   bool suppressLogo = true;
-   bool printVersion = false;
-};
-
-class ClientApplication : public CLI::App
-{
-public:
-   ClientApplication();
-
-   virtual void pre_callback();
-
-private:
-   std::shared_ptr<ClientApplicationArgs> args_;
-
-   static void Run(const std::shared_ptr<ClientApplicationArgs>& args);
-};
-
 }}} // namespace ultralove::nmcs::client
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_CLIENT_APPLICATION_H_INCL__
+#endif // #ifndef __NMCS_CLIENT_COMMON_H_INCL__

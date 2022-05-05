@@ -24,8 +24,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
-
 #include "clienthexdump.h"
 
 namespace ultralove { namespace nmcs { namespace client {

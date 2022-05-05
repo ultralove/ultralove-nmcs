@@ -24,37 +24,36 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_CLIENT_APPLICATION_H_INCL__
-#define __NMCS_CLIENT_APPLICATION_H_INCL__
+#include <nmcs/platformguid.h>
 
-#include "clientcommon.h"
+namespace ultralove { namespace nmcs { namespace platform {
 
-#pragma pack(push)
-#pragma pack(8)
-
-namespace ultralove { namespace nmcs { namespace client {
-
-struct ClientApplicationArgs
+NmcsStatus CreateGuid(uint8_t* data)
 {
-   bool suppressLogo = true;
-   bool printVersion = false;
-};
+   NMCS_PRECONDITION_RETURN(data != nullptr, NMCS_STATUS_INVALID_PARAMETER);
 
-class ClientApplication : public CLI::App
+   NmcsStatus status = NMCS_STATUS_FAILURE;
+   return status;
+}
+
+NmcsStatus CreateGuidFromString(const char* str, uint8_t* data)
 {
-public:
-   ClientApplication();
+   NMCS_PRECONDITION_RETURN(str != nullptr, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(data != nullptr, NMCS_STATUS_INVALID_PARAMETER);
 
-   virtual void pre_callback();
+   NmcsStatus status = NMCS_STATUS_FAILURE;
+   return status;
+}
 
-private:
-   std::shared_ptr<ClientApplicationArgs> args_;
+NMCS_SHARED_API NmcsStatus CreateGuidString(const uint8_t* data, char* str, const size_t strSize)
+{
+   NMCS_PRECONDITION_RETURN(data != nullptr, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(str != nullptr, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(strSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(strSize <= 16, NMCS_STATUS_INVALID_PARAMETER);
 
-   static void Run(const std::shared_ptr<ClientApplicationArgs>& args);
-};
+   NmcsStatus status = NMCS_STATUS_FAILURE;
+   return status;
+}
 
-}}} // namespace ultralove::nmcs::client
-
-#pragma pack(pop)
-
-#endif // #ifndef __NMCS_CLIENT_APPLICATION_H_INCL__
+}}} // namespace ultralove::nmcs::platform

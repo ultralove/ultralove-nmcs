@@ -48,4 +48,9 @@ add_dependencies(nmcsc ${NMCS_COMPILER_DEPENDENCIES})
 target_link_libraries(nmcsc ${NMCS_COMPILER_DEPENDENCIES})
 
 set_target_properties(nmcsc PROPERTIES VERSION ${PROJECT_VERSION})
-target_precompile_headers(nmcsc REUSE_FROM nmcsprecomp)
+target_precompile_headers(nmcsc PRIVATE
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
+  compilercommon.h
+)

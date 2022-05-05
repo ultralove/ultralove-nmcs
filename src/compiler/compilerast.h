@@ -27,6 +27,8 @@
 #ifndef __NMCS_COMPILER_AST_H_INCL__
 #define __NMCS_COMPILER_AST_H_INCL__
 
+#include "compilercommon.h"
+
 namespace ultralove { namespace nmcs { namespace compiler {
 
 class AST

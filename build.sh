@@ -149,6 +149,7 @@ if [ ! -d "$BUILD_DIRECTORY" ]; then
     cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --no-warn-unused-cli -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
     if [ $? -ne 0 ]; then
       echo "Failed to configure projects."
+      rm -rf "$BUILD_DIRECTORY"
       exit -1
     fi
     echo "Done."

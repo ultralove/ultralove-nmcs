@@ -25,6 +25,7 @@
 ################################################################################
 
 set (NMCS_MODEL_INCLUDES
+  modelcommon.h
 )
 
 set(NMCS_MODEL_SOURCES
@@ -47,4 +48,5 @@ target_precompile_headers(nmcsmodel PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
+  modelcommon.h
 )

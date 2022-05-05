@@ -34,6 +34,7 @@ set(NMCS_RUNTIME_INCLUDES
 
 set(NMCS_RUNTIME_SOURCES
   runtime.cpp
+  runtimecommon.h
   runtimeguid.cpp
   runtimeshared.cpp
   runtimestream.cpp
@@ -54,4 +55,5 @@ set_target_properties(nmcsruntime PROPERTIES VERSION ${PROJECT_VERSION} SOVERSIO
 target_precompile_headers(nmcsruntime PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
+  runtimecommon.h
 )

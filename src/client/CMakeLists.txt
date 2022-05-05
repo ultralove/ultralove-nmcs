@@ -28,6 +28,7 @@ include_directories(${CLI11_INCLUDES})
 
 set(NMCS_CLIENT_INCLUDES
   clientchapterscommand.h
+  clientcommon.h
   clientguidgencommand.h
   clienthexdump.h
 )
@@ -50,4 +51,11 @@ add_dependencies(nmcscli ${NMCS_CLIENT_DEPENDENCIES})
 target_link_libraries(nmcscli ${NMCS_CLIENT_DEPENDENCIES})
 
 set_target_properties(nmcscli PROPERTIES VERSION ${PROJECT_VERSION})
-target_precompile_headers(nmcscli REUSE_FROM nmcsprecomp)
+target_precompile_headers(nmcscli PRIVATE
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/model.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/server.h
+  clientcommon.h
+)

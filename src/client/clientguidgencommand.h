@@ -27,9 +27,7 @@
 #ifndef __NMCS_CLIENT_GUIDGEN_COMMAND_H_INCL__
 #define __NMCS_CLIENT_GUIDGEN_COMMAND_H_INCL__
 
-#include <CLI/CLI.hpp>
-
-#include <nmcs/common.h>
+#include "clientcommon.h"
 
 #pragma pack(push)
 #pragma pack(8)

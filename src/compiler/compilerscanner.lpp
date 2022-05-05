@@ -1,11 +1,11 @@
 %option noyywrap
 
 %{
-#include <cstdio>
+#include "compilercommon.h"
+#include "compilerparser.h"
 
 #define YY_DECL int yylex()
 
-#include "compilerparser.h"
 
 %}
 

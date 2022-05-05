@@ -24,7 +24,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/model.h>
+#include "modelcommon.h"
 
 namespace ultralove { namespace nmcs { namespace model {
 

@@ -26,6 +26,7 @@
 
 set(NMCS_PLATFORM_INCLUDES
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformguid.h
+  platformcommon.h
 )
 
 set(NMCS_PLATFORM_SOURCES
@@ -50,4 +51,5 @@ set_target_properties(nmcsplatform PROPERTIES VERSION ${PROJECT_VERSION} SOVERSI
 
 target_precompile_headers(nmcsplatform PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
+  platformcommon.h
 )

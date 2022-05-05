@@ -36,6 +36,7 @@
 #include <string>
 
 #include <atomic>
+#include <mutex>
 
 #include "version.h"
 

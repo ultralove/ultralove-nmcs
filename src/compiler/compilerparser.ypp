@@ -1,7 +1,6 @@
 %{
 
-#include <cstdio>
-#include <cstdlib>
+#include "compilercommon.h"
 
 extern int yylex();
 extern int yyparse();

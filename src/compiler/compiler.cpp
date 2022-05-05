@@ -24,13 +24,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
-#include <iostream>
-
-#include <CLI/CLI.hpp>
-
-#include <nmcs/common.h>
-
+#include "compilercommon.h"
 #include "compilerdriver.h"
 
 bool suppressLogo             = false;

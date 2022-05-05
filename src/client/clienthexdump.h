@@ -27,7 +27,7 @@
 #ifndef __NMCS_CLIENT_HEX_DUMP_H_INCL__
 #define __NMCS_CLIENT_HEX_DUMP_H_INCL__
 
-#include <nmcs/common.h>
+#include "clientcommon.h"
 
 #pragma pack(push)
 #pragma pack(8)
