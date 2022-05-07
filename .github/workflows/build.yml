@@ -22,13 +22,13 @@ jobs:
     strategy:
       matrix:
         # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
       - name: install (linux)
-        run: sudo apt-get install ninja-build uuid-dev
+        run: sudo apt-get install ninja-build openssl uuid-dev
         if: matrix.os == 'ubuntu-latest'
 
       - name: install (windows)
@@ -36,7 +36,7 @@ jobs:
         if: matrix.os == 'windows-latest'
 
       - name: install (darwin)
-        run: brew install ninja
+        run: brew install ninja openssl@3
         if: matrix.os == 'macos-latest'
 
       - uses: ilammy/msvc-dev-cmd@v1
