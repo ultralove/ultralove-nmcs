@@ -44,7 +44,7 @@ jobs:
           arch: x64
 
       - name: configure
-        run: cmake -GNinja -B${{runner.workspace}}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DNMCS_BUILD_ID=${{github.run_number}}
+        run: cmake -GNinja -B${{runner.workspace}}/build -Wno-dev --no-warn-unused-cli -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DNMCS_BUILD_ID=${{github.run_number}}
 
       - name: build
         run: cmake --build ${{runner.workspace}}/build --config Release
