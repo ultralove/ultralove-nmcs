@@ -24,7 +24,7 @@
 #
 ################################################################################
 
-include_directories(${CLI11_INCLUDES})
+include_directories(${LIBCLI11_INCLUDE_PATH})
 
 set(NMCS_COMPILER_INCLUDES
     compilerast.h

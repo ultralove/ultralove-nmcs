@@ -24,53 +24,73 @@
 #
 # ##############################################################################
 
+include_directories(
+  ${LIBCURL_INCLUDE_PATH}
+  ${LIBXML2_INCLUDE_PATH}
+  ${LIBSIMDJSON_INCLUDE_PATH}
+  ${LIBSPDLOG_INCLUDE_PATH}
+)
+
 set(NMCS_SERVER_INCLUDES
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercredentialservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverfileservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverhttpservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h
-    ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicemanager.h
-    serverattachedpictureframe.h
-    serverchapterframe.h
-    servercommentsframe.h
-    serverconfiguration.h
-    serverframe.h
-    serverframecontroller.h
-    serverframefactory.h
-    serverframeresource.h
-    serverid3v2.h
-    serveriframe.h
-    serverservicefactory.h
-    servertableofcontentsframe.h
-    servertextinformationframe.h
-    serverurllinkframe.h)
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/servercredentialservice.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverfileservice.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverhttpservice.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservice.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicecallback.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/serverservicemanager.h
+  serverattachedpictureframe.h
+  serverchapterframe.h
+  servercommentsframe.h
+  serverconfiguration.h
+  serverframe.h
+  serverframecontroller.h
+  serverframefactory.h
+  serverframeresource.h
+  serverid3v2.h
+  serveriframe.h
+  serverservicefactory.h
+  servertableofcontentsframe.h
+  servertextinformationframe.h
+  serverurllinkframe.h
+)
 
 set(NMCS_SERVER_SOURCES
-    server.cpp
-    serverattachedpictureframe.cpp
-    serverchapterframe.cpp
-    servercommentsframe.cpp
-    serverconfiguration.cpp
-    servercredentialservice.cpp
-    serverfileservice.cpp
-    serverframe.cpp
-    serverframecontroller.cpp
-    serverframefactory.cpp
-    serverhttpservice.cpp
-    serverid3v2.cpp
-    serverservicefactory.cpp
-    serverservicemanager.cpp
-    servertableofcontentsframe.cpp
-    servertextinformationframe.cpp
-    serverurllinkframe.cpp)
-
-set(NMCS_SERVER_DEPENDENCIES nmcsmodel)
+  server.cpp
+  serverattachedpictureframe.cpp
+  serverchapterframe.cpp
+  servercommentsframe.cpp
+  serverconfiguration.cpp
+  servercredentialservice.cpp
+  serverfileservice.cpp
+  serverframe.cpp
+  serverframecontroller.cpp
+  serverframefactory.cpp
+  serverhttpservice.cpp
+  serverid3v2.cpp
+  serverservicefactory.cpp
+  serverservicemanager.cpp
+  servertableofcontentsframe.cpp
+  servertextinformationframe.cpp
+  serverurllinkframe.cpp
+)
 
 add_library(nmcsserver ${NMCS_SERVER_INCLUDES} ${NMCS_SERVER_SOURCES})
 
-add_dependencies(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
-target_link_libraries(nmcsserver ${NMCS_SERVER_DEPENDENCIES})
+add_dependencies(nmcsserver
+  nmcsmodel
+  ${LIBCURL_LIBRARY}
+  ${LIBXML2_LIBRARY}
+  ${LIBSIMDJSON_LIBRARY}
+  ${LIBSPDLOG_LIBRARY}
+)
+
+target_link_libraries(nmcsserver
+  nmcsmodel
+  ${LIBCURL_LIBRARY_PATH}
+  ${LIBXML2_LIBRARY_PATH}
+  ${LIBSIMDJSON_LIBRARY_PATH}
+  ${LIBSPDLOG_LIBRARY_PATH}
+)
 
 set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION}
                                             SOVERSION ${PROJECT_VERSION})
