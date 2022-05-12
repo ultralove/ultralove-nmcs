@@ -39,6 +39,7 @@ set(NMCS_RUNTIME_SOURCES
   runtimeshared.cpp
   runtimestream.cpp
   runtimestring.cpp
+  runtimeuri.cpp
 )
 
 set(NMCS_RUNTIME_DEPENDENCIES
