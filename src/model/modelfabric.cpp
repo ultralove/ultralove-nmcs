@@ -28,9 +28,7 @@
 
 namespace ultralove { namespace nmcs { namespace model {
 
-const runtime::Guid Fabric::typeId_ = runtime::Guid::Create("68753A44-4D6F-1226-9C60-0050E4C00067");
-
-Fabric::~Fabric() {}
+const runtime::Guid Fabric::typeId_(runtime::Guid::Create("68753A44-4D6F-1226-9C60-0050E4C00067"));
 
 const runtime::Guid& Fabric::TypeId()
 {

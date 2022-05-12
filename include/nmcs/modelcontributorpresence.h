@@ -24,43 +24,31 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NMCS_MODEL_H_INCL__
-#define __NMCS_MODEL_H_INCL__
+#ifndef __NMCS_MODEL_CONTRIBUTOR_PRESENCE_H_INCL__
+#define __NMCS_MODEL_CONTRIBUTOR_PRESENCE_H_INCL__
 
-#include <nmcs/runtime.h>
-
-#include <nmcs/modelasset.h>
-#include <nmcs/modelchaptertag.h>
-#include <nmcs/modelcontribution.h>
-#include <nmcs/modelcontributor.h>
-#include <nmcs/modelcontributorpresence.h>
 #include <nmcs/modelcontributorpresencetype.h>
-#include <nmcs/modelcontributorrole.h>
-#include <nmcs/modelenclosure.h>
-#include <nmcs/modelenclosuretype.h>
-#include <nmcs/modelepisode.h>
-#include <nmcs/modelepisodetype.h>
 #include <nmcs/modelfabric.h>
-#include <nmcs/modellocationtag.h>
 #include <nmcs/modelpicture.h>
-#include <nmcs/modelpicturetype.h>
-#include <nmcs/modelpodcast.h>
-#include <nmcs/modelpublisher.h>
-#include <nmcs/modelseason.h>
-#include <nmcs/modeltag.h>
-#include <nmcs/modeltagreference.h>
-#include <nmcs/modeltagreferencetype.h>
-#include <nmcs/modeltranscripttag.h>
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace model {
-namespace nmcs     = ultralove::nmcs;
-namespace platform = ultralove::nmcs::platform;
-namespace runtime  = ultralove::nmcs::runtime;
+
+class NMCS_SHARED_API ContributorPresence : public Fabric
+{
+public:
+   runtime::String name_;
+   ContributorPresenceType type_;
+   runtime::Uri uri_;
+   Picture picture_;
+
+   virtual ~ContributorPresence() {}
+};
+
 }}} // namespace ultralove::nmcs::model
 
 #pragma pack(pop)
 
-#endif // #ifndef __NMCS_MODEL_H_INCL__
+#endif // #ifndef __NMCS_MODEL_CONTRIBUTOR_PRESENCE_H_INCL__

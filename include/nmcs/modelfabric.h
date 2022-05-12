@@ -28,6 +28,8 @@
 #define __NMCS_MODEL_FABRIC_H_INCL__
 
 #include <nmcs/runtimeguid.h>
+#include <nmcs/runtimestring.h>
+#include <nmcs/runtimetimestamp.h>
 
 #pragma pack(push)
 #pragma pack(8)
@@ -37,12 +39,16 @@ namespace ultralove { namespace nmcs { namespace model {
 class NMCS_SHARED_API Fabric
 {
 public:
-   virtual ~Fabric();
-
    static const runtime::Guid& TypeId();
+
+   runtime::Guid id_;
+   runtime::Timestamp creationDate_;
+   runtime::Timestamp modificationDate_;
+   runtime::String comment_;
 
 protected:
    static const runtime::Guid typeId_;
+   virtual ~Fabric() {}
 };
 
 }}} // namespace ultralove::nmcs::model
