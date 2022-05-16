@@ -29,9 +29,12 @@ if(${CMAKE_VERSION} VERSION_LESS 3.14)
     include(cmake/add_FetchContent_MakeAvailable.cmake)
 endif()
 
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+
 FetchContent_Declare(cli11
   GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
   GIT_TAG v2.2.0
+  GIT_SHALLOW ON
 )
 FetchContent_GetProperties(cli11)
 if(NOT cli11_POPULATED)
@@ -51,6 +54,7 @@ set(LIBZ_LIBRARY libz)
 FetchContent_Declare(libz
   GIT_REPOSITORY https://github.com/madler/zlib.git
   GIT_TAG v1.2.12
+  GIT_SHALLOW ON
 )
 FetchContent_GetProperties(libz)
 if(NOT libz_POPULATED)
@@ -69,6 +73,7 @@ set(LIBCURL_LIBRARY libcurl)
 FetchContent_Declare(libcurl
   GIT_REPOSITORY https://github.com/curl/curl.git
   GIT_TAG curl-7_83_0
+  GIT_SHALLOW ON
 )
 FetchContent_GetProperties(libcurl)
 if(NOT libcurl_POPULATED)
@@ -103,6 +108,7 @@ set(LIBXML2_LIBRARY LibXml2)
 FetchContent_Declare(libxml2
   GIT_REPOSITORY https://github.com/GNOME/libxml2.git
   GIT_TAG v2.9.14
+  GIT_SHALLOW ON
 )
 FetchContent_GetProperties(libxml2)
 if(NOT libxml2_POPULATED)
@@ -124,6 +130,7 @@ set(LIBSIMDJSON_LIBRARY simdjson)
 FetchContent_Declare(simdjson
   GIT_REPOSITORY https://github.com/simdjson/simdjson.git
   GIT_TAG v1.0.2
+  GIT_SHALLOW ON
 )
 FetchContent_GetProperties(simdjson)
 if(NOT simdjson_POPULATED)
@@ -144,6 +151,7 @@ set(LIBSPDLOG_LIBRARY spdlog)
 FetchContent_Declare(spdlog
   GIT_REPOSITORY https://github.com/gabime/spdlog.git
   GIT_TAG v1.10.0
+  GIT_SHALLOW ON
 )
 FetchContent_GetProperties(spdlog)
 if(NOT spdlog_POPULATED)
