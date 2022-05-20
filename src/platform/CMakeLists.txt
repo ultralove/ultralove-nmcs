@@ -26,11 +26,13 @@
 
 set(NMCS_PLATFORM_INCLUDES
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformguid.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformvault.h
   platformcommon.h
 )
 
 set(NMCS_PLATFORM_SOURCES
   ${NMCS_TARGET_SYSTEM}/platformguid.cpp
+  ${NMCS_TARGET_SYSTEM}/platformvault.cpp
   platform.cpp
 )
 

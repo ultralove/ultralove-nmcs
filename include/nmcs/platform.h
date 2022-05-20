@@ -49,11 +49,13 @@ namespace nmcs = ultralove::nmcs;
    #define NmcsByteSwap64(x) __builtin_bswap64(x)
 #endif
 
+extern "C" {
 void* NmcsAlloc(const size_t size);
 void NmcsRelease(void*& ptr);
 
 uint32_t NmcsUnsynchronize32(const uint32_t value);
 uint32_t NmcsSynchronize32(const uint32_t value);
+}
 
 #pragma pack(pop)
 

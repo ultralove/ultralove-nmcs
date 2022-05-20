@@ -27,7 +27,7 @@
 #ifndef __NMCS_STATUS_H_INCL__
 #define __NMCS_STATUS_H_INCL__
 
-#include <cstdint>
+#include <stdint.h>
 
 typedef uint32_t NmcsStatus;
 #define NMCS_MAKE_STATUS_CODE(__severity__, __facility__, __code__) ((uint32_t)((__severity__) | (__facility__ << 16) | (__code__ << 0)))
@@ -44,6 +44,8 @@ typedef uint32_t NmcsStatus;
 #define NMCS_STATUS_NOT_IMPLEMENTED                                 NMCS_MAKE_STATUS_CODE(NMCS_SEVERITY_ERROR, 0, 0x00000004)
 #define NMCS_STATUS_ALREADY_REGISTERED                              NMCS_MAKE_STATUS_CODE(NMCS_SEVERITY_ERROR, 0, 0x00000005)
 #define NMCS_STATUS_OUT_OF_MEMORY                                   NMCS_MAKE_STATUS_CODE(NMCS_SEVERITY_ERROR, 0, 0x00000006)
+#define NMCS_STATUS_NOT_FOUND                                       NMCS_MAKE_STATUS_CODE(NMCS_SEVERITY_ERROR, 0, 0x00000007)
+#define NMCS_STATUS_ALREADY_EXISTS                                  NMCS_MAKE_STATUS_CODE(NMCS_SEVERITY_ERROR, 0, 0x00000008)
 
 #define NMCS_SUCCEEDED(__status__)                                  (NMCS_STATUS_SUCCESS == (__status__))
 #define NMCS_FAILED(__status__)                                     (NMCS_STATUS_SUCCESS != (__status__))
