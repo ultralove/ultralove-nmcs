@@ -29,40 +29,40 @@
 
 namespace ultralove { namespace nmcs { namespace platform {
 
-void FreeUnicodeString(wchar_t** ppUnicodeString, const size_t unicodeStringLength)
+void FreeUnicodeString(wchar_t** ppUnicodeString, const size_t unicodeStringSize)
 {
    NMCS_PRECONDITION(ppUnicodeString != 0);
    NMCS_PRECONDITION(*ppUnicodeString != 0);
-   NMCS_PRECONDITION(unicodeStringLength > 0);
+   NMCS_PRECONDITION(unicodeStringSize > 0);
 
-   memset((void*)*ppUnicodeString, 0, unicodeStringLength);
+   memset((void*)*ppUnicodeString, 0, unicodeStringSize);
    free((void*)*ppUnicodeString);
    *ppUnicodeString = 0;
 }
 
-NmcsStatus AnsiStringToUnicodeString(const char* pAnsiString, const size_t ansiStringLength, wchar_t** ppUnicodeString, size_t* pUnicodeStringLength)
+NmcsStatus AnsiStringToUnicodeString(const char* pAnsiString, const size_t ansiStringSize, wchar_t** ppUnicodeString, size_t* pUnicodeStringSize)
 {
    NMCS_PRECONDITION_RETURN(pAnsiString != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(ansiStringLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(ansiStringSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
    NMCS_PRECONDITION_RETURN(ppUnicodeString != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pUnicodeStringLength != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUnicodeStringSize != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
 
-   *ppUnicodeString        = 0;
-   *pUnicodeStringLength   = 0;
+   *ppUnicodeString      = 0;
+   *pUnicodeStringSize   = 0;
 
-   NmcsStatus status       = NMCS_NMCS_STATUS_FAILURE;
-   int unicodeStringLength = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, pAnsiString, (int)ansiStringLength, 0, 0);
-   if (unicodeStringLength > 0) {
-      wchar_t* pUnicodeString = (wchar_t*)calloc(unicodeStringLength + 1, sizeof(WCHAR));
+   NmcsStatus status     = NMCS_NMCS_STATUS_FAILURE;
+   int unicodeStringSize = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, pAnsiString, (int)ansiStringSize, 0, 0);
+   if (unicodeStringSize > 0) {
+      wchar_t* pUnicodeString = (wchar_t*)calloc(unicodeStringSize + 1, sizeof(WCHAR));
       if (pUnicodeString != 0) {
-         int convertedChars = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, pAnsiString, (int)ansiStringLength, pUnicodeString, unicodeStringLength);
+         int convertedChars = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, pAnsiString, (int)ansiStringSize, pUnicodeString, unicodeStringSize);
          if (convertedChars > 0) {
-            *ppUnicodeString      = pUnicodeString;
-            *pUnicodeStringLength = unicodeStringLength;
-            status                = NMCS_STATUS_SUCCESS;
+            *ppUnicodeString    = pUnicodeString;
+            *pUnicodeStringSize = unicodeStringSize;
+            status              = NMCS_STATUS_SUCCESS;
          }
          else {
-            CSFreeUnicodeString(&pUnicodeString, unicodeStringLength);
+            CSFreeUnicodeString(&pUnicodeString, unicodeStringSize);
             status = NMCS_NMCS_STATUS_FAILURE;
          }
       }
@@ -105,53 +105,51 @@ void CSPrintSecErrorW(const wchar_t* pDescription, const long status)
 }
 
 NmcsStatus CreateCredentialsA(
-   const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength, const void* pPassword,
-   const size_t passwordLength)
+   const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize, const void* pSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
 
-   wchar_t* pServiceNameBuffer    = 0;
+   wchar_t* pServiceIdBuffer      = 0;
    size_t serviceNameBufferLength = 0;
-   NmcsStatus status              = AnsiStringToUnicodeString(pServiceName, serviceNameLength, &pServiceNameBuffer, &serviceNameBufferLength);
+   NmcsStatus status              = AnsiStringToUnicodeString(pServiceId, serviceIdSize, &pServiceIdBuffer, &serviceNameBufferLength);
    if (NMCS_STATUS_SUCCESS == status) {
-      wchar_t* pLoginNameBuffer    = 0;
+      wchar_t* pUserIdBuffer       = 0;
       size_t loginNameBufferLength = 0;
-      Status                       = AnsiStringToUnicodeString(pLoginName, loginNameLength, &pLoginNameBuffer, &loginNameBufferLength);
+      Status                       = AnsiStringToUnicodeString(pUserId, userIdSize, &pUserIdBuffer, &loginNameBufferLength);
       if (NMCS_STATUS_SUCCESS == Status) {
-         status = CreateCredentialsW(pServiceNameBuffer, serviceNameBufferLength, pLoginNameBuffer, loginNameBufferLength, pPassword, passwordLength);
-         FreeUnicodeString(&pLoginNameBuffer, loginNameBufferLength);
+         status = CreateCredentialsW(pServiceIdBuffer, serviceNameBufferLength, pUserIdBuffer, loginNameBufferLength, pSecret, secretSize);
+         FreeUnicodeString(&pUserIdBuffer, loginNameBufferLength);
       }
-      FreeUnicodeString(&pServiceNameBuffer, serviceNameBufferLength);
+      FreeUnicodeString(&pServiceIdBuffer, serviceNameBufferLength);
    }
    return Status;
 }
 
 NmcsStatus CreateCredentialsW(
-   const wchar_t* pServiceName, const size_t serviceNameLength, const wchar_t* pLoginName, const size_t loginNameLength, const void* pPassword,
-   const size_t passwordLength)
+   const wchar_t* pServiceId, const size_t serviceIdSize, const wchar_t* pUserId, const size_t userIdSize, const void* pSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pPassword != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength <= CRED_MAX_CREDENTIAL_BLOB_SIZE, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pSecret != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize <= CRED_MAX_CREDENTIAL_BLOB_SIZE, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status        = NMCS_STATUS_FAILURE;
    PCREDENTIALW pCredential = {0};
-   if (CredReadW(pServiceName, CRED_TYPE_GENERIC, 0, &pCredential) == FALSE) {
+   if (CredReadW(pServiceId, CRED_TYPE_GENERIC, 0, &pCredential) == FALSE) {
       CREDENTIALW Credential        = {0};
       Credential.Type               = CRED_TYPE_GENERIC;
-      Credential.TargetName         = (LPWSTR)pServiceName;
+      Credential.TargetName         = (LPWSTR)pServiceId;
       Credential.Comment            = L"ultralove::nmcs::vault";
-      Credential.CredentialBlobSize = (DWORD)passwordLength;
-      Credential.CredentialBlob     = (LPBYTE)pPassword;
+      Credential.CredentialBlobSize = (DWORD)secretSize;
+      Credential.CredentialBlob     = (LPBYTE)pSecret;
       Credential.Persist            = CRED_PERSIST_LOCAL_MACHINE;
-      Credential.UserName           = (LPWSTR)pLoginName;
+      Credential.UserName           = (LPWSTR)pUserId;
       if (CredWriteW(&pCredential, 0) != FALSE) {
          status = NMCS_STATUS_SUCCESS;
       }
@@ -169,51 +167,50 @@ NmcsStatus CreateCredentialsW(
    return status;
 }
 
-NmcsStatus ReadCredentialsA(
-   const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength, void** ppPassword, size_t* pPasswordLength)
+NmcsStatus
+ReadCredentialsA(const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize, void** ppSecret, size_t* pSecretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
 
-   wchar_t* pServiceNameBuffer    = 0;
+   wchar_t* pServiceIdBuffer      = 0;
    size_t serviceNameBufferLength = 0;
-   NmcsStatus status              = AnsiStringToUnicodeString(pServiceName, serviceNameLength, &pServiceNameBuffer, &serviceNameBufferLength);
+   NmcsStatus status              = AnsiStringToUnicodeString(pServiceId, serviceIdSize, &pServiceIdBuffer, &serviceNameBufferLength);
    if (NMCS_STATUS_SUCCESS == status) {
-      wchar_t* pLoginNameBuffer    = 0;
+      wchar_t* pUserIdBuffer       = 0;
       size_t loginNameBufferLength = 0;
-      status                       = AnsiStringToUnicodeString(pLoginName, loginNameLength, &pLoginNameBuffer, &loginNameBufferLength);
+      status                       = AnsiStringToUnicodeString(pUserId, userIdSize, &pUserIdBuffer, &loginNameBufferLength);
       if (NMCS_STATUS_SUCCESS == status) {
-         status = ReadCredentialsW(pServiceNameBuffer, serviceNameBufferLength, pLoginNameBuffer, loginNameBufferLength, ppPassword, pPasswordLength);
-         FreeUnicodeString(&pLoginNameBuffer, loginNameBufferLength);
+         status = ReadCredentialsW(pServiceIdBuffer, serviceNameBufferLength, pUserIdBuffer, loginNameBufferLength, ppSecret, pSecretSize);
+         FreeUnicodeString(&pUserIdBuffer, loginNameBufferLength);
       }
-      FreeUnicodeString(&pServiceNameBuffer, serviceNameBufferLength);
+      FreeUnicodeString(&pServiceIdBuffer, serviceNameBufferLength);
    }
    return status;
 }
 
-NmcsStatus ReadCredentialsW(
-   const wchar_t* pServiceName, const size_t serviceNameLength, const wchar_t* pLoginName, const size_t loginNameLength, void** ppPassword,
-   size_t* pPasswordLength)
+NmcsStatus
+ReadCredentialsW(const wchar_t* pServiceId, const size_t serviceIdSize, const wchar_t* pUserId, const size_t userIdSize, void** ppSecret, size_t* pSecretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(ppPassword != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pPasswordLength != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(ppSecret != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pSecretSize != NULL, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus Status        = NMCS_STATUS_FAILURE;
-   *ppPassword              = 0;
-   *pPasswordLength         = 0;
+   *ppSecret                = 0;
+   *pSecretSize             = 0;
    PCREDENTIALW pCredential = {0};
    if (CredReadW(ServiceName, CRED_TYPE_GENERIC, 0, &pCredential) != FALSE) {
-      status = AllocPassword(ppPassword, pCredential->CredentialBlobSize);
+      status = AllocPassword(ppSecret, pCredential->CredentialBlobSize);
       if (NMCS_STATUS_SUCCESS == status) {
-         memmove(*ppPassword, pCredential->CredentialBlob, pCredential->CredentialBlobSize);
-         *pPasswordLength = pCredential->CredentialBlobSize;
-         status           = NMCS_STATUS_SUCCESS;
+         memmove(*ppSecret, pCredential->CredentialBlob, pCredential->CredentialBlobSize);
+         *pSecretSize = pCredential->CredentialBlobSize;
+         status       = NMCS_STATUS_SUCCESS;
       }
       CredFree(pCredential);
       pCredential = 0;
@@ -231,55 +228,53 @@ NmcsStatus ReadCredentialsW(
 }
 
 NmcsStatus UpdateCredentialsA(
-   const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength, const void* pPassword,
-   const size_t passwordLength)
+   const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize, const void* pSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
 
-   wchar_t* pServiceNameBuffer    = 0;
+   wchar_t* pServiceIdBuffer      = 0;
    size_t serviceNameBufferLength = 0;
-   NmcsStatus status              = AnsiStringToUnicodeString(pServiceName, serviceNameLength, &pServiceNameBuffer, &serviceNameBufferLength);
+   NmcsStatus status              = AnsiStringToUnicodeString(pServiceId, serviceIdSize, &pServiceIdBuffer, &serviceNameBufferLength);
    if (NMCS_STATUS_SUCCESS == status) {
-      wchar_t* pLoginNameBuffer    = 0;
+      wchar_t* pUserIdBuffer       = 0;
       size_t loginNameBufferLength = 0;
-      status                       = AnsiStringToUnicodeString(pLoginName, loginNameLength, &pLoginNameBuffer, &loginNameBufferLength);
+      status                       = AnsiStringToUnicodeString(pUserId, userIdSize, &pUserIdBuffer, &loginNameBufferLength);
       if (NMCS_STATUS_SUCCESS == status) {
-         status = UpdateCredentialsW(pServiceNameBuffer, serviceNameBufferLength, pLoginNameBuffer, loginNameBufferLength, pPassword, passwordLength);
-         FreeUnicodeString(&pLoginNameBuffer, loginNameBufferLength);
+         status = UpdateCredentialsW(pServiceIdBuffer, serviceNameBufferLength, pUserIdBuffer, loginNameBufferLength, pSecret, secretSize);
+         FreeUnicodeString(&pUserIdBuffer, loginNameBufferLength);
       }
-      FreeUnicodeString(&pServiceNameBuffer, serviceNameBufferLength);
+      FreeUnicodeString(&pServiceIdBuffer, serviceNameBufferLength);
    }
    return status;
 }
 
 NmcsStatus UpdateCredentialsW(
-   const wchar_t* pServiceName, const size_t serviceNameLength, const wchar_t* pLoginName, const size_t loginNameLength, const void* pPassword,
-   const size_t passwordLength)
+   const wchar_t* pServiceId, const size_t serviceIdSize, const wchar_t* pUserId, const size_t userIdSize, const void* pSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pPassword != NULL, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength <= CRED_MAX_CREDENTIAL_BLOB_SIZE, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pSecret != NULL, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize <= CRED_MAX_CREDENTIAL_BLOB_SIZE, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status        = NMCS_STATUS_FAILURE;
    PCREDENTIALW pCredential = {0};
-   if (CredReadW(pServiceName, CRED_TYPE_GENERIC, 0, &pCredential) != FALSE) {
+   if (CredReadW(pServiceId, CRED_TYPE_GENERIC, 0, &pCredential) != FALSE) {
       CredFree(pCredential);
       pCredential                   = 0;
       CREDENTIALW Credential        = {0};
       Credential.Type               = CRED_TYPE_GENERIC;
-      Credential.TargetName         = (LPWSTR)pServiceName;
+      Credential.TargetName         = (LPWSTR)pServiceId;
       Credential.Comment            = L"ultralove::nmcs::vault";
-      Credential.CredentialBlobSize = (DWORD)passwordLength;
-      Credential.CredentialBlob     = (LPBYTE)pPassword;
+      Credential.CredentialBlobSize = (DWORD)secretSize;
+      Credential.CredentialBlob     = (LPBYTE)pSecret;
       Credential.Persist            = CRED_PERSIST_LOCAL_MACHINE;
-      Credential.UserName           = (LPWSTR)pLoginName;
+      Credential.UserName           = (LPWSTR)pUserId;
 
       if (CredWriteW(&Credential, 0) != FALSE) {
          status = NMCS_STATUS_SUCCESS;
@@ -294,38 +289,38 @@ NmcsStatus UpdateCredentialsW(
    return status;
 }
 
-NmcsStatus DeleteCredentialsA(const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength)
+NmcsStatus DeleteCredentialsA(const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_NMCS_STATUS_INVALID_PARAMETER);
 
-   wchar_t* pServiceNameBuffer    = 0;
+   wchar_t* pServiceIdBuffer      = 0;
    size_t serviceNameBufferLength = 0;
-   NmcsStatus status              = AnsiStringToUnicodeString(pServiceName, serviceNameLength, &pServiceNameBuffer, &serviceNameBufferLength);
+   NmcsStatus status              = AnsiStringToUnicodeString(pServiceId, serviceIdSize, &pServiceIdBuffer, &serviceNameBufferLength);
    if (NMCS_STATUS_SUCCESS == status) {
-      wchar_t* pLoginNameBuffer    = 0;
+      wchar_t* pUserIdBuffer       = 0;
       size_t loginNameBufferLength = 0;
-      status                       = AnsiStringToUnicodeString(pLoginName, loginNameLength, &pLoginNameBuffer, &loginNameBufferLength);
+      status                       = AnsiStringToUnicodeString(pUserId, userIdSize, &pUserIdBuffer, &loginNameBufferLength);
       if (NMCS_STATUS_SUCCESS == status) {
-         status = DeleteCredentialsW(pServiceNameBuffer, serviceNameBufferLength, pLoginNameBuffer, loginNameBufferLength);
-         FreeUnicodeString(&pLoginNameBuffer, loginNameBufferLength);
+         status = DeleteCredentialsW(pServiceIdBuffer, serviceNameBufferLength, pUserIdBuffer, loginNameBufferLength);
+         FreeUnicodeString(&pUserIdBuffer, loginNameBufferLength);
       }
-      FreeUnicodeString(&pServiceNameBuffer, serviceNameBufferLength);
+      FreeUnicodeString(&pServiceIdBuffer, serviceNameBufferLength);
    }
    return status;
 }
 
-NmcsStatus DeleteCredentialsW(const wchar_t* pServiceName, const size_t serviceNameLength, const wchar_t* pLoginName, const size_t loginNameLength)
+NmcsStatus DeleteCredentialsW(const wchar_t* pServiceId, const size_t serviceIdSize, const wchar_t* pUserId, const size_t userIdSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != NULL, STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != NULL, STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != NULL, STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != NULL, STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, STATUS_INVALID_PARAMETER);
 
    NmcsStatus status = STATUS_FAILURE;
-   if (CredDeleteW(pServiceName, CRED_TYPE_GENERIC, 0) != FALSE) {
+   if (CredDeleteW(pServiceId, CRED_TYPE_GENERIC, 0) != FALSE) {
       status = NMCS_STATUS_SUCCESS;
    }
    else {
@@ -340,15 +335,15 @@ NmcsStatus DeleteCredentialsW(const wchar_t* pServiceName, const size_t serviceN
    return status;
 }
 
-NmcsStatus AllocPassword(void** ppPassword, const size_t passwordLength)
+NmcsStatus AllocSecret(void** ppSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(ppPassword != 0, NMCS_NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(*ppPassword == 0, NMCS_NMCS_NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength > 0, NMCS_NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(ppSecret != 0, NMCS_NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(*ppSecret == 0, NMCS_NMCS_NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize > 0, NMCS_NMCS_NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status = NMCS_NMCS_STATUS_FAILURE;
-   *ppPassword       = calloc(passwordLength, sizeof(char));
-   if (*ppPassword != 0) {
+   *ppSecret         = calloc(secretSize, sizeof(char));
+   if (*ppSecret != 0) {
       status = NMCS_STATUS_SUCCESS;
    }
    else {
@@ -357,15 +352,15 @@ NmcsStatus AllocPassword(void** ppPassword, const size_t passwordLength)
    return status;
 }
 
-void ReleasePassword(void** ppPassword, const size_t passwordLength)
+void ReleaseSecret(void** ppSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION(ppPassword != 0);
-   NMCS_PRECONDITION(*ppPassword != 0);
-   NMCS_PRECONDITION(passwordLength > 0);
+   NMCS_PRECONDITION(ppSecret != 0);
+   NMCS_PRECONDITION(*ppSecret != 0);
+   NMCS_PRECONDITION(secretSize > 0);
 
-   memset(*ppPassword, 0, passwordLength);
-   free(*ppPassword);
-   *ppPassword = 0;
+   memset(*ppSecret, 0, secretSize);
+   free(*ppSecret);
+   *ppSecret = 0;
 }
 
 }}} // namespace ultralove::nmcs::platform

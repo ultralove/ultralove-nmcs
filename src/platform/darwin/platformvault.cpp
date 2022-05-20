@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <nmcs/platform.h>
+#include <nmcs/platformalloc.h>
 #include <nmcs/platformvault.h>
 
 #include <CoreFoundation/CoreFoundation.h>
@@ -42,7 +43,7 @@ NmcsStatus GetCredentialsErrorString(char** ppErrorString, const OSStatus system
    if (errorMessage != 0) {
       CFIndex minBufferLength = CFStringGetLength(errorMessage);
       CFIndex maxBufferLength = CFStringGetMaximumSizeForEncoding(minBufferLength, kCFStringEncodingUTF8) + 1;
-      char* pBuffer           = (char*)NmcsAlloc(maxBufferLength * sizeof(char));
+      char* pBuffer           = (char*)Alloc(maxBufferLength * sizeof(char));
       if (pBuffer != 0) {
          if (CFStringGetCString(errorMessage, pBuffer, maxBufferLength, kCFStringEncodingUTF8) != FALSE) {
             *ppErrorString = pBuffer;

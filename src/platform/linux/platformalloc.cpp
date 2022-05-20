@@ -27,7 +27,6 @@
 #include <nmcs/platformalloc.h>
 
 namespace ultralove { namespace nmcs { namespace platform {
-}}} // namespace ultralove::nmcs::platform
 
 void* Alloc(const size_t size)
 {
@@ -42,36 +41,4 @@ void Release(void*& ptr)
    ptr = nullptr;
 }
 
-uint32_t NmcsUnsynchronize32(const uint32_t value)
-{
-   uint32_t result = 0;
-
-   uint32_t first  = value & 0xFF;
-   uint32_t second = (value >> 8) & 0xFF;
-   uint32_t third  = (value >> 16) & 0xFF;
-   uint32_t fourth = (value >> 24) & 0xFF;
-   result          = result | first;
-   result          = result | (second << 7);
-   result          = result | (third << 14);
-   result          = result | (fourth << 21);
-
-   return result;
-}
-
-uint32_t NmcsSynchronize32(const uint32_t value)
-{
-   uint32_t result      = 0;
-
-   uint32_t valueBuffer = value;
-   uint32_t valueMask   = 0x7F;
-
-   while (valueMask ^ 0x7FFFFFFF) {
-      result = valueBuffer & ~valueMask;
-      result <<= 1;
-      result |= valueBuffer & valueMask;
-      valueMask   = ((valueMask + 1) << 8) - 1;
-      valueBuffer = result;
-   }
-
-   return result;
-}
+}}} // namespace ultralove::nmcs::platform

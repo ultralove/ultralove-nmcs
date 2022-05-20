@@ -34,8 +34,16 @@
 
 namespace ultralove { namespace nmcs { namespace server {
 
-class NMCS_SHARED_API ICredentialService : public runtime::Shared
+class NMCS_SHARED_API ICredentialService : public IService
 {
+   virtual NmcsStatus CreateCredentials(const runtime::String& serviceId, const runtime::String& userId, const runtime::String& secret) = 0;
+
+   virtual NmcsStatus ReadCredentials(const runtime::String& serviceId, const runtime::String& userId, runtime::String& secret)         = 0;
+
+   virtual NmcsStatus UpdateCredentials(const runtime::String& serviceId, const runtime::String& userId, const runtime::String& secret) = 0;
+
+   virtual NmcsStatus DeleteCredentials(const runtime::String& serviceId)                                                               = 0;
+
 protected:
    virtual ~ICredentialService() {}
 };

@@ -24,10 +24,68 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "serverconfiguration.h"
+#include "serverservicefactory.h"
+#include "serverserviceresource.h"
 
+#include <nmcs/platformvault.h>
 #include <nmcs/servercredentialservice.h>
 
 namespace ultralove { namespace nmcs { namespace server {
+
+class CredentialService : public ICredentialService
+{
+public:
+   static NmcsStatus CreateService(IServiceCallback*, IService*& pService)
+   {
+      pService = new CredentialService();
+      return NMCS_STATUS_SUCCESS;
+   }
+
+   virtual NmcsStatus CreateCredentials(const runtime::String& serviceId, const runtime::String& userId, const runtime::String& secret)
+   {
+      NMCS_PRECONDITION_RETURN(serviceId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+      NMCS_PRECONDITION_RETURN(userId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+      NMCS_PRECONDITION_RETURN(secret.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+
+      NmcsStatus status =
+         platform::CreateCredentials((const char*)serviceId.Data(), serviceId.Size(), (const char*)userId.Data(), userId.Size(), secret.Data(), secret.Size());
+      return status;
+   }
+
+   virtual NmcsStatus ReadCredentials(const runtime::String& serviceId, const runtime::String& userId, runtime::String& secret)
+   {
+      NMCS_PRECONDITION_RETURN(serviceId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+      NMCS_PRECONDITION_RETURN(userId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+
+      NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
+      return status;
+   }
+
+   virtual NmcsStatus UpdateCredentials(const runtime::String& serviceId, const runtime::String& userId, const runtime::String& secret)
+   {
+      NMCS_PRECONDITION_RETURN(serviceId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+      NMCS_PRECONDITION_RETURN(userId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+      NMCS_PRECONDITION_RETURN(secret.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+
+      NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
+      return status;
+   }
+
+   virtual NmcsStatus DeleteCredentials(const runtime::String& serviceId)
+   {
+      NMCS_PRECONDITION_RETURN(serviceId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
+
+      NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
+      return status;
+   }
+
+protected:
+   virtual ~CredentialService() {}
+
+private:
+   CredentialService() {}
+};
+
+static ServiceResource<CredentialService> resource("nmcs::credentialService");
 
 }}} // namespace ultralove::nmcs::server

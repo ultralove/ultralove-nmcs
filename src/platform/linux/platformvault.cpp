@@ -29,7 +29,7 @@
 
 namespace ultralove { namespace nmcs { namespace platform {
 
-NmcsStatus GetCredentialsErrorString(char** ppErrorString, const OSStatus systemStatus)
+NmcsStatus GetCredentialsErrorString(char** ppErrorString, const uint32 systemStatus)
 {
    NMCS_PRECONDITION_RETURN(ppErrorString != 0, NMCS_STATUS_INVALID_PARAMETER);
 
@@ -38,69 +38,67 @@ NmcsStatus GetCredentialsErrorString(char** ppErrorString, const OSStatus system
 }
 
 NmcsStatus CreateCredentials(
-   const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength, const void* pPassword,
-   const size_t passwordLength)
+   const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize, const void* pSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pPassword != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pSecret != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize > 0, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
    return status;
 }
 
-NmcsStatus ReadCredentials(
-   const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength, void** ppPassword, size_t* pPasswordLength)
+NmcsStatus
+ReadCredentials(const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize, void** ppSecret, size_t* pSecretLength)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(ppPassword != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pPasswordLength != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(ppSecret != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pSecretLength != 0, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
    return status;
 }
 
 NmcsStatus UpdateCredentials(
-   const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength, const void* pPassword,
-   const size_t passwordLength)
+   const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize, const void* pSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pPassword != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pSecret != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize > 0, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
    return status;
 }
 
-NmcsStatus DeleteCredentials(const char* pServiceName, const size_t serviceNameLength, const char* pLoginName, const size_t loginNameLength)
+NmcsStatus DeleteCredentials(const char* pServiceId, const size_t serviceIdSize, const char* pUserId, const size_t userIdSize)
 {
-   NMCS_PRECONDITION_RETURN(pServiceName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(serviceNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(pLoginName != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(loginNameLength > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pServiceId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(serviceIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(pUserId != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(userIdSize > 0, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
    return status;
 }
 
-NmcsStatus AllocPassword(void** ppPassword, const size_t passwordLength)
+NmcsStatus AllocSecret(void** ppSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION_RETURN(ppPassword != 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(*ppPassword == 0, NMCS_STATUS_INVALID_PARAMETER);
-   NMCS_PRECONDITION_RETURN(passwordLength > 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(ppSecret != 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(*ppSecret == 0, NMCS_STATUS_INVALID_PARAMETER);
+   NMCS_PRECONDITION_RETURN(secretSize > 0, NMCS_STATUS_INVALID_PARAMETER);
 
    NmcsStatus Status = NMCS_STATUS_FAILURE;
-   *ppPassword       = calloc(passwordLength, sizeof(char));
-   if (*ppPassword != 0) {
+   *ppSecret         = calloc(secretSize, sizeof(char));
+   if (*ppSecret != 0) {
       Status = NMCS_STATUS_SUCCESS;
    }
    else {
@@ -109,15 +107,15 @@ NmcsStatus AllocPassword(void** ppPassword, const size_t passwordLength)
    return Status;
 }
 
-void ReleasePassword(void** ppPassword, const size_t passwordLength)
+void ReleaseSecret(void** ppSecret, const size_t secretSize)
 {
-   NMCS_PRECONDITION(ppPassword != 0);
-   NMCS_PRECONDITION(*ppPassword != 0);
-   NMCS_PRECONDITION(passwordLength > 0);
+   NMCS_PRECONDITION(ppSecret != 0);
+   NMCS_PRECONDITION(*ppSecret != 0);
+   NMCS_PRECONDITION(secretSize > 0);
 
-   memset(*ppPassword, 0, passwordLength);
-   free(*ppPassword);
-   *ppPassword = 0;
+   memset(*ppSecret, 0, secretSize);
+   free(*ppSecret);
+   *ppSecret = 0;
 }
 
 }}} // namespace ultralove::nmcs::platform
