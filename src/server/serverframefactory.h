@@ -37,7 +37,7 @@ namespace ultralove { namespace nmcs { namespace server {
 class FrameFactory
 {
 public:
-   typedef IFrame* (*CREATE_FRAME_FUNCTION)();
+   typedef Frame* (*CREATE_FRAME_FUNCTION)();
 
    static FrameFactory& Instance();
    virtual ~FrameFactory();
@@ -46,7 +46,7 @@ public:
    void UnregisterFrame(const uint32_t id);
 
    bool CanCreate(const uint8_t* data, const size_t dataSize) const;
-   IFrame* Create(const uint8_t* data, const size_t dataSize) const;
+   Frame* Create(const uint8_t* data, const size_t dataSize) const;
 
 private:
    FrameFactory();

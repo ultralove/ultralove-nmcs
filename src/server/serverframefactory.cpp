@@ -79,14 +79,14 @@ bool FrameFactory::CanCreate(const uint8_t* data, const size_t dataSize) const
    return (functions_.find(id) != functions_.end());
 }
 
-IFrame* FrameFactory::Create(const uint8_t* data, const size_t dataSize) const
+Frame* FrameFactory::Create(const uint8_t* data, const size_t dataSize) const
 {
    NMCS_PRECONDITION_RETURN(data != nullptr, nullptr);
    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FRAME_HEADER_SIZE, nullptr);
 
    std::lock_guard<std::recursive_mutex> lock(functionsLock_);
 
-   IFrame* pFrame    = nullptr;
+   Frame* pFrame     = nullptr;
    const uint32_t id = ID3V2_DECODE_FRAME_ID(&data[ID3V2_FRAME_ID_OFFSET], ID3V2_FRAME_ID_SIZE);
    if (id != ID3V2_INVALID_FRAME_ID) {
       const FunctionDictionary::const_iterator functionIterator = functions_.find(id);

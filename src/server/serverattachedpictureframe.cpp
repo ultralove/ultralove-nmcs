@@ -35,7 +35,7 @@ AttachedPictureFrame::AttachedPictureFrame() {}
 
 AttachedPictureFrame::~AttachedPictureFrame() {}
 
-IFrame* AttachedPictureFrame::Create()
+Frame* AttachedPictureFrame::Create()
 {
    return new AttachedPictureFrame();
 }

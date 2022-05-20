@@ -42,7 +42,7 @@ URLLinkFrame::URLLinkFrame() {}
 
 URLLinkFrame::~URLLinkFrame() {}
 
-IFrame* URLLinkFrame::Create()
+Frame* URLLinkFrame::Create()
 {
    return new URLLinkFrame();
 }

@@ -35,7 +35,7 @@ ChapterFrame::ChapterFrame() {}
 
 ChapterFrame::~ChapterFrame() {}
 
-IFrame* ChapterFrame::Create()
+Frame* ChapterFrame::Create()
 {
    return new ChapterFrame();
 }

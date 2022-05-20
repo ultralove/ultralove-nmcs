@@ -27,14 +27,14 @@
 #ifndef __NMCS_SERVER_FRAME_DICTIONARY_H_INCL__
 #define __NMCS_SERVER_FRAME_DICTIONARY_H_INCL__
 
-#include "serveriframe.h"
+#include "serverframe.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace server {
 
-typedef std::map<runtime::Guid, IFrame*> FrameDictionary;
+typedef std::map<runtime::Guid, Frame*> FrameDictionary;
 
 }}} // namespace ultralove::nmcs::server
 

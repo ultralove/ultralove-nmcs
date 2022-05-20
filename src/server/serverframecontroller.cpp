@@ -45,7 +45,7 @@ FrameArray FrameController::ParseFrames(const runtime::Stream& stream)
       const size_t frameSize = ID3V2_DECODE_FRAME_SIZE(&data[ID3V2_FRAME_SIZE_OFFSET], ID3V2_FRAME_SIZE_SIZE);
       if (frameSize > 0) {
          if (frameFactory.CanCreate(data, ID3V2_FRAME_ID_SIZE) == true) {
-            IFrame* pFrame = frameFactory.Create(data, dataSize);
+            Frame* pFrame = frameFactory.Create(data, dataSize);
             if (pFrame != nullptr) {
                frameDictionary.insert(std::make_pair(runtime::Guid::Create(), pFrame));
             }
@@ -59,7 +59,7 @@ FrameArray FrameController::ParseFrames(const runtime::Stream& stream)
    }
 
    FrameArray frames;
-   std::for_each(frameDictionary.begin(), frameDictionary.end(), [&](const std::pair<runtime::Guid, IFrame*>& item) { frames.push_back(item.second); });
+   std::for_each(frameDictionary.begin(), frameDictionary.end(), [&](const std::pair<runtime::Guid, Frame*>& item) { frames.push_back(item.second); });
 
    return frames;
 }

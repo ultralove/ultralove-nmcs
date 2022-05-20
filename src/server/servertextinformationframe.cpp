@@ -72,7 +72,7 @@ TextInformationFrame::TextInformationFrame() {}
 
 TextInformationFrame::~TextInformationFrame() {}
 
-IFrame* TextInformationFrame::Create()
+Frame* TextInformationFrame::Create()
 {
    return new TextInformationFrame();
 }

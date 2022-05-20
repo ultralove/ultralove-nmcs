@@ -29,6 +29,40 @@
 
 namespace ultralove { namespace nmcs { namespace server {
 
+uint32_t Unsynchronize32(const uint32_t value)
+{
+   uint32_t result = 0;
+
+   uint32_t first  = value & 0xFF;
+   uint32_t second = (value >> 8) & 0xFF;
+   uint32_t third  = (value >> 16) & 0xFF;
+   uint32_t fourth = (value >> 24) & 0xFF;
+   result          = result | first;
+   result          = result | (second << 7);
+   result          = result | (third << 14);
+   result          = result | (fourth << 21);
+
+   return result;
+}
+
+uint32_t Synchronize32(const uint32_t value)
+{
+   uint32_t result      = 0;
+
+   uint32_t valueBuffer = value;
+   uint32_t valueMask   = 0x7F;
+
+   while (valueMask ^ 0x7FFFFFFF) {
+      result = valueBuffer & ~valueMask;
+      result <<= 1;
+      result |= valueBuffer & valueMask;
+      valueMask   = ((valueMask + 1) << 8) - 1;
+      valueBuffer = result;
+   }
+
+   return result;
+}
+
 uint32_t ID3V2_DECODE_FILE_ID(const uint8_t* data, const size_t dataSize)
 {
    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_FILE_ID);
@@ -122,7 +156,7 @@ uint32_t ID3V2_DECODE_FILE_SIZE(const uint8_t* data, const size_t dataSize)
 
    const uint32_t rawValue = NmcsByteSwap32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
 
-   return NmcsUnsynchronize32(rawValue);
+   return Unsynchronize32(rawValue);
 }
 
 uint32_t ID3V2_ENCODE_FILE_SIZE(const uint32_t size, uint8_t* data, const size_t dataSize)
@@ -131,7 +165,7 @@ uint32_t ID3V2_ENCODE_FILE_SIZE(const uint32_t size, uint8_t* data, const size_t
    NMCS_PRECONDITION_RETURN(data != 0, ID3V2_INVALID_FILE_SIZE);
    NMCS_PRECONDITION_RETURN(dataSize >= ID3V2_FILE_HEADER_SIZE, ID3V2_INVALID_FILE_SIZE);
 
-   const uint32_t cookedValue                  = NmcsSynchronize32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
+   const uint32_t cookedValue                  = Synchronize32(*((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]));
    *((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]) = NmcsByteSwap32(cookedValue);
 
    return *((uint32_t*)&data[ID3V2_FILE_SIZE_OFFSET]);

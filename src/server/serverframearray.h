@@ -27,14 +27,14 @@
 #ifndef __NMCS_SERVER_FRAME_ARRAY_H_INCL__
 #define __NMCS_SERVER_FRAME_ARRAY_H_INCL__
 
-#include "serveriframe.h"
+#include "serverframe.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace server {
 
-typedef std::vector<IFrame*> FrameArray;
+typedef std::vector<Frame*> FrameArray;
 
 }}} // namespace ultralove::nmcs::server
 

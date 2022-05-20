@@ -39,7 +39,7 @@ template<class T> class FrameResource
 public:
    FrameResource(const char* id)
    {
-      FrameResource(runtime::String(id));
+      FrameResource(runtime::String(id, 4));
    }
 
    FrameResource(const runtime::String& id)

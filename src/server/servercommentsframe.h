@@ -37,7 +37,7 @@ namespace ultralove { namespace nmcs { namespace server {
 class CommentsFrame : public Frame
 {
 public:
-   static IFrame* Create();
+   static Frame* Create();
    virtual ~CommentsFrame();
 
 private:

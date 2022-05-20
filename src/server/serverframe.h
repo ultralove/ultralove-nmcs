@@ -28,14 +28,13 @@
 #define __NMCS_SERVER_FRAME_H_INCL__
 
 #include "serverid3v2.h"
-#include "serveriframe.h"
 
 #pragma pack(push)
 #pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace server {
 
-class Frame : public IFrame
+class Frame
 {
 public:
    virtual ~Frame();

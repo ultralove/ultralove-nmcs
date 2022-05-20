@@ -47,7 +47,6 @@ set(NMCS_SERVER_INCLUDES
   serverframefactory.h
   serverframeresource.h
   serverid3v2.h
-  serveriframe.h
   serverservicefactory.h
   servertableofcontentsframe.h
   servertextinformationframe.h

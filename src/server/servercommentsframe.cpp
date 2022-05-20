@@ -36,7 +36,7 @@ CommentsFrame::CommentsFrame() {}
 
 CommentsFrame::~CommentsFrame() {}
 
-IFrame* CommentsFrame::Create()
+Frame* CommentsFrame::Create()
 {
    return new CommentsFrame();
 }

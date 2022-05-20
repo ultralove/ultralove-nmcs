@@ -37,7 +37,7 @@ namespace ultralove { namespace nmcs { namespace server {
 class URLLinkFrame : public Frame
 {
 public:
-   static IFrame* Create();
+   static Frame* Create();
    virtual ~URLLinkFrame();
 
 private:

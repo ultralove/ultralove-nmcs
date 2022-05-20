@@ -35,7 +35,7 @@ TableOfContentsFrame::TableOfContentsFrame() {}
 
 TableOfContentsFrame::~TableOfContentsFrame() {}
 
-IFrame* TableOfContentsFrame::Create()
+Frame* TableOfContentsFrame::Create()
 {
    return new TableOfContentsFrame();
 }
