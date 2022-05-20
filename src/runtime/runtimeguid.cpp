@@ -24,7 +24,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <nmcs/platformguid.h>
+#include <nmcs/platform.h>
 #include <nmcs/runtimeguid.h>
 
 namespace ultralove { namespace nmcs { namespace runtime {

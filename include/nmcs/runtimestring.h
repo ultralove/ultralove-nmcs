@@ -45,10 +45,12 @@ public:
       UTF16_LE,
       UTF16_BE,
       UTF32,
+      MAX_STRING_ENCODING     = UTF32,
+      INVALID_STRING_ENCODING = MAX_STRING_ENCODING + 1
    };
 
    String();
-   explicit String(const char* str);
+   String(const char* str, const size_t size);
    virtual ~String();
 
    String(const String& rhs);
@@ -67,11 +69,12 @@ public:
 
    const uint8_t* Data() const;
    size_t Size() const;
+   Encoding Encoding() const;
 
 private:
-   uint8_t* data_;
-   size_t dataSize_;
-   Encoding encoding_;
+   uint8_t* data_          = 0;
+   size_t dataSize_        = 0;
+   enum Encoding encoding_ = Encoding::INVALID_STRING_ENCODING;
 };
 
 }}} // namespace ultralove::nmcs::runtime

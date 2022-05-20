@@ -30,7 +30,9 @@
 #include <nmcs/common.h>
 #include <nmcs/globals.h>
 
+#include <nmcs/platformalloc.h>
 #include <nmcs/platformguid.h>
+#include <nmcs/platformvault.h>
 
 #pragma pack(push)
 #pragma pack(8)
@@ -48,14 +50,6 @@ namespace nmcs = ultralove::nmcs;
    #define NmcsByteSwap32(x) __builtin_bswap32(x)
    #define NmcsByteSwap64(x) __builtin_bswap64(x)
 #endif
-
-extern "C" {
-void* NmcsAlloc(const size_t size);
-void NmcsRelease(void*& ptr);
-
-uint32_t NmcsUnsynchronize32(const uint32_t value);
-uint32_t NmcsSynchronize32(const uint32_t value);
-}
 
 #pragma pack(pop)
 

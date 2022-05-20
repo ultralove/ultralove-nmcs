@@ -30,7 +30,43 @@ namespace ultralove { namespace nmcs { namespace runtime {
 
 String::String() {}
 
-String::String(const char* str) {}
+String::String(const char* str, const size_t size)
+{
+   if ((str != 0) && (size != 0)) {
+      data_ = SafeAllocArray<uint8_t>(size + 1);
+      if (data_ != 0) {
+         memmove(data_, str, size);
+         encoding_ = Encoding::UTF8;
+      }
+      else {
+         dataSize_ = 0;
+      }
+   }
+}
+
+String::String(const String& str)
+{
+   *this = str;
+}
+
+void String::operator=(const String& str)
+{
+   if (this != &str) {
+      if (data_ != 0) {
+         SafeDeleteArray(data_);
+         dataSize_ = 0;
+         encoding_ = Encoding::INVALID_STRING_ENCODING;
+      }
+      if ((str.Data() != 0) && (str.Size() > 0)) {
+         data_ = SafeAllocArray<uint8_t>(str.Size() + 1);
+         if (data_ != 0) {
+            dataSize_ = str.Size();
+            memmove(data_, str.Data(), dataSize_);
+            encoding_ = str.Encoding();
+         }
+      }
+   }
+}
 
 String::~String() {}
 
@@ -58,6 +94,11 @@ const uint8_t* String::Data() const
 size_t String::Size() const
 {
    return dataSize_;
+}
+
+enum String::Encoding String::Encoding() const
+{
+   return encoding_;
 }
 
 #if 0
