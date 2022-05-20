@@ -38,11 +38,15 @@ namespace ultralove { namespace nmcs { namespace server {
 class ServiceFactory
 {
 public:
-   ServiceFactory();
    virtual ~ServiceFactory();
+
+   static ServiceFactory& Instance();
 
    NmcsStatus RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION factoryFunction);
    void UnregisterService(const runtime::String& serviceId);
+
+private:
+   ServiceFactory();
 };
 
 }}} // namespace ultralove::nmcs::server

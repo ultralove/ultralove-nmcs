@@ -41,6 +41,7 @@ protected:
 };
 
 typedef NmcsStatus (*CREATE_SERVICE_FUNCTION)(IServiceCallback* serviceCallback, IService*& service);
+typedef void (*RELEASE_SERVICE_FUNCTION)(IService*& service);
 
 }}} // namespace ultralove::nmcs::server
 

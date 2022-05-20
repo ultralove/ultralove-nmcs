@@ -24,25 +24,48 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#ifndef __NMCS_SERVER_SERVICE_RESOURCE_H_INCL__
+#define __NMCS_SERVER_SERVICE_RESOURCE_H_INCL__
+
 #include "serverservicefactory.h"
+
+#pragma pack(push)
+#pragma pack(8)
 
 namespace ultralove { namespace nmcs { namespace server {
 
-ServiceFactory::ServiceFactory() {}
-
-ServiceFactory::~ServiceFactory() {}
-
-ServiceFactory& ServiceFactory::Instance()
+template<class T> class ServiceResource
 {
-   static ServiceFactory instance;
-   return instance;
-}
+public:
+   ServiceResource(const char* id)
+   {
+      ServiceResource(runtime::String(id, strlen(id)));
+   }
 
-NmcsStatus ServiceFactory::RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION factoryFunction)
-{
-   return NMCS_STATUS_NOT_IMPLEMENTED;
-}
+   ServiceResource(const runtime::String& id)
+   {
+      NMCS_PRECONDITION(id.Size() > 0);
 
-void ServiceFactory::UnregisterService(const runtime::String& serviceId) {}
+      id_                            = id;
+      ServiceFactory& serviceFactory = ServiceFactory::Instance();
+      registered_                    = serviceFactory.RegisterService(id, T::CreateService);
+   }
+
+   ~ServiceResource()
+   {
+      if (true == registered_) {
+         ServiceFactory& serviceFactory = ServiceFactory::Instance();
+         serviceFactory.UnregisterService(id_);
+      }
+   }
+
+private:
+   runtime::String id_;
+   bool registered_ = false;
+};
 
 }}} // namespace ultralove::nmcs::server
+
+#pragma pack(pop)
+
+#endif // #ifndef __NMCS_SERVER_SERVICE_RESOURCE_H_INCL__

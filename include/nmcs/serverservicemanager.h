@@ -28,7 +28,6 @@
 #define __NMCS_SERVER_SERVICE_MANAGER_H_INCL__
 
 #include <nmcs/runtimestring.h>
-
 #include <nmcs/serverservice.h>
 
 #pragma pack(push)
@@ -39,14 +38,24 @@ namespace ultralove { namespace nmcs { namespace server {
 class NMCS_SHARED_API ServiceManager
 {
 public:
-   ServiceManager();
    virtual ~ServiceManager();
 
-   NmcsStatus RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION serviceFactory);
+   static ServiceManager& Instance();
+
+   NmcsStatus RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION pCreateFunction);
+   NmcsStatus RegisterService(const runtime::String& serviceId, CREATE_SERVICE_FUNCTION pCreateFunction, RELEASE_SERVICE_FUNCTION pReleaseFunction);
    void UnregisterService(const runtime::String& serviceId);
 
    NmcsStatus AcquireService(const runtime::String& serviceId, IServiceCallback* callback, IService*& service);
-   void ReleaseService(IService*& pService);
+
+private:
+   ServiceManager();
+
+   std::map<runtime::String, CREATE_SERVICE_FUNCTION> createFunctions_;
+   std::recursive_mutex createFunctionsLock_;
+
+   std::map<runtime::String, RELEASE_SERVICE_FUNCTION> releaseFunctions_;
+   std::recursive_mutex releaseFunctionsLock_;
 };
 
 }}} // namespace ultralove::nmcs::server
