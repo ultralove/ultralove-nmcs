@@ -29,7 +29,7 @@
 
 namespace ultralove { namespace nmcs { namespace platform {
 
-NmcsStatus GetCredentialsErrorString(char** ppErrorString, const uint32 systemStatus)
+NmcsStatus GetCredentialsErrorString(char** ppErrorString, const uint32_t systemStatus)
 {
    NMCS_PRECONDITION_RETURN(ppErrorString != 0, NMCS_STATUS_INVALID_PARAMETER);
 
