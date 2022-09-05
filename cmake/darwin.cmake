@@ -25,16 +25,16 @@
 ################################################################################
 
 include(FetchContent)
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-    include(cmake/add_FetchContent_MakeAvailable.cmake)
-endif()
 
 set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+set(FETCHCONTENT_QUIET ON)
+set(FETCHCONTENT_VERBOSE OFF)
 
 FetchContent_Declare(cli11
-  GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
-  GIT_TAG v2.2.0
+  GIT_REPOSITORY "https://github.com/CLIUtils/CLI11.git"
   GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG v2.2.0
 )
 FetchContent_GetProperties(cli11)
 if(NOT cli11_POPULATED)
@@ -53,8 +53,9 @@ endif()
 set(LIBZ_LIBRARY libz)
 FetchContent_Declare(libz
   GIT_REPOSITORY https://github.com/madler/zlib.git
-  GIT_TAG v1.2.12
   GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG v1.2.12
 )
 FetchContent_GetProperties(libz)
 if(NOT libz_POPULATED)
@@ -72,8 +73,9 @@ endif()
 set(LIBCURL_LIBRARY libcurl)
 FetchContent_Declare(libcurl
   GIT_REPOSITORY https://github.com/curl/curl.git
-  GIT_TAG curl-7_83_0
   GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG curl-7_83_0
 )
 FetchContent_GetProperties(libcurl)
 if(NOT libcurl_POPULATED)
@@ -107,8 +109,9 @@ endif()
 set(LIBXML2_LIBRARY LibXml2)
 FetchContent_Declare(libxml2
   GIT_REPOSITORY https://github.com/GNOME/libxml2.git
-  GIT_TAG v2.9.14
   GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG v2.9.14
 )
 FetchContent_GetProperties(libxml2)
 if(NOT libxml2_POPULATED)
@@ -129,8 +132,9 @@ endif()
 set(LIBSIMDJSON_LIBRARY simdjson)
 FetchContent_Declare(simdjson
   GIT_REPOSITORY https://github.com/simdjson/simdjson.git
-  GIT_TAG v1.0.2
   GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG v1.0.2
 )
 FetchContent_GetProperties(simdjson)
 if(NOT simdjson_POPULATED)
@@ -150,8 +154,9 @@ endif()
 set(LIBSPDLOG_LIBRARY spdlog)
 FetchContent_Declare(spdlog
   GIT_REPOSITORY https://github.com/gabime/spdlog.git
-  GIT_TAG v1.10.0
   GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG v1.10.0
 )
 FetchContent_GetProperties(spdlog)
 if(NOT spdlog_POPULATED)
@@ -166,6 +171,26 @@ if(NOT spdlog_POPULATED)
   set(BUILD_SHARED_LIBS OFF)
   set(SPDLOG_BUILD_EXAMPLE OFF)
   add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
+  set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVE}")
+endif()
+
+set(LIBSIMDUTF_LIBRARY simdutf)
+FetchContent_Declare(simdutf
+  GIT_REPOSITORY https://github.com/simdutf/simdutf.git
+  GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG v1.0.1
+)
+FetchContent_GetProperties(simdutf)
+if(NOT simdutf_POPULATED)
+  FetchContent_Populate(simdutf)
+  set(LIBSIMDUTF_INCLUDE_PATH ${simdutf_SOURCE_DIR}/include)
+  set(LIBSIMDUTF_LIBRARY_PATH ${simdutf_BINARY_DIR}/src/libsimdutf.a)
+  set(BUILD_SHARED_LIBS_SAVE "${BUILD_SHARED_LIBS}")
+  set(BUILD_SHARED_LIBS OFF)
+  set(SIMDUTF_BENCHMARKS OFF)
+  set(BUILD_TESTING OFF)
+  add_subdirectory(${simdutf_SOURCE_DIR} ${simdutf_BINARY_DIR})
   set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVE}")
 endif()
 
