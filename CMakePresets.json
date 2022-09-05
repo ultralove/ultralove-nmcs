@@ -1,0 +1,64 @@
+{
+  "version": 2,
+  "configurePresets": [
+    {
+      "name": "default",
+      "warnings": {
+        "dev": false,
+        "unusedCli": false
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "default",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "binaryDir": "_build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": "default",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "binaryDir": "_build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "debug-shared",
+      "inherits": "debug",
+      "displayName": "Debug (Shared)",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "ON"
+      }
+    },
+    {
+      "name": "debug-static",
+      "inherits": "debug",
+      "displayName": "Debug (Static)",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "OFF"
+      }
+    },
+    {
+      "name": "release-shared",
+      "inherits": "release",
+      "displayName": "Release (Shared)",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "ON"
+      }
+    },
+    {
+      "name": "release-static",
+      "inherits": "release",
+      "displayName": "Release (Static)",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "OFF"
+      }
+    }
+  ]
+}
