@@ -24,10 +24,10 @@
 #
 ################################################################################
 
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.20)
 
 project(nmcs
-  VERSION 1.0.0
+  VERSION 2.0.0
   DESCRIPTION "Network Media Control System"
   LANGUAGES ASM C CXX
 )
@@ -41,9 +41,9 @@ configure_file(version.h.in version.h)
 include_directories(${CMAKE_BINARY_DIR})
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  set(CMAKE_CXX_EXTENSIONS OFF)
   set(CMAKE_CXX_STANDARD 20)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  set(CMAKE_CXX_EXTENSIONS OFF)
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
 
@@ -104,6 +104,8 @@ message(STATUS "LIBSIMDJSON_INCLUDE_PATH = ${LIBSIMDJSON_INCLUDE_PATH}")
 message(STATUS "LIBSIMDJSON_LIBRARY_PATH = ${LIBSIMDJSON_LIBRARY_PATH}")
 message(STATUS "LIBSPDLOG_INCLUDE_PATH   = ${LIBSPDLOG_INCLUDE_PATH}")
 message(STATUS "LIBSPDLOG_LIBRARY_PATH   = ${LIBSPDLOG_LIBRARY_PATH}")
+message(STATUS "LIBSIMDUTF_INCLUDE_PATH  = ${LIBSIMDUTF_INCLUDE_PATH}")
+message(STATUS "LIBSIMDUTF_LIBRARY_PATH  = ${LIBSIMDUTF_LIBRARY_PATH}")
 
 set(NMCS_INCLUDE_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/include")
 include_directories(${NMCS_INCLUDE_DIRECTORY})
@@ -111,13 +113,12 @@ include_directories(${NMCS_INCLUDE_DIRECTORY})
 add_subdirectory("src/precomp")
 add_subdirectory("src/platform")
 add_subdirectory("src/runtime")
-add_subdirectory("src/compiler")
 add_subdirectory("src/model")
 add_subdirectory("src/server")
 add_subdirectory("src/agent")
 add_subdirectory("src/client")
 
-install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsc nmcscli nmcsd
+install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsagent nmcsclient
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib

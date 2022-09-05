@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       build_timestamp: ${{steps.timestamp.outputs.timestamp}}
-      build_id: nmcs-1.0.0-build${{github.run_number}}-${{steps.timestamp.outputs.timestamp}}
+      build_id: nmcs-2.0.0-build${{github.run_number}}-${{steps.timestamp.outputs.timestamp}}
     steps:
       - name: configure build id
         id: timestamp
@@ -58,7 +58,7 @@ jobs:
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: |
-            ${{runner.workspace}}/build/nmcs-1.0.0-build${{github.run_number}}-linux.tar.gz
+            ${{runner.workspace}}/build/nmcs-2.0.0-build${{github.run_number}}-linux.tar.gz
 
       - name: upload (windows)
         uses: actions/upload-artifact@v3
@@ -66,7 +66,7 @@ jobs:
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: |
-            ${{runner.workspace}}/build/nmcs-1.0.0-build${{github.run_number}}-windows.zip
+            ${{runner.workspace}}/build/nmcs-2.0.0-build${{github.run_number}}-windows.zip
 
       - name: upload (darwin)
         uses: actions/upload-artifact@v3
@@ -74,7 +74,7 @@ jobs:
         with:
           name: ${{needs.configure.outputs.build_id}}
           path: |
-            ${{runner.workspace}}/build/nmcs-1.0.0-build${{github.run_number}}-darwin.tar.gz
+            ${{runner.workspace}}/build/nmcs-2.0.0-build${{github.run_number}}-darwin.tar.gz
 
   release:
     needs: [configure, build]
