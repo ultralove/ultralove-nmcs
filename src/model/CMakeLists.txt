@@ -42,7 +42,9 @@ add_library(nmcsmodel ${NMCS_MODEL_INCLUDES} ${NMCS_MODEL_SOURCES})
 add_dependencies(nmcsmodel ${NMCS_MODEL_DEPENDENCIES})
 target_link_libraries(nmcsmodel ${NMCS_MODEL_DEPENDENCIES})
 
-set_target_properties(nmcsmodel PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION})
+set_target_properties(nmcsmodel PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(nmcsmodel PROPERTIES SOVERSION ${PROJECT_VERSION})
+set_target_properties(nmcsmodel PROPERTIES OUTPUT_NAME "nmcs-model")
 
 target_precompile_headers(nmcsmodel PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h

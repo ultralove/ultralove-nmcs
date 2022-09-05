@@ -42,13 +42,16 @@ set(NMCS_AGENT_DEPENDENCIES
   nmcsserver
 )
 
-add_executable(nmcsd ${NMCS_AGENT_INCLUDES} ${NMCS_AGENT_SOURCES})
+add_executable(nmcsagent ${NMCS_AGENT_INCLUDES} ${NMCS_AGENT_SOURCES})
 
-add_dependencies(nmcsd ${NMCS_AGENT_DEPENDENCIES})
-target_link_libraries(nmcsd ${NMCS_AGENT_DEPENDENCIES})
+add_dependencies(nmcsagent ${NMCS_AGENT_DEPENDENCIES})
+target_link_libraries(nmcsagent ${NMCS_AGENT_DEPENDENCIES})
 
-set_target_properties(nmcsd PROPERTIES VERSION ${PROJECT_VERSION})
-target_precompile_headers(nmcsd PRIVATE
+set_target_properties(nmcsagent PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(nmcsagent PROPERTIES SOVERSION ${PROJECT_VERSION})
+set_target_properties(nmcsagent PROPERTIES OUTPUT_NAME "nmcs-agent")
+
+target_precompile_headers(nmcsagent PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h

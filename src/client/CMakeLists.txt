@@ -45,13 +45,16 @@ set(NMCS_CLIENT_DEPENDENCIES
   nmcsserver
 )
 
-add_executable(nmcscli ${NMCS_CLIENT_INCLUDES} ${NMCS_CLIENT_SOURCES})
+add_executable(nmcsclient ${NMCS_CLIENT_INCLUDES} ${NMCS_CLIENT_SOURCES})
 
-add_dependencies(nmcscli ${NMCS_CLIENT_DEPENDENCIES})
-target_link_libraries(nmcscli ${NMCS_CLIENT_DEPENDENCIES})
+add_dependencies(nmcsclient ${NMCS_CLIENT_DEPENDENCIES})
+target_link_libraries(nmcsclient ${NMCS_CLIENT_DEPENDENCIES})
 
-set_target_properties(nmcscli PROPERTIES VERSION ${PROJECT_VERSION})
-target_precompile_headers(nmcscli PRIVATE
+set_target_properties(nmcsclient PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(nmcsclient PROPERTIES SOVERSION ${PROJECT_VERSION})
+set_target_properties(nmcsclient PROPERTIES OUTPUT_NAME "nmcs-cli")
+
+target_precompile_headers(nmcsclient PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h

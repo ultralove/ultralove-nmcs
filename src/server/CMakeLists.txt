@@ -91,8 +91,10 @@ target_link_libraries(nmcsserver
   ${LIBSPDLOG_LIBRARY_PATH}
 )
 
-set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION}
-                                            SOVERSION ${PROJECT_VERSION})
+set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(nmcsserver PROPERTIES SOVERSION ${PROJECT_VERSION})
+set_target_properties(nmcsserver PROPERTIES OUTPUT_NAME "nmcs-server")
+
 target_precompile_headers(nmcsserver PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
