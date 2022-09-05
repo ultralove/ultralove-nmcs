@@ -25,9 +25,6 @@
 ################################################################################
 
 include(FetchContent)
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-    include(cmake/add_FetchContent_MakeAvailable.cmake)
-endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin")
