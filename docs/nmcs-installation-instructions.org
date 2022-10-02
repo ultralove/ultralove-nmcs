@@ -7,6 +7,28 @@
 
 * Darwin
 ** Docker
+*** Download and run Azure SQL Edge
+For more information go to https://hub.docker.com/_/microsoft-azure-sql-edge
+#+begin_src
+$ docker pull mcr.microsoft.com/azure-sql-edge:latest
+$ docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Strong!password0' -p 1433:1433 --name mssql-server -d mcr.microsoft.com/azure-sql-edge:latest
+#+end_src
+*** Login
+#+begin_src
+$ sqlcmd -S localhost -U sa -P 'Strong!password0'
+#+end_src
+*** Change SA password
+#+begin_src
+> alter login sa with password = N'Ultra!schall0'
+#+end_src
+*** Create a new user
+#+begin_src
+> create login heiko with password = N'Ultra!schall0'
+#+end_src
+*** Add sysadmin role to the new user
+#+begin_src
+> exec sp_addsrvrolemember @loginame = 'heiko', @rolename = 'sysadmin'
+#+end_src
 
 ** Microsoft SQL Server
 
