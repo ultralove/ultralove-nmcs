@@ -3,9 +3,10 @@
   "configurePresets": [
     {
       "name": "default",
+      "hidden": true,
       "warnings": {
         "dev": false,
-        "unusedCli": false
+        "unusedCli": true
       }
     },
     {
