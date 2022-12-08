@@ -26,10 +26,13 @@
 #
 ################################################################################
 
-BUILD_CLEAN=0
 BUILD_CONFIGURATION="Debug"
-BUILD_DIRECTORY="$(pwd)/_build"
-BUILD_ARTIFACTS="$BUILD_DIRECTORY/artifacts"
+BUILD_GLOBALS_DIRECTORY="$(pwd)/_globals"
+BUILD_PRODUCT_DIRECTORY="$(pwd)/_build"
+BUILD_ARTIFACTS="$BUILD_PRODUCT_DIRECTORY/artifacts"
+BUILD_BOOTSTRAP=0
+BUILD_CLEAN=0
+BUILD_RESET=0
 BUILD_REBUILD=0
 BUILD_SHARED="ON"
 BUILD_INSTALL=0
@@ -50,57 +53,62 @@ do
 case $arg in
     --bootstrap)
     BUILD_BOOTSTRAP=1
-    shift # past argument
+    shift
     ;;
     --clean)
     BUILD_CLEAN=1
-    shift # past argument
+    shift
+    ;;
+    --cleanall)
+    BUILD_RESET=1
+    shift
     ;;
     -c=*|--config=*)
     BUILD_CONFIGURATION="${arg#*=}"
-    shift # past argument
+    shift
     ;;
     -i|--install)
     BUILD_INSTALL=1
-    shift # past argument
+    shift
     ;;
     -n|--no-shared)
     BUILD_SHARED="OFF"
-    shift # past argument
+    shift
     ;;
     -p|--package)
     BUILD_PACKAGE=1
-    shift # past argument
+    shift
     ;;
     --rebuild)
     CMAKE_BUILD_ARGS="$CMAKE_BUILD_ARGS --clean-first "
-    shift # past argument
+    shift
     ;;
     -r|--release)
     BUILD_CONFIGURATION="Release"
-    shift # past argument
+    shift
     ;;
     "-h"|"--help")
     echo "Usage: build.sh [options]"
     echo ""
     echo "Options:"
-    echo "  --clean                                     Completely remove build output"
+    echo "  --clean                                     Remove build targets"
+    echo "  --cleanall                                  Reset build environment"
     echo "  -c=<BUILD_CONFIG>|--config=<BUILD_CONFIG>   Specify build configuration (default = 'Debug')"
-    echo "  -i|--install                                Install build targets to /usr/local"
+    echo "  -i|--install                                Install build targets into /usr/local"
     echo "  -n|--no-shared                              Don't build shared libraries"
     echo "  -p|--package                                Build distributable package"
-    echo "  --rebuild                                   Remove intermediate files before build"
+    echo "  --rebuild                                   Remove build targets and rebuild"
     echo "  --release                                   Don't include debug symbols, overrides '-c|--config'"
     echo "  -u|--uninstall                              Remove build targets from /usr/local"
     echo ""
     exit 0
-    shift # past argument
+    shift
     ;;
     -u|--uninstall)
     BUILD_UNINSTALL=1
-    shift # past argument
+    shift
     ;;
-    *)    # unknown option
+    *) # unknown option
     echo "Unknown argument $arg"
     exit 1
     ;;
@@ -109,20 +117,27 @@ done
 
 if [ $BUILD_UNINSTALL -ne 0 ]; then
   echo "Uninstalling..."
-  if [ -f "$BUILD_DIRECTORY/install_manifest.txt" ]; then
-    xargs sudo rm -f < "$BUILD_DIRECTORY/install_manifest.txt"
+  if [ -f "$BUILD_PRODUCT_DIRECTORY/install_manifest.txt" ]; then
+    xargs sudo rm -f < "$BUILD_PRODUCT_DIRECTORY/install_manifest.txt"
     sudo rm -rf "$CMAKE_INSTALL_PREFIX/include/nmcs"
     echo "Done."
   fi
   exit 0
 fi
 
-if [ $BUILD_CLEAN -eq 1 ]; then
-  if [ -d "$BUILD_DIRECTORY" ]; then
-    rm -rf "$BUILD_DIRECTORY"
+if [ $BUILD_RESET -eq 1 ]; then
+  if [ -d "$BUILD_GLOBALS_DIRECTORY" ]; then
+    rm -rf "$BUILD_GLOBALS_DIRECTORY"
   fi
-  if [ -d "$BUILD_TARGET_DIRECTORY" ]; then
-    rm -rf "$BUILD_TARGET_DIRECTORY"
+  if [ -d "$BUILD_PRODUCT_DIRECTORY" ]; then
+    rm -rf "$BUILD_PRODUCT_DIRECTORY"
+  fi
+  exit 0
+fi
+
+if [ $BUILD_CLEAN -eq 1 ]; then
+  if [ -d "$BUILD_PRODUCT_DIRECTORY" ]; then
+    rm -rf "$BUILD_PRODUCT_DIRECTORY"
   fi
   exit 0
 fi
@@ -144,19 +159,31 @@ if [ $CMAKE_INSTALL_FOUND -eq 0 ]; then
   exit 1
 fi
 
-if [ ! -d "$BUILD_DIRECTORY" ]; then
-    echo "Configuring projects using $CMAKE_GENERATOR..."
-    cmake -B"$BUILD_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+if [ $BUILD_BOOTSTRAP -ne 0 ]; then
+  echo "Bootstrapping..."
+  mkdir -p "$BUILD_GLOBALS_DIRECTORY"
+  Bootstrap "$BUILD_GLOBALS_DIRECTORY"
+  if [ $? -ne 0 ]; then
+    echo "Failed to bootstrap projects."
+    rm -rf "$BUILD_GLOBALS_DIRECTORY"
+    exit 1
+  fi
+  echo "Done."
+fi
+
+if [ ! -d "$BUILD_PRODUCT_DIRECTORY" ]; then
+    echo "Configuring using $CMAKE_GENERATOR..."
+    cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
     if [ $? -ne 0 ]; then
       echo "Failed to configure projects."
-      rm -rf "$BUILD_DIRECTORY"
+      rm -rf "$BUILD_PRODUCT_DIRECTORY"
       exit -1
     fi
     echo "Done."
 fi
 
-echo "Building projects..."
-cmake --build "$BUILD_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j
+echo "Building..."
+cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1
@@ -164,8 +191,8 @@ fi
 echo "Done."
 
 if [ $BUILD_PACKAGE -ne 0 ]; then
-  echo "Packaging targets..."
-  cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target package
+  echo "Packaging..."
+  cmake --build "$BUILD_PRODUCT_DIRECTORY" --config "$BUILD_CONFIGURATION" --target package
   if [ $? -ne 0 ]; then
     echo "Failed to package targets."
     exit -1
@@ -174,8 +201,8 @@ if [ $BUILD_PACKAGE -ne 0 ]; then
 fi
 
 if [ $BUILD_INSTALL -ne 0 ]; then
-  echo "Installing targets to $CMAKE_INSTALL_PREFIX..."
-  sudo cmake --build "$BUILD_DIRECTORY" --config "$BUILD_CONFIGURATION" --target install
+  echo "Installing to $CMAKE_INSTALL_PREFIX..."
+  sudo cmake --build "$BUILD_PRODUCT_DIRECTORY" --config "$BUILD_CONFIGURATION" --target install
   if [ $? -ne 0 ]; then
     echo "Failed to install targets."
     exit -1
