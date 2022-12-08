@@ -30,7 +30,7 @@ FetchContent_Declare(cli11
   GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG v2.2.0
+  GIT_TAG ${LIBCLI11_VERSION_TAG}
 )
 FetchContent_GetProperties(cli11)
 if(NOT cli11_POPULATED)
@@ -51,7 +51,7 @@ FetchContent_Declare(libz
   GIT_REPOSITORY https://github.com/madler/zlib.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG v1.2.12
+  GIT_TAG ${LIBZ_VERSION_TAG}
 )
 FetchContent_GetProperties(libz)
 if(NOT libz_POPULATED)
@@ -71,7 +71,7 @@ FetchContent_Declare(libcurl
   GIT_REPOSITORY https://github.com/curl/curl.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG curl-7_83_0
+  GIT_TAG ${LIBCURL_VERSION_TAG}
 )
 FetchContent_GetProperties(libcurl)
 if(NOT libcurl_POPULATED)
@@ -107,7 +107,7 @@ FetchContent_Declare(libxml2
   GIT_REPOSITORY https://github.com/GNOME/libxml2.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG v2.9.14
+  GIT_TAG ${LIBXML2_VERSION_TAG}
 )
 FetchContent_GetProperties(libxml2)
 if(NOT libxml2_POPULATED)
@@ -130,7 +130,7 @@ FetchContent_Declare(simdjson
   GIT_REPOSITORY https://github.com/simdjson/simdjson.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG v1.0.2
+  GIT_TAG ${LIBSIMDJSON_VERSION_TAG}
 )
 FetchContent_GetProperties(simdjson)
 if(NOT simdjson_POPULATED)
@@ -152,7 +152,7 @@ FetchContent_Declare(spdlog
   GIT_REPOSITORY https://github.com/gabime/spdlog.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG v1.10.0
+  GIT_TAG ${LIBSPDLOG_VERSION_TAG}
 )
 FetchContent_GetProperties(spdlog)
 if(NOT spdlog_POPULATED)
@@ -175,7 +175,7 @@ FetchContent_Declare(simdutf
   GIT_REPOSITORY https://github.com/simdutf/simdutf.git
   GIT_SHALLOW ON
   GIT_PROGRESS OFF
-  GIT_TAG v1.0.1
+  GIT_TAG ${LIBSIMDUTF_VERSION_TAG}
 )
 FetchContent_GetProperties(simdutf)
 if(NOT simdutf_POPULATED)
