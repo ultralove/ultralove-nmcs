@@ -194,6 +194,29 @@ if(NOT simdutf_POPULATED)
   set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVE}")
 endif()
 
+set(LIBWHISPER_LIBRARY whisper.cpp)
+FetchContent_Declare(whisper.cpp
+  GIT_REPOSITORY https://github.com/ggerganov/whisper.cpp.git
+  GIT_SHALLOW ON
+  GIT_PROGRESS OFF
+  GIT_TAG ${LIBWHISPER_VERSION_TAG}
+)
+FetchContent_GetProperties(whisper.cpp)
+if(NOT whisper.cpp_POPULATED)
+  FetchContent_Populate(whisper.cpp)
+  set(LIBWHISPER_INCLUDE_PATH ${whisper.cpp_SOURCE_DIR})
+  set(LIBWHISPER_LIBRARY_PATH ${whisper.cpp_BINARY_DIR}/libwhisper.a)
+  set(BUILD_SHARED_LIBS_SAVE "${BUILD_SHARED_LIBS}")
+  set(BUILD_SHARED_LIBS OFF)
+  set(WHISPER_ALL_WARNINGS OFF)
+  set(WHISPER_ALL_WARNINGS_3RD_PARTY OFF)
+  set(WHISPER_BUILD_TESTS OFF)
+  set(WHISPER_BUILD_EXAMPLES OFF)
+  set(WHISPER_PERF OFF)
+  add_subdirectory(${whisper.cpp_SOURCE_DIR} ${whisper.cpp_BINARY_DIR})
+  set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVE}")
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
