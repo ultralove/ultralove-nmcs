@@ -91,14 +91,14 @@ if(NMCS_TARGET_SYSTEM STREQUAL "darwin")
   endif()
 endif()
 
-set(LIBCLI11_VERSION_TAG    "v2.3.1")
+set(LIBCLI11_VERSION_TAG    "v2.3.2")
 set(LIBZ_VERSION_TAG        "v1.2.13")
-set(LIBCURL_VERSION_TAG     "curl-7_86_0")
+set(LIBCURL_VERSION_TAG     "curl-8_0_1")
 set(LIBXML2_VERSION_TAG     "v2.10.3")
-set(LIBSIMDJSON_VERSION_TAG "v3.0.1")
+set(LIBSIMDJSON_VERSION_TAG "v3.1.6")
 set(LIBSPDLOG_VERSION_TAG   "v1.11.0")
-set(LIBSIMDUTF_VERSION_TAG  "v2.0.5")
-set(LIBWHISPER_VERSION_TAG  "1.0.4")
+set(LIBSIMDUTF_VERSION_TAG  "v3.2.5")
+set(LIBWHISPER_VERSION_TAG  "v1.2.1")
 
 message(STATUS "Configuring dependencies for ${NMCS_TARGET_SYSTEM}...")
 include(cmake/${NMCS_TARGET_SYSTEM}.cmake)
@@ -132,12 +132,13 @@ add_subdirectory("src/server")
 add_subdirectory("src/agent")
 add_subdirectory("src/client")
 
-install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsagent nmcsclient
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-)
-install(DIRECTORY include/nmcs DESTINATION include)
+# install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsagent nmcsclient
+# install(TARGETS nmcsplatform
+#   RUNTIME DESTINATION "bin"
+#   LIBRARY DESTINATION "lib"
+#   ARCHIVE DESTINATION "lib/${PROJECT_NAME}"
+# )
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION include)
 
 set(CPACK_PACKAGE_NAME "nmcs")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${NMCS_VERSION}-build${NMCS_BUILD_ID}-${NMCS_TARGET_SYSTEM}")
@@ -150,4 +151,6 @@ set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_GENERATOR "ZIP;TGZ")
+set(CPACK_THREADS 0)
 include(CPack)
