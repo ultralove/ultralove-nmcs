@@ -47,8 +47,11 @@ add_executable(nmcsagent ${NMCS_AGENT_INCLUDES} ${NMCS_AGENT_SOURCES})
 add_dependencies(nmcsagent ${NMCS_AGENT_DEPENDENCIES})
 target_link_libraries(nmcsagent ${NMCS_AGENT_DEPENDENCIES})
 
-set_target_properties(nmcsagent PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(nmcsagent PROPERTIES SOVERSION ${PROJECT_VERSION})
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set_target_properties(nmcsagent PROPERTIES VERSION ${PROJECT_VERSION})
+  set_target_properties(nmcsagent PROPERTIES SOVERSION ${PROJECT_VERSION})
+endif()
+
 set_target_properties(nmcsagent PROPERTIES OUTPUT_NAME "nmcs-agent")
 
 target_precompile_headers(nmcsagent PRIVATE

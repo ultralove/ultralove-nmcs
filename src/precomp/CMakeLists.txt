@@ -42,8 +42,11 @@ add_library(nmcsprecomp STATIC ${NMCS_PRECOMP_INCLUDES} ${NMCS_PRECOMP_SOURCES})
 
 target_link_libraries(nmcsprecomp ${NMCS_PRECOMP_DEPENDENCIES})
 
-set_target_properties(nmcsprecomp PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(nmcsprecomp PROPERTIES SOVERSION ${PROJECT_VERSION})
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set_target_properties(nmcsprecomp PROPERTIES VERSION ${PROJECT_VERSION})
+  set_target_properties(nmcsprecomp PROPERTIES SOVERSION ${PROJECT_VERSION})
+endif()
+
 set_target_properties(nmcsprecomp PROPERTIES OUTPUT_NAME "nmcs-precomp")
 
 target_precompile_headers(nmcsprecomp INTERFACE ${NMCS_PRECOMP_INCLUDES})

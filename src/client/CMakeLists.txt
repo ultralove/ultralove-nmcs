@@ -50,8 +50,11 @@ add_executable(nmcsclient ${NMCS_CLIENT_INCLUDES} ${NMCS_CLIENT_SOURCES})
 add_dependencies(nmcsclient ${NMCS_CLIENT_DEPENDENCIES})
 target_link_libraries(nmcsclient ${NMCS_CLIENT_DEPENDENCIES})
 
-set_target_properties(nmcsclient PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(nmcsclient PROPERTIES SOVERSION ${PROJECT_VERSION})
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set_target_properties(nmcsclient PROPERTIES VERSION ${PROJECT_VERSION})
+  set_target_properties(nmcsclient PROPERTIES SOVERSION ${PROJECT_VERSION})
+endif()
+
 set_target_properties(nmcsclient PROPERTIES OUTPUT_NAME "nmcs-cli")
 
 target_precompile_headers(nmcsclient PRIVATE

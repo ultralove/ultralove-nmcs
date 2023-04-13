@@ -91,9 +91,13 @@ target_link_libraries(nmcsserver
   ${LIBSPDLOG_LIBRARY_PATH}
 )
 
-set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(nmcsserver PROPERTIES SOVERSION ${PROJECT_VERSION})
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set_target_properties(nmcsserver PROPERTIES VERSION ${PROJECT_VERSION})
+  set_target_properties(nmcsserver PROPERTIES SOVERSION ${PROJECT_VERSION})
+endif()
+
 set_target_properties(nmcsserver PROPERTIES OUTPUT_NAME "nmcs-server")
+
 
 target_precompile_headers(nmcsserver PRIVATE
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
