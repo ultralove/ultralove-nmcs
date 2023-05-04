@@ -2,17 +2,20 @@
 #+AUTHOR: Heiko Panjas <heiko@panjas.com>
 #+DATE: <2023-04-13 Thu>
 
-* Windows
+* TODO Windows
 TBD
-* Linux
-TBD
+* TODO Linux
+** Docker
+#+begin_src
+  sudo usermod -aG docker <my-user>
+#+end_src
 * Darwin
 ** Docker
 *** Download and run Azure SQL Edge (SQL Server)
 For more information go to https://hub.docker.com/_/microsoft-azure-sql-edge
 #+begin_src
 $ docker pull mcr.microsoft.com/azure-sql-edge:latest
-$ docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Strong!password0' -p 1433:1433 --name mssql-server -d mcr.microsoft.com/azure-sql-edge:latest
+$ docker run --name mssql-server --restart unless-stopped --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Strong!password0' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latest
 #+end_src
 *** Login
 #+begin_src
