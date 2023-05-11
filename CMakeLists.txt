@@ -24,7 +24,7 @@
 #
 ################################################################################
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.23)
 
 project(nmcs
   VERSION 2.0.0
@@ -93,6 +93,7 @@ endif()
 
 set(LIBCLI11_VERSION_TAG    "v2.3.2")
 set(LIBZ_VERSION_TAG        "v1.2.13")
+set(LIBGRPC_VERSION_TAG     "v1.54.0")
 set(LIBCURL_VERSION_TAG     "curl-8_0_1")
 set(LIBXML2_VERSION_TAG     "v2.10.3")
 set(LIBSIMDJSON_VERSION_TAG "v3.1.6")
@@ -108,6 +109,8 @@ message(STATUS "LIBCLI11_INCLUDE_PATH    = ${LIBCLI11_INCLUDE_PATH}")
 message(STATUS "LIBCLI11_LIBRARY_PATH    = ${LIBCLI11_LIBRARY_PATH}")
 message(STATUS "LIBZ_INCLUDE_PATH        = ${LIBZ_INCLUDE_PATH}")
 message(STATUS "LIBZ_LIBRARY_PATH        = ${LIBZ_LIBRARY_PATH}")
+message(STATUS "LIBGRPC_INCLUDE_PATH     = ${LIBGRPC_INCLUDE_PATH}")
+message(STATUS "LIBGRPC_LIBRARY_PATH     = ${LIBGRPC_LIBRARY_PATH}")
 message(STATUS "LIBCURL_INCLUDE_PATH     = ${LIBCURL_INCLUDE_PATH}")
 message(STATUS "LIBCURL_LIBRARY_PATH     = ${LIBCURL_LIBRARY_PATH}")
 message(STATUS "LIBXML2_INCLUDE_PATH     = ${LIBXML2_INCLUDE_PATH}")
