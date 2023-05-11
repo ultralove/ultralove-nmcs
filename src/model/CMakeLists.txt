@@ -1,6 +1,6 @@
 ################################################################################
 #
-# Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+# Copyright (c) ultralove contributors (https://github.com/ultralove)
 #
 # The MIT License (MIT)
 #
@@ -48,10 +48,3 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 set_target_properties(nmcsmodel PROPERTIES OUTPUT_NAME "nmcs-model")
-
-target_precompile_headers(nmcsmodel PRIVATE
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platform.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtime.h
-  modelcommon.h
-)

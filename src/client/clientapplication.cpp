@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -39,7 +39,7 @@ void ClientApplication::pre_callback()
 {
    if ((false == args_->suppressLogo) && (false == args_->printVersion)) {
       std::cout << "Ultralove NMCS CLI " << NmcsBuildString() << std::endl
-                << "Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)" << std::endl
+                << "Copyright (c) ultralove contributors (https://github.com/ultralove)" << std::endl
                 << std::endl;
    }
    if (true == args_->printVersion) {

@@ -2,7 +2,7 @@
 
 ################################################################################
 #
-# Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+# Copyright (c) ultralove contributors (https://github.com/ultralove)
 #
 # The MIT License (MIT)
 #
@@ -164,7 +164,7 @@ fi
 echo "Done."
 
 echo "Building..."
-cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" --verbose -j
+cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1

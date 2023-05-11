@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -47,8 +47,7 @@ public:
       NMCS_PRECONDITION_RETURN(userId.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
       NMCS_PRECONDITION_RETURN(secret.Size() > 0, NMCS_STATUS_INVALID_PARAMETER);
 
-      NmcsStatus status =
-         platform::CreateCredentials((const char*)serviceId.Data(), serviceId.Size(), (const char*)userId.Data(), userId.Size(), secret.Data(), secret.Size());
+      NmcsStatus status = NMCS_STATUS_NOT_IMPLEMENTED;
       return status;
    }
 

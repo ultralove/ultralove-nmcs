@@ -1,6 +1,6 @@
 ################################################################################
 #
-# Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+# Copyright (c) ultralove contributors (https://github.com/ultralove)
 #
 # The MIT License (MIT)
 #
@@ -127,7 +127,6 @@ message(STATUS "LIBWHISPER_LIBRARY_PATH  = ${LIBWHISPER_LIBRARY_PATH}")
 set(NMCS_INCLUDE_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/include")
 include_directories(${NMCS_INCLUDE_DIRECTORY})
 
-add_subdirectory("src/precomp")
 add_subdirectory("src/platform")
 add_subdirectory("src/runtime")
 add_subdirectory("src/model")

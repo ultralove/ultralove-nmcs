@@ -1,6 +1,6 @@
 ################################################################################
 #
-# Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+# Copyright (c) ultralove contributors (https://github.com/ultralove)
 #
 # The MIT License (MIT)
 #
@@ -27,14 +27,14 @@
 set(NMCS_PLATFORM_INCLUDES
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformalloc.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformguid.h
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformvault.h
+#   ${NMCS_INCLUDE_DIRECTORY}/nmcs/platformvault.h
   platformcommon.h
 )
 
 set(NMCS_PLATFORM_SOURCES
   ${NMCS_TARGET_SYSTEM}/platformalloc.cpp
   ${NMCS_TARGET_SYSTEM}/platformguid.cpp
-  ${NMCS_TARGET_SYSTEM}/platformvault.cpp
+#   ${NMCS_TARGET_SYSTEM}/platformvault.cpp
 )
 
 if(NMCS_TARGET_SYSTEM STREQUAL "darwin")
@@ -47,7 +47,6 @@ endif()
 
 add_library(nmcsplatform ${NMCS_PLATFORM_INCLUDES} ${NMCS_PLATFORM_SOURCES})
 
-add_dependencies(nmcsplatform nmcsprecomp)
 target_link_libraries(nmcsplatform ${NMCS_PLATFORM_DEPENDENCIES})
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -56,8 +55,3 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 set_target_properties(nmcsplatform PROPERTIES OUTPUT_NAME "nmcs-platform")
-
-target_precompile_headers(nmcsplatform PRIVATE
-  ${NMCS_INCLUDE_DIRECTORY}/nmcs/common.h
-  platformcommon.h
-)

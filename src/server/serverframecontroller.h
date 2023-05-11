@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) Ultralove NMCS Contributors (https://github.com/ultralove)
+// Copyright (c) ultralove contributors (https://github.com/ultralove)
 //
 // The MIT License (MIT)
 //
@@ -27,6 +27,7 @@
 #ifndef __NMCS_SERVER_FRAME_CONTROLLER_H_INCL__
 #define __NMCS_SERVER_FRAME_CONTROLLER_H_INCL__
 
+#include "servercommon.h"
 #include "serverframearray.h"
 
 #pragma pack(push)
