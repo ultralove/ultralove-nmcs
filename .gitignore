@@ -2,3 +2,7 @@ _build/
 _globals/
 .DS_Store
 .vscode/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
