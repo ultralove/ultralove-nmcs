@@ -27,7 +27,6 @@
 ################################################################################
 
 BUILD_CONFIGURATION="Debug"
-BUILD_GLOBALS_DIRECTORY="$(pwd)/_globals"
 BUILD_PRODUCT_DIRECTORY="$(pwd)/_build"
 BUILD_ARTIFACTS="$BUILD_PRODUCT_DIRECTORY/artifacts"
 BUILD_CLEAN=0
@@ -37,10 +36,9 @@ BUILD_SHARED="ON"
 BUILD_INSTALL=0
 BUILD_UNINSTALL=0
 BUILD_PACKAGE=0
-BUILD_THREADS=4
 
 CMAKE_BUILD_ARGS=""
-CMAKE_GENERATOR="Ninja"
+CMAKE_GENERATOR="Unix Makefiles"
 CMAKE_INSTALL_FOUND=0
 CMAKE_INSTALL_PATH=cmake
 CMAKE_REQUIRED_VERSION="3.23"
@@ -121,9 +119,6 @@ if [ $BUILD_UNINSTALL -ne 0 ]; then
 fi
 
 if [ $BUILD_RESET -eq 1 ]; then
-  if [ -d "$BUILD_GLOBALS_DIRECTORY" ]; then
-    rm -rf "$BUILD_GLOBALS_DIRECTORY"
-  fi
   if [ -d "$BUILD_PRODUCT_DIRECTORY" ]; then
     rm -rf "$BUILD_PRODUCT_DIRECTORY"
   fi
@@ -132,7 +127,7 @@ fi
 
 if [ $BUILD_CLEAN -eq 1 ]; then
   if [ -d "$BUILD_PRODUCT_DIRECTORY" ]; then
-    rm -rf "$BUILD_PRODUCT_DIRECTORY"
+    cmake --build "$BUILD_PRODUCT_DIRECTORY" --target clean -j 2> /dev/null
   fi
   exit 0
 fi
@@ -155,7 +150,7 @@ if [ $CMAKE_INSTALL_FOUND -eq 0 ]; then
 fi
 
 echo "Configuring using $CMAKE_GENERATOR..."
-cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --warn-uninitialized -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev --log-level=ERROR -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
 if [ $? -ne 0 ]; then
   echo "Failed to configure projects."
   rm -rf "$BUILD_PRODUCT_DIRECTORY"
@@ -164,7 +159,7 @@ fi
 echo "Done."
 
 echo "Building..."
-cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j
+cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION"
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1

@@ -55,4 +55,4 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   set_target_properties(nmcsclient PROPERTIES SOVERSION ${PROJECT_VERSION})
 endif()
 
-set_target_properties(nmcsclient PROPERTIES OUTPUT_NAME "nmcs-cli")
+set_target_properties(nmcsclient PROPERTIES OUTPUT_NAME "nmcscli")

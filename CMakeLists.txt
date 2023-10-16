@@ -32,16 +32,21 @@ project(nmcs
   LANGUAGES ASM C CXX
 )
 
+message(STATUS "NMCS_BUILD_ID = ${NMCS_BUILD_ID}")
+
 set(NMCS_VERSION "${PROJECT_VERSION}")
-if(NOT DEFINED NMCS_BUILD_ID)
+if((NOT DEFINED NMCS_BUILD_ID) OR (NMCS_BUILD_ID STREQUAL "0") OR (NMCS_BUILD_ID EQUAL 0))
   set(NMCS_BUILD_ID 0)
+  set(NMCS_BUILD_TIMESTAMP "private")
+else()
+  string(TIMESTAMP NMCS_BUILD_TIMESTAMP "%Y-%m-%d %H:%M:%S")
 endif()
-string(TIMESTAMP NMCS_BUILD_TIMESTAMP "%Y-%m-%d %H:%M:%S")
 configure_file(version.h.in version.h)
 include_directories(${CMAKE_BINARY_DIR})
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  set(CMAKE_CXX_STANDARD 20)
+  set(CMAKE_C_STANDARD 23)
+  set(CMAKE_CXX_STANDARD 23)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
   set(CMAKE_CXX_EXTENSIONS OFF)
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -101,9 +106,11 @@ set(LIBSPDLOG_VERSION_TAG   "v1.11.0")
 set(LIBSIMDUTF_VERSION_TAG  "v3.2.5")
 set(LIBWHISPER_VERSION_TAG  "v1.2.1")
 
-message(STATUS "Configuring dependencies for ${NMCS_TARGET_SYSTEM}...")
+# Silence ranlib warnings about unused variables
+SET(CMAKE_C_ARCHIVE_FINISH   "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
+SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
+
 include(cmake/${NMCS_TARGET_SYSTEM}.cmake)
-message(STATUS "Done configuring dependencies for ${NMCS_TARGET_SYSTEM}.")
 
 message(STATUS "LIBCLI11_INCLUDE_PATH    = ${LIBCLI11_INCLUDE_PATH}")
 message(STATUS "LIBCLI11_LIBRARY_PATH    = ${LIBCLI11_LIBRARY_PATH}")
@@ -134,25 +141,70 @@ add_subdirectory("src/server")
 add_subdirectory("src/agent")
 add_subdirectory("src/client")
 
+option(ENABLE_VAULT_SERVICE ON)
+if(ENABLE_VAULT_SERVICE)
+    add_subdirectory("src/services/vault")
+endif()
+
+option(ENABLE_HTTP_CLIENT_SERVICE ON)
+if(ENABLE_HTTP_CLIENT_SERVICE)
+    add_subdirectory("src/services/httpclient")
+endif()
+
+option(ENABLE_AUPHONIC_SERVICE ON)
+if(ENABLE_AUPHONIC_SERVICE)
+    add_subdirectory("src/services/auphonic")
+endif()
+
+option(ENABLE_PODLOVE_SERVICE ON)
+if(ENABLE_PODLOVE_SERVICE)
+    add_subdirectory("src/services/podlove")
+endif()
+
+option(ENABLE_TRANSCRIPTION_SERVICE ON)
+if(ENABLE_TRANSCRIPTION_SERVICE)
+    add_subdirectory("src/services/transcription")
+endif()
+
+option(ENABLE_NATIVE_GATEWAY ON)
+if(ENABLE_NATIVE_GATEWAY)
+    add_subdirectory("src/gateways/northbound/native")
+endif()
+
+option(ENABLE_RPC_GATEWAY ON)
+if(ENABLE_RPC_GATEWAY)
+    add_subdirectory("src/gateways/northbound/rpc")
+endif()
+
+option(ENABLE_SQLITE_GATEWAY ON)
+if(ENABLE_SQLITE_GATEWAY)
+    add_subdirectory("src/gateways/southbound/sqlite")
+endif()
+
+option(ENABLE_SQLITE_GATEWAY ON)
+if(ENABLE_SQLITE_GATEWAY)
+    add_subdirectory("src/gateways/southbound/rss")
+endif()
+
 # install(TARGETS nmcsplatform nmcsruntime nmcsmodel nmcsserver nmcsagent nmcsclient
 # install(TARGETS nmcsplatform
 #   RUNTIME DESTINATION "bin"
 #   LIBRARY DESTINATION "lib"
 #   ARCHIVE DESTINATION "lib/${PROJECT_NAME}"
 # )
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION include)
+# install(DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION include)
 
-set(CPACK_PACKAGE_NAME "nmcs")
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${NMCS_VERSION}-build${NMCS_BUILD_ID}-${NMCS_TARGET_SYSTEM}")
-set(CPACK_PACKAGE_VENDOR "ultralove")
-set(CPACK_PACKAGE_CONTACT "staff@ultralove.io")
-set(CPACK_PACKAGE_URL "https://github.com/ultralove/ultralove-nmcs")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "network media control system")
-set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
-set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-set(CPACK_GENERATOR "ZIP;TGZ")
-set(CPACK_THREADS 0)
-include(CPack)
+# set(CPACK_PACKAGE_NAME "nmcs")
+# set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${NMCS_VERSION}-build${NMCS_BUILD_ID}-${NMCS_TARGET_SYSTEM}")
+# set(CPACK_PACKAGE_VENDOR "ultralove")
+# set(CPACK_PACKAGE_CONTACT "staff@ultralove.io")
+# set(CPACK_PACKAGE_URL "https://github.com/ultralove/ultralove-nmcs")
+# set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "network media control system")
+# set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+# set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+# set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+# set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+# set(CPACK_GENERATOR "ZIP;TGZ")
+# set(CPACK_THREADS 0)
+# include(CPack)

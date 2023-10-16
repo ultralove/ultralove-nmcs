@@ -96,4 +96,4 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   set_target_properties(nmcsserver PROPERTIES SOVERSION ${PROJECT_VERSION})
 endif()
 
-set_target_properties(nmcsserver PROPERTIES OUTPUT_NAME "nmcs-server")
+set_target_properties(nmcsserver PROPERTIES OUTPUT_NAME "nmcsserver")

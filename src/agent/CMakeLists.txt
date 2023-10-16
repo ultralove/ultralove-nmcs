@@ -52,4 +52,4 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   set_target_properties(nmcsagent PROPERTIES SOVERSION ${PROJECT_VERSION})
 endif()
 
-set_target_properties(nmcsagent PROPERTIES OUTPUT_NAME "nmcs-agent")
+set_target_properties(nmcsagent PROPERTIES OUTPUT_NAME "nmcsagent")

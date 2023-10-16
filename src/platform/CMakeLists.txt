@@ -54,4 +54,4 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   set_target_properties(nmcsplatform PROPERTIES SOVERSION ${PROJECT_VERSION})
 endif()
 
-set_target_properties(nmcsplatform PROPERTIES OUTPUT_NAME "nmcs-platform")
+set_target_properties(nmcsplatform PROPERTIES OUTPUT_NAME "nmcsplatform")

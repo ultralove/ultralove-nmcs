@@ -47,4 +47,4 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   set_target_properties(nmcsmodel PROPERTIES SOVERSION ${PROJECT_VERSION})
 endif()
 
-set_target_properties(nmcsmodel PROPERTIES OUTPUT_NAME "nmcs-model")
+set_target_properties(nmcsmodel PROPERTIES OUTPUT_NAME "nmcsmodel")

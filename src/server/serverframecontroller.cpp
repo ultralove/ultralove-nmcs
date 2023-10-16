@@ -59,7 +59,7 @@ FrameArray FrameController::ParseFrames(const runtime::Stream& stream)
    }
 
    FrameArray frames;
-   std::for_each(frameDictionary.begin(), frameDictionary.end(), [&](const std::pair<runtime::Guid, Frame*>& item) { frames.push_back(item.second); });
+   //  std::for_each(frameDictionary.begin(), frameDictionary.end(), [&](const std::pair<runtime::Guid, Frame*>& item) { frames.push_back(item.second); });
 
    return frames;
 }
