@@ -35,18 +35,21 @@
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace model {
+namespace ultralove {
+namespace nmcs {
+namespace model {
 
-class NMCS_SHARED_API Contributor : public Fabric
-{
+class NMCS_SHARED_API Contributor : public Fabric {
 public:
-   runtime::String name_;
-   ContributorPresence presences_[0];
+  runtime::String name_;
+  ContributorPresence presences_[1];
 
-   virtual ~Contributor() {}
+  virtual ~Contributor() {}
 };
 
-}}} // namespace ultralove::nmcs::model
+} // namespace model
+} // namespace nmcs
+} // namespace ultralove
 
 #pragma pack(pop)
 

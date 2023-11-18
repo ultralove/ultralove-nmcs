@@ -27,7 +27,7 @@
 ################################################################################
 
 BUILD_CONFIGURATION="Debug"
-BUILD_PRODUCT_DIRECTORY="$(pwd)/_build"
+BUILD_PRODUCT_DIRECTORY="_build"
 BUILD_ARTIFACTS="$BUILD_PRODUCT_DIRECTORY/artifacts"
 BUILD_CLEAN=0
 BUILD_RESET=0
@@ -150,7 +150,7 @@ if [ $CMAKE_INSTALL_FOUND -eq 0 ]; then
 fi
 
 echo "Configuring using $CMAKE_GENERATOR..."
-cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_PACKAGE="$BUILD_PACKAGE" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
 if [ $? -ne 0 ]; then
   echo "Failed to configure projects."
   rm -rf "$BUILD_PRODUCT_DIRECTORY"
@@ -159,7 +159,7 @@ fi
 echo "Done."
 
 echo "Building..."
-cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION"
+cmake --build "$BUILD_PRODUCT_DIRECTORY" $CMAKE_BUILD_ARGS --config "$BUILD_CONFIGURATION" -j
 if [ $? -ne 0 ]; then
   echo "Failed to build projects."
   exit -1

@@ -44,31 +44,34 @@
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace model {
+namespace ultralove {
+namespace nmcs {
+namespace model {
 
-class NMCS_SHARED_API Episode : public Fabric
-{
+class NMCS_SHARED_API Episode : public Fabric {
 public:
-   runtime::Uri uri_;
-   runtime::String title_;
-   runtime::String description_;
-   runtime::String summary_;
-   Picture picture_;
-   EpisodeType type_;
-   bool explicit_;
-   runtime::Timestamp publicationDate_;
-   runtime::Timespan duration_;
-   runtime::Guid guid_;
-   Contribution contributions_[0];
-   ChapterTag chapters_[0];
-   LocationTag locations_[0];
-   TranscriptTag transcript_[0];
-   Enclosure enclosures_[0];
+  runtime::Uri uri_;
+  runtime::String title_;
+  runtime::String description_;
+  runtime::String summary_;
+  Picture picture_;
+  EpisodeType type_;
+  bool explicit_;
+  runtime::Timestamp publicationDate_;
+  runtime::Timespan duration_;
+  runtime::Guid guid_;
+  Contribution contributions_[1];
+  ChapterTag chapters_[1];
+  LocationTag locations_[1];
+  TranscriptTag transcript_[1];
+  Enclosure enclosures_[1];
 
-   virtual ~Episode() {}
+  virtual ~Episode() {}
 };
 
-}}} // namespace ultralove::nmcs::model
+} // namespace model
+} // namespace nmcs
+} // namespace ultralove
 
 #pragma pack(pop)
 

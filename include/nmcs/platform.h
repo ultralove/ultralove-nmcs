@@ -37,18 +37,22 @@
 #pragma pack(push)
 #pragma pack(8)
 
-namespace ultralove { namespace nmcs { namespace platform {
+namespace ultralove {
+namespace nmcs {
+namespace platform {
 namespace nmcs = ultralove::nmcs;
-}}} // namespace ultralove::nmcs::platform
+}
+} // namespace nmcs
+} // namespace ultralove
 
-#ifdef __MSCVER
-   #define NmcsByteSwap16(x) _byteswap_ushort(x)
-   #define NmcsByteSwap32(x) _byteswap_ulong(x)
-   #define NmcsByteSwap64(x) _byteswap_uint64(x)
+#ifdef _MSC_VER
+#define NmcsByteSwap16(x) _byteswap_ushort(x)
+#define NmcsByteSwap32(x) _byteswap_ulong(x)
+#define NmcsByteSwap64(x) _byteswap_uint64(x)
 #else
-   #define NmcsByteSwap16(x) __builtin_bswap16(x)
-   #define NmcsByteSwap32(x) __builtin_bswap32(x)
-   #define NmcsByteSwap64(x) __builtin_bswap64(x)
+#define NmcsByteSwap16(x) __builtin_bswap16(x)
+#define NmcsByteSwap32(x) __builtin_bswap32(x)
+#define NmcsByteSwap64(x) __builtin_bswap64(x)
 #endif
 
 #pragma pack(pop)
