@@ -26,6 +26,21 @@
 
 include(FetchContent)
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+  set(EXTRA_LIBRARIES "-framework AppKit" "-framework Carbon" "-framework IOKit" "-framework Security")
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 12)
+    message(STATUS "Building for x86_64 using clang ${CMAKE_CXX_COMPILER_VERSION}.")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE INTERNAL "")
+    set(CMAKE_OSX_ARCHITECTURES x86_64 CACHE INTERNAL "")
+    add_compile_options(-mmacosx-version-min=10.15)
+  else()
+    message(STATUS "Building for x86_64 and arm64 using clang ${CMAKE_CXX_COMPILER_VERSION}.")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 13.0 CACHE INTERNAL "")
+    set(CMAKE_OSX_ARCHITECTURES arm64 x86_64 CACHE INTERNAL "")
+    add_compile_options(-mmacosx-version-min=13.0)
+  endif()
+endif()
+
 set(FETCHCONTENT_QUIET   ON)
 set(FETCHCONTENT_VERBOSE OFF)
 

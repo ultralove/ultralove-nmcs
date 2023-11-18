@@ -26,6 +26,9 @@
 
 include(FetchContent)
 
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+add_compile_definitions("_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS")
+
 set(FETCHCONTENT_QUIET   ON)
 set(FETCHCONTENT_VERBOSE OFF)
 
