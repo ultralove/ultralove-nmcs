@@ -37,6 +37,7 @@
 
 #include <atomic>
 #include <mutex>
+#include <utility>
 
 #include <map>
 #include <vector>

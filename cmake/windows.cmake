@@ -50,7 +50,6 @@ if(NOT libcli11_POPULATED)
   add_subdirectory(${libcli11_SOURCE_DIR} ${libcli11_BINARY_DIR})
 endif()
 
-set(LIBZ_LIBRARY libz)
 FetchContent_Declare(libz
   GIT_REPOSITORY https://github.com/madler/zlib.git
   GIT_SHALLOW  ON
@@ -72,7 +71,6 @@ if(NOT libz_POPULATED)
   add_subdirectory(${libz_SOURCE_DIR} ${libz_BINARY_DIR})
 endif()
 
-set(LIBCURL_LIBRARY libcurl)
 FetchContent_Declare(libcurl
   GIT_REPOSITORY https://github.com/curl/curl.git
   GIT_SHALLOW  ON
@@ -125,6 +123,7 @@ if(NOT libxml2_POPULATED)
   set(LIBXML2_WITH_ZLIB     OFF CACHE INTERNAL "")
   add_subdirectory(${libxml2_SOURCE_DIR} ${libxml2_BINARY_DIR})
 endif()
+
 FetchContent_Declare(libsimdutf
   GIT_REPOSITORY https://github.com/simdutf/simdutf.git
   GIT_SHALLOW  ON
