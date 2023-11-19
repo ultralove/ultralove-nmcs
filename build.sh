@@ -149,8 +149,8 @@ if [ $CMAKE_INSTALL_FOUND -eq 0 ]; then
   exit 1
 fi
 
-echo "Configuring using $CMAKE_GENERATOR..."
-cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
+echo "Configuring..."
+cmake -B"$BUILD_PRODUCT_DIRECTORY" -G"$CMAKE_GENERATOR" -Wno-dev -Wno-deprecated -DBUILD_SHARED_LIBS="$BUILD_SHARED" -DNMCS_BUILD_ID=0 -DCMAKE_BUILD_TYPE="$BUILD_CONFIGURATION"
 if [ $? -ne 0 ]; then
   echo "Failed to configure projects."
   rm -rf "$BUILD_PRODUCT_DIRECTORY"

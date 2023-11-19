@@ -41,6 +41,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   endif()
 endif()
 
+# Silence ranlib warnings about unused variables
+SET(CMAKE_C_ARCHIVE_FINISH   "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
+SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
+
 set(FETCHCONTENT_QUIET   ON)
 set(FETCHCONTENT_VERBOSE OFF)
 
@@ -101,16 +105,8 @@ if(NOT libcurl_POPULATED)
   set(BUILD_BINDINGS      OFF CACHE INTERNAL "")
   set(BUILD_TESTING       OFF CACHE INTERNAL "")
   set(ENABLE_MANUAL       OFF CACHE INTERNAL "")
-  set(USE_UNIX_SOCKETS    OFF CACHE INTERNAL "")
-  set(CURL_ENABLE_SSL     ON CACHE INTERNAL "")
-  set(CURL_USE_SECTRANSP  ON CACHE INTERNAL "")
-  set(CURL_DISABLE_LDAP   ON CACHE INTERNAL "")
-  set(CURL_DISABLE_LDAPS  ON CACHE INTERNAL "")
-  set(CURL_DISABLE_NTLM   ON CACHE INTERNAL "")
-  set(CURL_DISABLE_ALTSVC ON CACHE INTERNAL "")
-  set(ENABLE_IPV6         ON CACHE INTERNAL "")
   set(HTTP_ONLY           ON CACHE INTERNAL "")
-  set(CURL_CA_PATH        none CACHE INTERNAL "")
+  set(CURL_USE_SECTRANSP  ON CACHE INTERNAL "")
   add_subdirectory(${libcurl_SOURCE_DIR} ${libcurl_BINARY_DIR})
 endif()
 
