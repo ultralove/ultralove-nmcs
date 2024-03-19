@@ -30,6 +30,8 @@ set(NMCS_RUNTIME_INCLUDES
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeshared.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestream.h
   ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimestring.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeuri.h
+  ${NMCS_INCLUDE_DIRECTORY}/nmcs/runtimeversion.h
 )
 
 set(NMCS_RUNTIME_SOURCES
@@ -40,6 +42,7 @@ set(NMCS_RUNTIME_SOURCES
   runtimestream.cpp
   runtimestring.cpp
   runtimeuri.cpp
+  runtimeversion.cpp
 )
 
 set(NMCS_RUNTIME_DEPENDENCIES

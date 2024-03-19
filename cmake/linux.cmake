@@ -26,17 +26,23 @@
 
 include(FetchContent)
 
+# Silence warnings when compiling external dependencies
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations -Wno-constant-logical-operand")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations -Wno-constant-logical-operand")
+
+set(FETCHCONTENT_QUIET   ON)
+set(FETCHCONTENT_VERBOSE OFF)
+
 FetchContent_Declare(cli11
-  GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBCLI11_VERSION_TAG}
+  GIT_REPOSITORY ${LIBCLI11_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBCLI11_VERSION}
 )
 FetchContent_GetProperties(cli11)
 if(NOT cli11_POPULATED)
   FetchContent_Populate(cli11)
   set(LIBCLI11_INCLUDE_PATH ${cli11_SOURCE_DIR}/include)
-  set(BUILD_SHARED_LIBS    OFF CACHE INTERNAL "")
   set(CLI11_SINGLE_FILE    OFF CACHE INTERNAL "")
   set(CLI11_BUILD_DOCS     OFF CACHE INTERNAL "")
   set(CLI11_BUILD_TESTS    OFF CACHE INTERNAL "")
@@ -46,10 +52,10 @@ endif()
 
 set(LIBZ_LIBRARY libz)
 FetchContent_Declare(libz
-  GIT_REPOSITORY https://github.com/madler/zlib.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBZ_VERSION_TAG}
+  GIT_REPOSITORY ${LIBZ_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBZ_VERSION}
 )
 FetchContent_GetProperties(libz)
 if(NOT libz_POPULATED)
@@ -57,17 +63,16 @@ if(NOT libz_POPULATED)
   set(LIBZ_INCLUDE_PATH ${libz_BINARY_DIR} ${libz_SOURCE_DIR} ${libz_SOURCE_DIR}/contrib/minizip)
   set(LIBZ_LIBRARY_PATH ${libz_BINARY_DIR}/libz.a)
   set(LIBZ_SOURCE_PATH  ${libz_SOURCE_DIR})
-  set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "")
   set(SKIP_INSTALL_ALL  ON CACHE INTERNAL "")
   add_subdirectory(${libz_SOURCE_DIR} ${libz_BINARY_DIR})
 endif()
 
 set(LIBCURL_LIBRARY libcurl)
 FetchContent_Declare(libcurl
-  GIT_REPOSITORY https://github.com/curl/curl.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBCURL_VERSION_TAG}
+  GIT_REPOSITORY ${LIBCURL_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBCURL_VERSION}
 )
 FetchContent_GetProperties(libcurl)
 if(NOT libcurl_POPULATED)
@@ -78,7 +83,6 @@ if(NOT libcurl_POPULATED)
   else()
     set(LIBCURL_LIBRARY_PATH ${libcurl_BINARY_DIR}/lib/libcurl.a)
   endif()
-  set(BUILD_SHARED_LIBS   OFF  CACHE INTERNAL "")
   set(BUILD_CURL_EXE      OFF  CACHE INTERNAL "")
   set(BUILD_BINDINGS      OFF  CACHE INTERNAL "")
   set(BUILD_TESTING       OFF  CACHE INTERNAL "")
@@ -90,17 +94,16 @@ if(NOT libcurl_POPULATED)
 endif()
 
 FetchContent_Declare(libxml2
-  GIT_REPOSITORY https://github.com/GNOME/libxml2.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBXML2_VERSION_TAG}
+  GIT_REPOSITORY ${LIBXML2_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBXML2_VERSION}
 )
 FetchContent_GetProperties(libxml2)
 if(NOT libxml2_POPULATED)
   FetchContent_Populate(libxml2)
   set(LIBXML2_INCLUDE_PATH ${libxml2_SOURCE_DIR})
   set(LIBXML2_LIBRARY_PATH ${libxml2_BINARY_DIR}/libxml2.a)
-  set(BUILD_SHARED_LIBS     OFF CACHE INTERNAL "")
   set(LIBXML2_WITH_ICONV    OFF CACHE INTERNAL "")
   set(LIBXML2_WITH_ICU      OFF CACHE INTERNAL "")
   set(LIBXML2_WITH_LEGACY   OFF CACHE INTERNAL "")
@@ -113,19 +116,35 @@ if(NOT libxml2_POPULATED)
   add_subdirectory(${libxml2_SOURCE_DIR} ${libxml2_BINARY_DIR})
 endif()
 
+set(LIBSIMDUTF_LIBRARY simdutf)
+FetchContent_Declare(simdutf
+  GIT_REPOSITORY ${LIBSIMDUTF_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBSIMDUTF_VERSION}
+)
+FetchContent_GetProperties(simdutf)
+if(NOT simdutf_POPULATED)
+  FetchContent_Populate(simdutf)
+  set(LIBSIMDUTF_INCLUDE_PATH ${simdutf_SOURCE_DIR}/include)
+  set(LIBSIMDUTF_LIBRARY_PATH ${simdutf_BINARY_DIR}/src/libsimdutf.a)
+  set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
+  set(BUILD_TESTING      OFF CACHE INTERNAL "")
+  add_subdirectory(${simdutf_SOURCE_DIR} ${simdutf_BINARY_DIR})
+endif()
+
 set(LIBSIMDJSON_LIBRARY simdjson)
 FetchContent_Declare(simdjson
-  GIT_REPOSITORY https://github.com/simdjson/simdjson.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBSIMDJSON_VERSION_TAG}
+  GIT_REPOSITORY ${LIBSIMDJSON_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBSIMDJSON_VERSION}
 )
 FetchContent_GetProperties(simdjson)
 if(NOT simdjson_POPULATED)
   FetchContent_Populate(simdjson)
   set(LIBSIMDJSON_INCLUDE_PATH ${simdjson_SOURCE_DIR}/include)
   set(LIBSIMDJSON_LIBRARY_PATH ${simdjson_BINARY_DIR}/libsimdjson.a)
-  set(BUILD_SHARED_LIBS               OFF CACHE INTERNAL "")
   set(SIMDJSON_DEVELOPER_MODE         OFF CACHE INTERNAL "")
   set(SIMDJSON_DISABLE_DEPRECATED_API OFF CACHE INTERNAL "")
   set(SIMDJSON_ALLOW_DOWNLOADS        OFF CACHE INTERNAL "")
@@ -135,10 +154,10 @@ endif()
 
 set(LIBSPDLOG_LIBRARY spdlog)
 FetchContent_Declare(spdlog
-  GIT_REPOSITORY https://github.com/gabime/spdlog.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBSPDLOG_VERSION_TAG}
+  GIT_REPOSITORY ${LIBSPDLOG_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBSPDLOG_VERSION}
 )
 FetchContent_GetProperties(spdlog)
 if(NOT spdlog_POPULATED)
@@ -149,34 +168,15 @@ if(NOT spdlog_POPULATED)
   else()
     set(LIBSPDLOG_LIBRARY_PATH ${spdlog_BINARY_DIR}/libspdlog.a)
   endif()
-  set(BUILD_SHARED_LIBS    OFF CACHE INTERNAL "")
   set(SPDLOG_BUILD_EXAMPLE OFF CACHE INTERNAL "")
   add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
 endif()
 
-set(LIBSIMDUTF_LIBRARY simdutf)
-FetchContent_Declare(simdutf
-  GIT_REPOSITORY https://github.com/simdutf/simdutf.git
-  GIT_SHALLOW ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBSIMDUTF_VERSION_TAG}
-)
-FetchContent_GetProperties(simdutf)
-if(NOT simdutf_POPULATED)
-  FetchContent_Populate(simdutf)
-  set(LIBSIMDUTF_INCLUDE_PATH ${simdutf_SOURCE_DIR}/include)
-  set(LIBSIMDUTF_LIBRARY_PATH ${simdutf_BINARY_DIR}/src/libsimdutf.a)
-  set(BUILD_SHARED_LIBS  OFF CACHE INTERNAL "")
-  set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
-  set(BUILD_TESTING      OFF CACHE INTERNAL "")
-  add_subdirectory(${simdutf_SOURCE_DIR} ${simdutf_BINARY_DIR})
-endif()
-
 FetchContent_Declare(libwhisper
-  GIT_REPOSITORY https://github.com/ggerganov/whisper.cpp.git
-  GIT_SHALLOW  ON
-  GIT_PROGRESS OFF
-  GIT_TAG ${LIBWHISPER_VERSION_TAG}
+  GIT_REPOSITORY ${LIBWHISPER_URL}
+  GIT_SHALLOW    ON
+  GIT_PROGRESS   OFF
+  GIT_TAG        ${LIBWHISPER_VERSION}
 )
 FetchContent_GetProperties(libwhisper)
 if(NOT libwhisper_POPULATED)
