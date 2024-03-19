@@ -14,7 +14,6 @@ TBD
 *** Download and run Azure SQL Edge (SQL Server)
 For more information go to https://hub.docker.com/_/microsoft-azure-sql-edge
 #+begin_src
-$ docker pull mcr.microsoft.com/azure-sql-edge:latest
 $ docker run --name mssql-server --restart unless-stopped --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Strong!password0' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latest
 #+end_src
 *** Login
