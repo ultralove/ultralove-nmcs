@@ -45,7 +45,9 @@ Guid::Guid(const Guid& rhs)
 
 Guid& Guid::operator=(const Guid& rhs)
 {
-   memcpy(data_, rhs.data_, sizeof(uint8_t) * 16);
+   if (this != &rhs) {
+      memcpy(data_, rhs.data_, sizeof(uint8_t) * 16);
+   }
    return *this;
 }
 
